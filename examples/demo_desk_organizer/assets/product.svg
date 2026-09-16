@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500">
+  <rect width="900" height="500" fill="#eef1ed"/>
+  <rect x="170" y="130" width="560" height="250" rx="24" fill="#b98652" stroke="#69472d" stroke-width="8"/>
+  <path d="M220 180h460M220 250h460M350 140v220M520 140v220" stroke="#e0b27b" stroke-width="12" opacity=".8"/>
+  <rect x="270" y="75" width="360" height="80" rx="16" fill="#f6f7f4" stroke="#69472d" stroke-width="8"/>
+  <text x="450" y="125" text-anchor="middle" font-family="Arial" font-size="28" fill="#25332a">BAMBOO DESK TRAY</text>
+</svg>

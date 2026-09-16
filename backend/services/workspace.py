@@ -3,19 +3,18 @@ from __future__ import annotations
 import json
 import os
 import uuid
-import zipfile
 from pathlib import Path
 from typing import Any
 
 from backend.repositories.workspace import WorkspaceRepository, utc_now
 from backend.schemas.workspace import CreateProject, ProductTruth, VideoPlanInput
+from backend.services.delivery import DeliveryError, ExportBuilder
 from backend.workers.runner import InlineJobRunner
 
 
 ROOT = Path(__file__).resolve().parents[2]
 DEMO_PRODUCT = ROOT / "examples/demo_sku/product.json"
-DEMO_CATALOG = ROOT / "examples/demo_sku/catalog.json"
-DEMO_PLAN = ROOT / "examples/demo_sku/generated-fixtures/image_plan.json"
+SYSTEM_VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").strip() if (ROOT / "VERSION").exists() else "phase3-dev"
 
 
 class WorkspaceService:
@@ -33,8 +32,19 @@ class WorkspaceService:
         """
         return lambda: job.get("result_ref")
 
+    def _fixture_dir(self, sku: str) -> Path:
+        for candidate in sorted((ROOT / "examples").glob("*/product.json")):
+            product = json.loads(candidate.read_text(encoding="utf-8"))
+            if product.get("sku") == sku:
+                return candidate.parent
+        return DEMO_PRODUCT.parent
+
+    def _product(self, sku: str) -> tuple[dict[str, Any], Path]:
+        fixture_dir = self._fixture_dir(sku)
+        return json.loads((fixture_dir / "product.json").read_text(encoding="utf-8")), fixture_dir
+
     def _demo_truth(self, project_id: str, sku: str) -> dict[str, Any]:
-        product = json.loads(DEMO_PRODUCT.read_text(encoding="utf-8"))
+        product, fixture_dir = self._product(sku)
         return {
             "project_id": project_id,
             "sku": sku,
@@ -47,7 +57,7 @@ class WorkspaceService:
             "product_features": product["product_features"],
             "verified_claims": product["verified_claims"],
             "product_images": product["product_images"],
-            "source": ["examples/demo_sku/product.json"],
+            "source": [str((fixture_dir / "product.json").relative_to(ROOT))],
             "version": 1,
         }
 
@@ -59,7 +69,8 @@ class WorkspaceService:
     def create_project(self, payload: CreateProject, project_id: str | None = None) -> dict[str, Any]:
         project_id = project_id or f"project-{uuid.uuid4().hex[:12]}"
         self.repository.create_project(project_id, payload.project_name, payload.sku)
-        self.repository.save_artifact(project_id, "product_truth", self._demo_truth(project_id, payload.sku), {"source": "examples/demo_sku/catalog.json"})
+        _, fixture_dir = self._product(payload.sku)
+        self.repository.save_artifact(project_id, "product_truth", self._demo_truth(project_id, payload.sku), {"source": str((fixture_dir / "product.json").relative_to(ROOT))}, source_ref=str(fixture_dir))
         return self.get_project(project_id)
 
     def _artifact(self, project_id: str, artifact_type: str) -> dict[str, Any] | None:
@@ -90,7 +101,9 @@ class WorkspaceService:
             existing = self.repository.get_job_by_idempotency(project_id, "competitor_research", idempotency_key)
             if existing:
                 return existing
-        snapshots = [{"competitor_id": f"{project_id}-c{i + 1}", "url": url, "title": f"Synthetic competitor {i + 1}", "bullet_points": ["Visible assortment", "Material positioning"], "rating": 4.2, "price": 19.99, "reviews": [], "negative_reviews": [], "neutral_reviews": [], "positive_reviews": [], "images": [], "crawl_status": "completed", "captured_at": utc_now(), "raw_source": {"synthetic": True}} for i, url in enumerate(urls)]
+        product, _ = self._product(self.repository.get_project(project_id)["sku"])
+        feature = product.get("product_features", ["clear product configuration"])[0]
+        snapshots = [{"competitor_id": f"{project_id}-c{i + 1}", "url": url, "title": f"Synthetic competitor {i + 1}", "bullet_points": [f"Comparable {feature}", "Visible assortment"], "rating": 4.2, "price": 19.99, "reviews": [], "negative_reviews": [], "neutral_reviews": [], "positive_reviews": [], "images": [], "crawl_status": "completed", "captured_at": utc_now(), "raw_source": {"synthetic": True}} for i, url in enumerate(urls)]
         snapshot_ref = self.repository.save_artifact(project_id, "competitor_snapshot", snapshots, {"source": "synthetic demo input"})
         result: dict[str, Any] = {"job_id": "", "status": "completed", "competitor_ids": [item["competitor_id"] for item in snapshots]}
         research_ref = self.repository.save_artifact(project_id, "research", result, {"competitor_snapshot": snapshot_ref["artifact_version_id"]})
@@ -116,7 +129,10 @@ class WorkspaceService:
         truth = self.repository.latest_artifact(project_id, "product_truth")
         if not insight:
             raise ValueError("competitor insight is required")
-        payload = {"project_id": project_id, "primary_purchase_drivers": ["material safety", "comfort", "fit"], "customer_pain_points": ["skin sensitivity", "size uncertainty"], "core_differentiators": ["ASTM F136 titanium", "multi-wear set", "secure hinged closure"], "product_claims": ["claim_f136_titanium", "claim_gold_pvd"], "proof_points": ["catalog-backed material claim"], "priority_order": ["material safety", "fit", "comfort"], "listing_mapping": {"title": "identity"}, "image_mapping": {"image_01": "identity"}, "video_mapping": {"hook": "material safety"}, "version": (self.repository.latest_artifact(project_id, "strategy") or {}).get("version", 0) + 1, "product_truth_version": truth["version"] if truth else 1, "competitor_insight_version": insight["version"]}
+        product, _ = self._product(self.repository.get_project(project_id)["sku"])
+        features = list(product.get("product_features", [])) or ["clear product identity", "reliable everyday use"]
+        claims = [str(item.get("text", "")) for item in product.get("verified_claims", []) if item.get("text")]
+        payload = {"project_id": project_id, "primary_purchase_drivers": features[:3], "customer_pain_points": ["selection uncertainty", "proof clarity"], "core_differentiators": features[:3], "product_claims": claims[:3], "proof_points": ["catalog-backed product claim"], "priority_order": features[:3], "listing_mapping": {"title": "identity"}, "image_mapping": {"image_01": "identity"}, "video_mapping": {"hook": features[0]}, "version": (self.repository.latest_artifact(project_id, "strategy") or {}).get("version", 0) + 1, "product_truth_version": truth["version"] if truth else 1, "competitor_insight_version": insight["version"]}
         self.repository.save_artifact(project_id, "strategy", payload, {"product_truth": truth["artifact_version_id"] if truth else None, "competitor_insight": insight["artifact_version_id"]})
         self.repository.update_project(project_id, stage="strategy", status="completed")
         return payload
@@ -127,16 +143,26 @@ class WorkspaceService:
         insight = self.repository.latest_artifact(project_id, "competitor_insight")
         if not strategy:
             raise ValueError("strategy is required")
-        payload = {"project_id": project_id, "product_truth_version": truth["version"] if truth else 1, "insight_version": insight["version"] if insight else 1, "strategy_version": strategy["version"], "title": "Demo Studio ASTM F136 Titanium Hinged Ring 3PCS, 18K Gold PVD Set, 18G/20G 8mm Multi-Style Rings", "bullet_points": ["MATERIAL SAFETY: ASTM F136 implant-grade titanium with an 18K Gold PVD finish.", "3PCS MULTI-STYLE SET: Classic hoop, double-layer hoop, and CZ accent hoop.", "SECURE HINGED CLOSURE: Hinged segmented ring with a flush seam and press-to-close clasp.", "FIND YOUR FIT: 18G and 20G gauge options with an 8mm inner diameter.", "ONE SET, MORE WAYS TO WEAR: Three coordinated styles for everyday presentation."], "product_description": "A synthetic three-piece hinged ring set for demonstrating traceable listing generation.", "claims_used": ["claim_f136_titanium", "claim_gold_pvd"], "strategy_refs": [f"strategy:v{strategy['version']}"], "version": (self.repository.latest_artifact(project_id, "listing") or {}).get("version", 0) + 1, "generated_content": {}, "edited_content": None, "approved_content": None, "status": "pending_review", "model": "deterministic-demo"}
+        product, _ = self._product(self.repository.get_project(project_id)["sku"])
+        claims = [str(item.get("text", "")) for item in product.get("verified_claims", []) if item.get("text")]
+        features = list(product.get("product_features", [])) or ["clear product identity"]
+        payload = {"project_id": project_id, "product_truth_version": truth["version"] if truth else 1, "insight_version": insight["version"] if insight else 1, "strategy_version": strategy["version"], "title": product["product_name"], "bullet_points": features[:5], "product_description": f"Synthetic {product['category']} listing generated from versioned Product Truth.", "claims_used": claims[:5], "strategy_refs": [f"strategy:v{strategy['version']}"], "version": (self.repository.latest_artifact(project_id, "listing") or {}).get("version", 0) + 1, "generated_content": {}, "edited_content": None, "approved_content": None, "status": "pending_review", "model": "deterministic-config"}
         self.repository.save_artifact(project_id, "listing", payload, {"product_truth": truth["artifact_version_id"] if truth else None, "insight": insight["artifact_version_id"] if insight else None, "strategy": strategy["artifact_version_id"]})
         self.repository.update_project(project_id, stage="listing", status="completed")
         return payload
 
     def image_plan(self, project_id: str) -> dict[str, Any]:
-        from image_generation.service import build_context
-        _, _, plan, _ = build_context()
         strategy = self.repository.latest_artifact(project_id, "strategy")
-        payload = {"project_id": project_id, "strategy_version": strategy["version"] if strategy else 1, "version": (self.repository.latest_artifact(project_id, "image_plan") or {}).get("version", 0) + 1, "image_plan": json.loads(json.dumps(plan.model_dump(), ensure_ascii=False))}
+        project = self.repository.get_project(project_id)
+        product, fixture_dir = self._product(project["sku"])
+        configured_plan = fixture_dir / "generated-fixtures" / "image_plan.json"
+        if configured_plan.is_file():
+            from image_generation.service import build_context
+            _, _, plan, _ = build_context()
+            image_plan = json.loads(json.dumps(plan.model_dump(), ensure_ascii=False))
+        else:
+            image_plan = {"product_id": product["product_id"], "plan_version": "config-v1", "images": [{"image_id": f"{product['product_id']}_image_{index}", "role": role, "action": action, "prompt": f"Show the {product['product_name']} for {action}.", "generation_status": "planned", "qa_status": "pending"} for index, (role, action) in enumerate([("identity", "product identity"), ("feature", "key product feature"), ("usage", "everyday use")], start=1)]}
+        payload = {"project_id": project_id, "strategy_version": strategy["version"] if strategy else 1, "version": (self.repository.latest_artifact(project_id, "image_plan") or {}).get("version", 0) + 1, "image_plan": image_plan, "source_fixture": str(fixture_dir.relative_to(ROOT))}
         truth = self.repository.latest_artifact(project_id, "product_truth")
         self.repository.save_artifact(project_id, "image_plan", payload, {"product_truth": truth["artifact_version_id"] if truth else None, "strategy": strategy["artifact_version_id"] if strategy else None})
         self.repository.update_project(project_id, stage="images", status="completed")
@@ -159,7 +185,6 @@ class WorkspaceService:
             return result["artifact_version_id"]
         job = self.runner.submit(project_id, "image_generation", {"image_plan": plan["version"]}, idempotency_key, execute_generation)
         payload["job_id"] = job["job_id"]
-        self.repository.save_artifact(project_id, "image_generation", payload, {"image_plan": plan["artifact_version_id"], "job": job["job_id"]})
         reports = [
             {
                 "qa_version": "pending-v1",
@@ -196,18 +221,37 @@ class WorkspaceService:
         self.repository.update_project(project_id, stage="video", status="completed")
         return payload
 
+    def approve_artifact(self, project_id: str, artifact_id: str, version: int, decision: str, approved_by: str, comment: str = "") -> dict[str, Any]:
+        artifact = self.repository.get_artifact_version(project_id, artifact_id, version)
+        if artifact is None:
+            raise DeliveryError("ARTIFACT_VERSION_NOT_FOUND", "Artifact version not found", [{"artifact_id": artifact_id, "artifact_version": version}])
+        existing = self.repository.get_approval_for_version(project_id, artifact_id, version)
+        if existing and (existing.get("decision") or existing.get("status")) == "approved" and decision == "approved":
+            raise DeliveryError("ALREADY_APPROVED", "Artifact version is already approved", [{"artifact_id": artifact_id, "artifact_version": version}])
+        return self.repository.save_approval(project_id, {"artifact_version_id": artifact["artifact_version_id"], "artifact_id": artifact.get("artifact_id") or artifact["artifact_type"], "artifact_version": version, "decision": decision, "approved_by": approved_by, "reviewer": approved_by, "comment": comment, "status": decision})
+
     def export(self, project_id: str) -> dict[str, Any]:
         project = self.get_project(project_id)
         export_id = f"export-{uuid.uuid4().hex[:12]}"
         export_dir = ROOT / "output" / "exports"
-        export_dir.mkdir(parents=True, exist_ok=True)
         zip_path = export_dir / f"{export_id}.zip"
-        files: dict[str, str] = {"project.json": json.dumps(project, ensure_ascii=False, indent=2), "product_truth.json": json.dumps(project.get("product_truth"), ensure_ascii=False, indent=2), "manifest.json": ""}
-        artifact_versions = self.repository.list_artifacts(project_id)
-        manifest = {"export_id": export_id, "project_id": project_id, "status": "completed", "source_versions": {"product_truth": (self.repository.latest_artifact(project_id, "product_truth") or {}).get("artifact_version_id")}, "artifact_versions": [{"artifact_type": item["artifact_type"], "artifact_version_id": item["artifact_version_id"], "project_id": item["project_id"], "version": item["version"], "input_refs_json": item["input_refs_json"], "payload_json": item["payload_json"], "created_at": item["created_at"]} for item in artifact_versions], "generated_files": list(files), "qa_reports": [], "approval_state": self.repository.list_approvals(project_id), "created_at": utc_now(), "completed_at": utc_now(), "file_ref": str(zip_path)}
-        files["manifest.json"] = json.dumps(manifest, ensure_ascii=False, indent=2)
-        with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as archive:
-            for name, content in files.items():
-                archive.writestr(name, content)
+        required_types = ["product_truth", "strategy", "listing", "image_plan", "image_generation", "qa_report"]
+        if self.repository.latest_artifact(project_id, "video_plan"):
+            required_types.append("video_plan")
+        artifacts = []
+        blocked = []
+        for artifact_type in required_types:
+            artifact = self.repository.latest_artifact(project_id, artifact_type)
+            if artifact is None:
+                blocked.append({"artifact_id": artifact_type, "artifact_version": None, "status": "missing"})
+                continue
+            artifacts.append(artifact)
+            if not self.repository.is_artifact_version_approved(project_id, artifact.get("artifact_id") or artifact_type, artifact["version"]):
+                blocked.append({"artifact_id": artifact.get("artifact_id") or artifact_type, "artifact_version": artifact["version"], "status": "unapproved"})
+        if blocked:
+            raise DeliveryError("EXPORT_BLOCKED_UNAPPROVED_ARTIFACT", "One or more required artifact versions are not approved", blocked)
+        approvals = [self.repository.get_approval_for_version(project_id, item.get("artifact_id") or item["artifact_type"], item["version"]) for item in artifacts]
+        approvals = [item for item in approvals if item]
+        manifest = ExportBuilder(ROOT).build(project=project, artifacts=artifacts, approvals=approvals, export_id=export_id, exported_at=utc_now(), system_version=SYSTEM_VERSION, output_path=zip_path)
         self.repository.save_export(project_id, manifest, str(zip_path))
         return manifest

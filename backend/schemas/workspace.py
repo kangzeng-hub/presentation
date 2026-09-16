@@ -149,11 +149,15 @@ class QAReport(SchemaModel):
 class ArtifactVersion(SchemaModel):
     artifact_version_id: str
     project_id: str
+    artifact_id: str | None = None
     artifact_type: str
     version: int
     input_refs_json: dict[str, Any]
     payload_json: dict[str, Any] | list[Any]
     created_at: str
+    checksum: str | None = None
+    source_ref: str | None = None
+    created_by: str | None = None
 
 
 class VideoPlanInput(SchemaModel):
@@ -201,23 +205,41 @@ class ApprovalCreate(SchemaModel):
     comment: str = ""
 
 
+class ArtifactApprovalCreate(SchemaModel):
+    decision: Literal["approved", "rejected"]
+    approved_by: str = Field(min_length=1)
+    comment: str = ""
+
+
 class Approval(ApprovalCreate):
     approval_id: str
     project_id: str
     created_at: str
     updated_at: str
+    artifact_id: str | None = None
+    artifact_version: int | None = None
+    decision: Literal["pending", "approved", "rejected"] | None = None
+    approved_by: str | None = None
+    approved_at: str | None = None
 
 
 class ExportManifest(SchemaModel):
     export_id: str
     project_id: str
-    status: Literal["completed", "failed"]
+    status: Literal["pending", "completed", "failed"]
     file_ref: str | None = None
     source_versions: dict[str, Any] = Field(default_factory=dict)
     artifact_versions: list[ArtifactVersion] = Field(default_factory=list)
     generated_files: list[str] = Field(default_factory=list)
     qa_reports: list[str] = Field(default_factory=list)
     approval_state: list[dict[str, Any]] = Field(default_factory=list)
+    project: dict[str, Any] = Field(default_factory=dict)
+    artifacts: list[dict[str, Any]] = Field(default_factory=list)
+    approvals: list[dict[str, Any]] = Field(default_factory=list)
+    sources: list[dict[str, Any] | str] = Field(default_factory=list)
+    files: list[dict[str, Any]] = Field(default_factory=list)
+    exported_at: str | None = None
+    system_version: str = ""
     created_at: str
     completed_at: str | None = None
 

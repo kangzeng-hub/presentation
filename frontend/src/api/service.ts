@@ -23,6 +23,9 @@ export const apiService={
  generateImagePlan:async(projectId:string)=>request(await client.POST('/projects/{project_id}/images/plan',{params:{path:{project_id:projectId}}})),
  generateImages:async(projectId:string)=>request(await client.POST('/projects/{project_id}/images/generate',{params:{path:{project_id:projectId}}})),
  getQA:async(projectId:string)=>request(await client.GET('/projects/{project_id}/qa',{params:{path:{project_id:projectId}}})),
+ approveArtifact:async(projectId:string,artifactId:string,version:number,approvedBy:string,comment='')=>request(await client.POST('/projects/{project_id}/artifacts/{artifact_id}/versions/{version}/approval',{params:{path:{project_id:projectId,artifact_id:artifactId,version}},body:{decision:'approved',approved_by:approvedBy,comment}})),
+ createExport:async(projectId:string)=>request(await client.POST('/projects/{project_id}/exports',{params:{path:{project_id:projectId}}})),
+ getExport:async(projectId:string,exportId:string)=>request(await client.GET('/projects/{project_id}/exports/{export_id}',{params:{path:{project_id:projectId,export_id:exportId}}})),
  generateVideo:async(projectId:string,body:components['schemas']['VideoPlanInput'])=>request(await client.POST('/projects/{project_id}/video/plan',{params:{path:{project_id:projectId}},body})),
  getJob:async(jobId:string)=>request(await client.GET('/jobs/{job_id}',{params:{path:{job_id:jobId}}})),
  waitForJob:async(jobId:string, onUpdate?:(job:components['schemas']['Job'])=>void)=>{

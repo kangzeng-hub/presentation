@@ -272,6 +272,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/projects/{project_id}/artifacts/{artifact_id}/versions/{version}/approval": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+                artifact_id: string;
+                version: number;
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["approveArtifactVersion"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/projects/{project_id}/export": {
         parameters: {
             query?: never;
@@ -301,7 +321,7 @@ export interface paths {
         };
         get: operations["listExports"];
         put?: never;
-        post?: never;
+        post: operations["createExport"];
         delete?: never;
         options?: never;
         head?: never;
@@ -599,9 +619,22 @@ export interface components {
             reviewer: string;
             comment?: string;
         };
+        ArtifactApprovalCreate: {
+            /** @enum {string} */
+            decision: "approved" | "rejected";
+            approved_by: string;
+            comment?: string;
+        };
         Approval: components["schemas"]["ApprovalCreate"] & {
             approval_id: string;
             project_id: string;
+            artifact_id?: string | null;
+            artifact_version?: number | null;
+            /** @enum {string|null} */
+            decision?: "pending" | "approved" | "rejected" | null;
+            approved_by?: string | null;
+            /** Format: date-time */
+            approved_at?: string | null;
             /** Format: date-time */
             created_at: string;
             /** Format: date-time */
@@ -610,6 +643,7 @@ export interface components {
         ArtifactVersion: {
             artifact_version_id: string;
             project_id: string;
+            artifact_id?: string | null;
             artifact_type: string;
             version: number;
             input_refs_json: {
@@ -620,13 +654,28 @@ export interface components {
             } | unknown[];
             /** Format: date-time */
             created_at: string;
+            checksum?: string | null;
+            source_ref?: string | null;
+            created_by?: string | null;
         };
         ExportManifest: {
             export_id: string;
             project_id: string;
             /** @enum {string} */
-            status: "completed" | "failed";
+            status: "pending" | "completed" | "failed";
             file_ref?: string | null;
+            project: {
+                [key: string]: unknown;
+            };
+            artifacts: {
+                [key: string]: unknown;
+            }[];
+            approvals: components["schemas"]["Approval"][];
+            sources: unknown[];
+            files: {
+                [key: string]: unknown;
+            }[];
+            system_version: string;
             source_versions: {
                 [key: string]: unknown;
             };
@@ -636,6 +685,9 @@ export interface components {
             approval_state: components["schemas"]["Approval"][];
             /** Format: date-time */
             created_at: string;
+            /** Format: date-time */
+            exported_at?: string | null;
+            /** Format: date-time */
             completed_at?: string | null;
         };
         ErrorResponse: {
@@ -1161,6 +1213,34 @@ export interface operations {
             };
         };
     };
+    approveArtifactVersion: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+                artifact_id: string;
+                version: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ArtifactApprovalCreate"];
+            };
+        };
+        responses: {
+            /** @description Approval */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Approval"];
+                };
+            };
+        };
+    };
     exportProject: {
         parameters: {
             query?: never;
@@ -1201,6 +1281,28 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ExportManifest"][];
+                };
+            };
+        };
+    };
+    createExport: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Export manifest */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExportManifest"];
                 };
             };
         };

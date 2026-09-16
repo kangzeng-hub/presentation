@@ -39,11 +39,16 @@ class WorkspaceBackendTests(unittest.TestCase):
         self.assertEqual(self.client.post("/projects/demo-project/competitor-research", json={"urls": ["https://example.com/a"]}, headers={"Idempotency-Key": "research-1"}).status_code, 202)
         self.assertEqual(self.client.post("/projects/demo-project/competitor-insight").status_code, 202)
         self.assertEqual(self.client.post("/projects/demo-project/strategy").status_code, 202)
+        self.assertEqual(self.client.post("/projects/demo-project/listing").status_code, 202)
         self.assertEqual(self.client.post("/projects/demo-project/images/plan").status_code, 202)
         self.assertEqual(self.client.post("/projects/demo-project/images/generate").status_code, 202)
         self.assertGreater(len(self.client.get("/projects/demo-project/qa").json()), 0)
         image_plan = self.service.repository.latest_artifact("demo-project", "image_plan")
         self.assertIn("product_truth", image_plan["input_refs_json"])
+        for artifact in self.service.repository.list_artifacts("demo-project"):
+            if artifact["artifact_type"] in {"product_truth", "strategy", "listing", "image_plan", "image_generation", "qa_report"}:
+                approved = self.client.post(f"/projects/demo-project/artifacts/{artifact['artifact_id']}/versions/{artifact['version']}/approval", json={"decision": "approved", "approved_by": "phase2-test"})
+                self.assertEqual(approved.status_code, 201)
         export = self.client.post("/projects/demo-project/export")
         self.assertEqual(export.status_code, 200)
         self.assertTrue(Path(export.json()["file_ref"]).is_file())

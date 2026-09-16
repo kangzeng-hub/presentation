@@ -5,8 +5,9 @@ from typing import Annotated
 from fastapi import APIRouter, Header, HTTPException, Response, status
 
 from backend.repositories.workspace import WorkspaceRepository
-from backend.schemas.workspace import Approval, ApprovalCreate, ArtifactVersion, CompetitorInsight, CompetitorSnapshot, CreateProject, ErrorResponse, ExportManifest, ImagePlanRef, Job, ListingPlan, PresentationStrategy, ProductTruth, Project, ProjectWorkspace, QAReport, ResearchRequest, VideoPlan, VideoPlanInput
+from backend.schemas.workspace import Approval, ApprovalCreate, ArtifactApprovalCreate, ArtifactVersion, CompetitorInsight, CompetitorSnapshot, CreateProject, ErrorResponse, ExportManifest, ImagePlanRef, Job, ListingPlan, PresentationStrategy, ProductTruth, Project, ProjectWorkspace, QAReport, ResearchRequest, VideoPlan, VideoPlanInput
 from backend.services.workspace import WorkspaceService
+from backend.services.delivery import DeliveryError
 
 
 def create_workspace_router(service: WorkspaceService | None = None) -> APIRouter:
@@ -173,10 +174,26 @@ def create_workspace_router(service: WorkspaceService | None = None) -> APIRoute
 
     @router.post("/projects/{project_id}/approvals", response_model=Approval, status_code=status.HTTP_201_CREATED)
     def create_approval(project_id: str, payload: ApprovalCreate) -> dict:
-        service.get_project(project_id)
-        if service.repository.get_artifact(payload.artifact_version_id) is None:
-            raise HTTPException(status_code=404, detail={"code": "RESOURCE_NOT_FOUND", "message": "Artifact version not found", "details": {}})
-        return service.repository.save_approval(project_id, payload.model_dump())
+        try:
+            service.get_project(project_id)
+            artifact = service.repository.get_artifact(payload.artifact_version_id)
+            if artifact is None or artifact["project_id"] != project_id:
+                raise HTTPException(status_code=404, detail={"code": "ARTIFACT_VERSION_NOT_FOUND", "message": "Artifact version not found", "details": {}})
+            return service.approve_artifact(project_id, artifact.get("artifact_id") or artifact["artifact_type"], artifact["version"], payload.status, payload.reviewer, payload.comment)
+        except KeyError as exc:
+            raise not_found(exc)
+        except DeliveryError as exc:
+            raise HTTPException(status_code=409, detail={"code": exc.code, "message": exc.message, "details": exc.details})
+
+    @router.post("/projects/{project_id}/artifacts/{artifact_id}/versions/{version}/approval", response_model=Approval, status_code=status.HTTP_201_CREATED)
+    def approve_exact_version(project_id: str, artifact_id: str, version: int, payload: ArtifactApprovalCreate) -> dict:
+        try:
+            service.get_project(project_id)
+            return service.approve_artifact(project_id, artifact_id, version, payload.decision, payload.approved_by, payload.comment)
+        except KeyError as exc:
+            raise not_found(exc)
+        except DeliveryError as exc:
+            raise HTTPException(status_code=404 if exc.code == "ARTIFACT_VERSION_NOT_FOUND" else 409, detail={"code": exc.code, "message": exc.message, "details": exc.details})
 
     @router.post("/projects/{project_id}/export", response_model=ExportManifest)
     def export_project(project_id: str) -> dict:
@@ -184,6 +201,12 @@ def create_workspace_router(service: WorkspaceService | None = None) -> APIRoute
             return service.export(project_id)
         except KeyError as exc:
             raise not_found(exc)
+        except DeliveryError as exc:
+            raise HTTPException(status_code=409, detail={"code": exc.code, "message": exc.message, "details": exc.details})
+
+    @router.post("/projects/{project_id}/exports", response_model=ExportManifest)
+    def create_export(project_id: str) -> dict:
+        return export_project(project_id)
 
     @router.get("/projects/{project_id}/exports", response_model=list[ExportManifest])
     def list_exports(project_id: str) -> list[dict]:

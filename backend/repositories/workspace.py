@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import os
 import sqlite3
 import uuid
@@ -53,11 +54,15 @@ class WorkspaceRepository:
                 CREATE TABLE IF NOT EXISTS artifact_versions (
                     artifact_version_id TEXT PRIMARY KEY,
                     project_id TEXT NOT NULL,
+                    artifact_id TEXT,
                     artifact_type TEXT NOT NULL,
                     version INTEGER NOT NULL,
                     input_refs_json TEXT NOT NULL,
                     payload_json TEXT NOT NULL,
-                    created_at TEXT NOT NULL
+                    created_at TEXT NOT NULL,
+                    checksum TEXT,
+                    source_ref TEXT,
+                    created_by TEXT
                 );
                 CREATE TABLE IF NOT EXISTS jobs (
                     job_id TEXT PRIMARY KEY,
@@ -79,12 +84,17 @@ class WorkspaceRepository:
                 CREATE TABLE IF NOT EXISTS approvals (
                     approval_id TEXT PRIMARY KEY,
                     project_id TEXT NOT NULL,
+                    artifact_id TEXT,
+                    artifact_version INTEGER,
                     artifact_version_id TEXT NOT NULL,
                     status TEXT NOT NULL,
                     reviewer TEXT NOT NULL,
                     comment TEXT NOT NULL,
                     created_at TEXT NOT NULL,
-                    updated_at TEXT NOT NULL
+                    updated_at TEXT NOT NULL,
+                    decision TEXT,
+                    approved_by TEXT,
+                    approved_at TEXT
                 );
                 CREATE TABLE IF NOT EXISTS exports (
                     export_id TEXT PRIMARY KEY,
@@ -100,6 +110,29 @@ class WorkspaceRepository:
                 CREATE INDEX IF NOT EXISTS idx_jobs_project ON jobs(project_id, created_at);
                 """
             )
+            self._ensure_column(db, "artifact_versions", "artifact_id", "TEXT")
+            self._ensure_column(db, "artifact_versions", "checksum", "TEXT")
+            self._ensure_column(db, "artifact_versions", "source_ref", "TEXT")
+            self._ensure_column(db, "artifact_versions", "created_by", "TEXT")
+            self._ensure_column(db, "approvals", "artifact_id", "TEXT")
+            self._ensure_column(db, "approvals", "artifact_version", "INTEGER")
+            self._ensure_column(db, "approvals", "decision", "TEXT")
+            self._ensure_column(db, "approvals", "approved_by", "TEXT")
+            self._ensure_column(db, "approvals", "approved_at", "TEXT")
+            db.execute("UPDATE artifact_versions SET artifact_id = artifact_type WHERE artifact_id IS NULL")
+            db.execute("""UPDATE approvals
+                         SET artifact_id = COALESCE(artifact_id, (SELECT artifact_type FROM artifact_versions WHERE artifact_versions.artifact_version_id = approvals.artifact_version_id)),
+                             artifact_version = COALESCE(artifact_version, (SELECT version FROM artifact_versions WHERE artifact_versions.artifact_version_id = approvals.artifact_version_id)),
+                             decision = COALESCE(decision, CASE WHEN status = 'approved' THEN 'approved' WHEN status = 'rejected' THEN 'rejected' ELSE 'pending' END),
+                             approved_by = COALESCE(approved_by, reviewer),
+                             approved_at = COALESCE(approved_at, CASE WHEN status = 'approved' THEN updated_at ELSE NULL END)
+                         WHERE artifact_id IS NULL OR artifact_version IS NULL OR decision IS NULL""")
+
+    @staticmethod
+    def _ensure_column(db: sqlite3.Connection, table: str, column: str, definition: str) -> None:
+        columns = {row[1] for row in db.execute(f"PRAGMA table_info({table})").fetchall()}
+        if column not in columns:
+            db.execute(f"ALTER TABLE {table} ADD COLUMN {column} {definition}")
 
     @staticmethod
     def _json(value: Any) -> str:
@@ -142,17 +175,24 @@ class WorkspaceRepository:
         with self._connection() as db:
             db.execute("UPDATE projects SET status = ?, current_stage = ?, updated_at = ? WHERE project_id = ?", (status or current["status"], stage or current["current_stage"], utc_now(), project_id))
 
-    def save_artifact(self, project_id: str, artifact_type: str, payload: dict[str, Any], input_refs: dict[str, Any] | None = None) -> dict[str, Any]:
+    def save_artifact(self, project_id: str, artifact_type: str, payload: Any, input_refs: dict[str, Any] | None = None, *, source_ref: str | None = None, created_by: str = "system") -> dict[str, Any]:
+        payload_bytes = self._json(payload).encode("utf-8")
+        checksum = hashlib.sha256(payload_bytes).hexdigest()
         with self._connection() as db:
             row = db.execute("SELECT COALESCE(MAX(version), 0) AS version FROM artifact_versions WHERE project_id = ? AND artifact_type = ?", (project_id, artifact_type)).fetchone()
             version = int(row["version"]) + 1
             artifact_id = f"{artifact_type}-v{version}-{uuid.uuid4().hex[:8]}"
-            db.execute("INSERT INTO artifact_versions VALUES (?, ?, ?, ?, ?, ?, ?)", (artifact_id, project_id, artifact_type, version, self._json(input_refs or {}), self._json(payload), utc_now()))
+            db.execute("INSERT INTO artifact_versions (artifact_version_id, project_id, artifact_id, artifact_type, version, input_refs_json, payload_json, created_at, checksum, source_ref, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (artifact_id, project_id, artifact_type, artifact_type, version, self._json(input_refs or {}), self._json(payload), utc_now(), checksum, source_ref, created_by))
         return self.get_artifact(artifact_id)  # type: ignore[return-value]
 
     def get_artifact(self, artifact_version_id: str) -> dict[str, Any] | None:
         with self._connection() as db:
             return self._decode(db.execute("SELECT * FROM artifact_versions WHERE artifact_version_id = ?", (artifact_version_id,)).fetchone(), ("input_refs_json", "payload_json"))
+
+    def get_artifact_version(self, project_id: str, artifact_id: str, version: int) -> dict[str, Any] | None:
+        with self._connection() as db:
+            row = db.execute("SELECT * FROM artifact_versions WHERE project_id = ? AND (artifact_id = ? OR artifact_type = ?) AND version = ?", (project_id, artifact_id, artifact_id, version)).fetchone()
+        return self._decode(row, ("input_refs_json", "payload_json"))
 
     def latest_artifact(self, project_id: str, artifact_type: str) -> dict[str, Any] | None:
         with self._connection() as db:
@@ -214,10 +254,20 @@ class WorkspaceRepository:
         return self.get_job(job_id)  # type: ignore[return-value]
 
     def save_approval(self, project_id: str, payload: dict[str, Any]) -> dict[str, Any]:
+        artifact = self.get_artifact(payload["artifact_version_id"])
+        if artifact is None or artifact["project_id"] != project_id:
+            raise KeyError("artifact_version")
+        artifact_id = payload.get("artifact_id") or artifact.get("artifact_id") or artifact["artifact_type"]
+        artifact_version = int(payload.get("artifact_version") or artifact["version"])
+        decision = payload.get("decision") or payload.get("status") or "pending"
+        if decision not in {"pending", "approved", "rejected"}:
+            raise ValueError("INVALID_APPROVAL_DECISION")
         timestamp = utc_now()
         approval_id = f"approval-{uuid.uuid4().hex}"
+        approved_at = timestamp if decision == "approved" else None
+        approved_by = payload.get("approved_by") or payload.get("reviewer") or ""
         with self._connection() as db:
-            db.execute("INSERT INTO approvals VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (approval_id, project_id, payload["artifact_version_id"], payload["status"], payload["reviewer"], payload.get("comment", ""), timestamp, timestamp))
+            db.execute("INSERT INTO approvals (approval_id, project_id, artifact_id, artifact_version, artifact_version_id, status, reviewer, comment, created_at, updated_at, decision, approved_by, approved_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (approval_id, project_id, artifact_id, artifact_version, artifact["artifact_version_id"], decision, approved_by, payload.get("comment", ""), timestamp, timestamp, decision, approved_by, approved_at))
         return self.get_approval(approval_id)  # type: ignore[return-value]
 
     def get_approval(self, approval_id: str) -> dict[str, Any] | None:
@@ -227,6 +277,15 @@ class WorkspaceRepository:
     def list_approvals(self, project_id: str) -> list[dict[str, Any]]:
         with self._connection() as db:
             return [dict(row) for row in db.execute("SELECT * FROM approvals WHERE project_id = ? ORDER BY created_at", (project_id,)).fetchall()]
+
+    def get_approval_for_version(self, project_id: str, artifact_id: str, version: int) -> dict[str, Any] | None:
+        with self._connection() as db:
+            row = db.execute("SELECT * FROM approvals WHERE project_id = ? AND artifact_id = ? AND artifact_version = ? ORDER BY created_at DESC LIMIT 1", (project_id, artifact_id, version)).fetchone()
+        return dict(row) if row else None
+
+    def is_artifact_version_approved(self, project_id: str, artifact_id: str, version: int) -> bool:
+        approval = self.get_approval_for_version(project_id, artifact_id, version)
+        return bool(approval and (approval.get("decision") or approval.get("status")) == "approved")
 
     def save_export(self, project_id: str, manifest: dict[str, Any], file_ref: str | None) -> dict[str, Any]:
         export_id = manifest["export_id"]

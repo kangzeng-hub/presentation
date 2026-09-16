@@ -1,0 +1,18 @@
+{
+  "product_id": "DEMO_DESK_ORGANIZER_BAMBOO",
+  "sku": "DEMO-DESK-ORGANIZER",
+  "product_name": "Demo Bamboo Desk Organizer Tray",
+  "category": "desk organization",
+  "material": {"base": "bamboo composite", "finish": "water-based matte finish"},
+  "dimensions": {"width": "28cm", "depth": "18cm", "height": "6cm"},
+  "variants": [{"variant_id": "BAMBOO-TRAY", "included_count": 1}],
+  "package_contents": ["main organizer tray", "removable divider set"],
+  "product_features": ["modular divider layout", "raised device slot", "smooth wipe-clean surface"],
+  "verified_claims": [
+    {"kind": "CLAIM", "text": "Bamboo composite organizer tray", "source": "examples/demo_desk_organizer/product.json"},
+    {"kind": "CLAIM", "text": "Removable divider set included", "source": "examples/demo_desk_organizer/product.json"}
+  ],
+  "product_images": ["examples/demo_desk_organizer/assets/product.svg"],
+  "source": ["public synthetic demo fixture"],
+  "version": 1
+}

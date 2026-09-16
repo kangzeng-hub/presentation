@@ -105,6 +105,15 @@ paths:
       operationId: createApproval
       requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/ApprovalCreate'}}}}
       responses: {'201': {description: Approval, content: {application/json: {schema: {$ref: '#/components/schemas/Approval'}}}}}
+  /projects/{project_id}/artifacts/{artifact_id}/versions/{version}/approval:
+    parameters:
+      - {$ref: '#/components/parameters/ProjectId'}
+      - {name: artifact_id, in: path, required: true, schema: {type: string}}
+      - {name: version, in: path, required: true, schema: {type: integer, minimum: 1}}
+    post:
+      operationId: approveArtifactVersion
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/ArtifactApprovalCreate'}}}}
+      responses: {'201': {description: Approval, content: {application/json: {schema: {$ref: '#/components/schemas/Approval'}}}}}
   /projects/{project_id}/export:
     parameters: [{$ref: '#/components/parameters/ProjectId'}]
     post:
@@ -115,6 +124,9 @@ paths:
     get:
       operationId: listExports
       responses: {'200': {description: Exports, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/ExportManifest'}}}}}}
+    post:
+      operationId: createExport
+      responses: {'200': {description: Export manifest, content: {application/json: {schema: {$ref: '#/components/schemas/ExportManifest'}}}}}
   /projects/{project_id}/exports/{export_id}:
     parameters:
       - {$ref: '#/components/parameters/ProjectId'}
@@ -161,7 +173,8 @@ components:
     VideoPlan: {allOf: [{$ref: '#/components/schemas/VideoPlanInput'}, {type: object, required: [project_id, strategy_version, status, version, strategy_refs], properties: {project_id: {type: string}, strategy_version: {type: integer}, status: {type: string, enum: [pending_review, approved, rejected, revision_required]}, version: {type: integer}, strategy_refs: {type: array, items: {type: string}}}}]}
     Job: {type: object, required: [job_id, project_id, type, status, attempt, created_at], properties: {job_id: {type: string}, project_id: {type: string}, type: {type: string}, status: {type: string, enum: [queued, running, completed, failed, cancelled]}, input_version: {type: object, additionalProperties: true}, idempotency_key: {type: [string, 'null']}, attempt: {type: integer}, created_at: {type: string, format: date-time}, started_at: {type: [string, 'null']}, completed_at: {type: [string, 'null']}, lease_expires_at: {type: [string, 'null']}, result_ref: {type: [string, 'null']}, error_code: {type: [string, 'null']}, error_message: {type: [string, 'null']}}}
     ApprovalCreate: {type: object, required: [artifact_version_id, status, reviewer], properties: {artifact_version_id: {type: string}, status: {type: string, enum: [pending, approved, rejected]}, reviewer: {type: string}, comment: {type: string}}}
-    Approval: {allOf: [{$ref: '#/components/schemas/ApprovalCreate'}, {type: object, required: [approval_id, project_id, created_at, updated_at], properties: {approval_id: {type: string}, project_id: {type: string}, created_at: {type: string, format: date-time}, updated_at: {type: string, format: date-time}}}]}
-    ArtifactVersion: {type: object, required: [artifact_version_id, project_id, artifact_type, version, input_refs_json, payload_json, created_at], properties: {artifact_version_id: {type: string}, project_id: {type: string}, artifact_type: {type: string}, version: {type: integer}, input_refs_json: {type: object, additionalProperties: true}, payload_json: {oneOf: [{type: object, additionalProperties: true}, {type: array, items: {}}]}, created_at: {type: string, format: date-time}}}
-    ExportManifest: {type: object, required: [export_id, project_id, status, source_versions, artifact_versions, generated_files, qa_reports, approval_state, created_at], properties: {export_id: {type: string}, project_id: {type: string}, status: {type: string, enum: [completed, failed]}, file_ref: {type: [string, 'null']}, source_versions: {type: object, additionalProperties: true}, artifact_versions: {type: array, items: {$ref: '#/components/schemas/ArtifactVersion'}}, generated_files: {type: array, items: {type: string}}, qa_reports: {type: array, items: {type: string}}, approval_state: {type: array, items: {$ref: '#/components/schemas/Approval'}}, created_at: {type: string, format: date-time}, completed_at: {type: [string, 'null']}}}
+    ArtifactApprovalCreate: {type: object, required: [decision, approved_by], properties: {decision: {type: string, enum: [approved, rejected]}, approved_by: {type: string}, comment: {type: string}}}
+    Approval: {allOf: [{$ref: '#/components/schemas/ApprovalCreate'}, {type: object, required: [approval_id, project_id, created_at, updated_at], properties: {approval_id: {type: string}, project_id: {type: string}, artifact_id: {type: [string, 'null']}, artifact_version: {type: [integer, 'null']}, decision: {type: [string, 'null'], enum: [pending, approved, rejected, null]}, approved_by: {type: [string, 'null']}, approved_at: {type: [string, 'null'], format: date-time}, created_at: {type: string, format: date-time}, updated_at: {type: string, format: date-time}}}]}
+    ArtifactVersion: {type: object, required: [artifact_version_id, project_id, artifact_type, version, input_refs_json, payload_json, created_at], properties: {artifact_version_id: {type: string}, project_id: {type: string}, artifact_id: {type: [string, 'null']}, artifact_type: {type: string}, version: {type: integer}, input_refs_json: {type: object, additionalProperties: true}, payload_json: {oneOf: [{type: object, additionalProperties: true}, {type: array, items: {}}]}, created_at: {type: string, format: date-time}, checksum: {type: [string, 'null']}, source_ref: {type: [string, 'null']}, created_by: {type: [string, 'null']}}}
+    ExportManifest: {type: object, required: [export_id, project_id, status, source_versions, artifact_versions, generated_files, qa_reports, approval_state, created_at, project, artifacts, approvals, sources, files, system_version], properties: {export_id: {type: string}, project_id: {type: string}, status: {type: string, enum: [pending, completed, failed]}, file_ref: {type: [string, 'null']}, project: {type: object, additionalProperties: true}, artifacts: {type: array, items: {type: object, additionalProperties: true}}, approvals: {type: array, items: {$ref: '#/components/schemas/Approval'}}, sources: {type: array, items: {}}, files: {type: array, items: {type: object, additionalProperties: true}}, system_version: {type: string}, source_versions: {type: object, additionalProperties: true}, artifact_versions: {type: array, items: {$ref: '#/components/schemas/ArtifactVersion'}}, generated_files: {type: array, items: {type: string}}, qa_reports: {type: array, items: {type: string}}, approval_state: {type: array, items: {$ref: '#/components/schemas/Approval'}}, created_at: {type: string, format: date-time}, exported_at: {type: [string, 'null'], format: date-time}, completed_at: {type: [string, 'null'], format: date-time}}}
     ErrorResponse: {type: object, required: [error], properties: {error: {type: object, required: [code, message, details], properties: {code: {type: string}, message: {type: string}, details: {type: object, additionalProperties: true}}}}}

@@ -25,7 +25,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                project_id: string;
+                project_id: components["parameters"]["ProjectId"];
             };
             cookie?: never;
         };
@@ -42,7 +42,9 @@ export interface paths {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         get: operations["getProductTruth"];
@@ -58,7 +60,9 @@ export interface paths {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         get: operations["listCompetitors"];
@@ -74,7 +78,9 @@ export interface paths {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         get?: never;
@@ -90,7 +96,9 @@ export interface paths {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         get: operations["getCompetitorInsight"];
@@ -106,7 +114,9 @@ export interface paths {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         get: operations["getStrategy"];
@@ -122,7 +132,9 @@ export interface paths {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         get: operations["getListing"];
@@ -138,7 +150,9 @@ export interface paths {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         get: operations["listImages"];
@@ -154,7 +168,9 @@ export interface paths {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         get?: never;
@@ -170,7 +186,9 @@ export interface paths {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         get?: never;
@@ -182,11 +200,31 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/projects/{project_id}/qa": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
+            cookie?: never;
+        };
+        get: operations["getQA"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/projects/{project_id}/video": {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         get: operations["getVideoPlan"];
@@ -202,7 +240,9 @@ export interface paths {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         get?: never;
@@ -214,14 +254,137 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/projects/{project_id}/approvals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
+            cookie?: never;
+        };
+        get: operations["listApprovals"];
+        put?: never;
+        post: operations["createApproval"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["exportProject"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/exports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
+            cookie?: never;
+        };
+        get: operations["listExports"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/projects/{project_id}/exports/{export_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+                export_id: string;
+            };
+            cookie?: never;
+        };
+        get: operations["getExport"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/jobs/{job_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        get: operations["getJob"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/jobs/{job_id}/retry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["retryJob"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/jobs/{job_id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["cancelJob"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** @enum {string} */
-        AsyncStatus: "queued" | "running" | "completed" | "failed" | "cancelled";
-        /** @enum {string} */
-        HumanStatus: "pending_review" | "approved" | "rejected" | "revision_required";
         CreateProject: {
             sku: string;
             project_name: string;
@@ -230,50 +393,82 @@ export interface components {
             project_id: string;
             sku: string;
             project_name: string;
-            overall_status: components["schemas"]["AsyncStatus"];
+            /** @enum {string} */
+            overall_status: "queued" | "running" | "completed" | "failed" | "cancelled";
             current_stage: string;
             /** Format: date-time */
             created_at: string;
+            /** Format: date-time */
+            updated_at?: string | null;
         };
         ProjectWorkspace: components["schemas"]["Project"] & {
             product_truth?: components["schemas"]["ProductTruth"];
+            competitors?: components["schemas"]["CompetitorSnapshot"][];
+            research?: components["schemas"]["Job"];
             competitor_insight?: components["schemas"]["CompetitorInsight"];
             strategy?: components["schemas"]["PresentationStrategy"];
+            listing?: components["schemas"]["ListingPlan"];
+            image_plan?: components["schemas"]["ImagePlanRef"];
+            image_generation?: components["schemas"]["Job"];
+            qa?: components["schemas"]["QAReport"][];
+            video?: components["schemas"]["VideoPlan"];
+            approvals?: components["schemas"]["Approval"][];
+            active_jobs?: components["schemas"]["Job"][];
         };
         ProductTruth: {
             project_id: string;
             sku: string;
             product_name: string;
             category: string;
-            material: Record<string, never>;
-            dimensions: Record<string, never>;
-            variants: Record<string, never>[];
+            material: {
+                [key: string]: unknown;
+            };
+            dimensions: {
+                [key: string]: unknown;
+            };
+            variants?: {
+                [key: string]: unknown;
+            }[];
             package_contents: string[];
             product_features: string[];
-            verified_claims: Record<string, never>[];
+            verified_claims: {
+                [key: string]: unknown;
+            }[];
             product_images: string[];
             source: string[];
             version: number;
+        } & {
+            [key: string]: unknown;
+        };
+        ResearchRequest: {
+            urls: string[];
         };
         CompetitorSnapshot: {
             competitor_id: string;
-            /** Format: uri */
             url: string;
-            asin?: string | null;
             title?: string | null;
             bullet_points?: string[];
             description?: string | null;
             rating?: number | null;
             price?: number | null;
-            reviews?: Record<string, never>[];
-            negative_reviews?: Record<string, never>[];
-            neutral_reviews?: Record<string, never>[];
-            positive_reviews?: Record<string, never>[];
+            reviews?: {
+                [key: string]: unknown;
+            }[];
+            negative_reviews?: {
+                [key: string]: unknown;
+            }[];
+            neutral_reviews?: {
+                [key: string]: unknown;
+            }[];
+            positive_reviews?: {
+                [key: string]: unknown;
+            }[];
             images?: string[];
-            crawl_status: components["schemas"]["AsyncStatus"];
-            /** Format: date-time */
-            crawled_at?: string | null;
-            raw_source?: unknown;
+            crawl_status: string;
+            captured_at?: string | null;
+            raw_source?: {
+                [key: string]: unknown;
+            };
         };
         EvidenceRef: {
             snapshot_id: string;
@@ -301,10 +496,18 @@ export interface components {
             product_claims: string[];
             proof_points: string[];
             priority_order: string[];
-            listing_mapping: Record<string, never>;
-            image_mapping: Record<string, never>;
-            video_mapping: Record<string, never>;
+            listing_mapping: {
+                [key: string]: unknown;
+            };
+            image_mapping: {
+                [key: string]: unknown;
+            };
+            video_mapping: {
+                [key: string]: unknown;
+            };
             version: number;
+            product_truth_version?: number;
+            competitor_insight_version?: number;
         };
         ListingPlan: {
             project_id: string;
@@ -317,30 +520,35 @@ export interface components {
             claims_used: string[];
             strategy_refs: string[];
             version: number;
-            generated_content: Record<string, never>;
-            edited_content?: Record<string, never> | null;
-            approved_content?: Record<string, never> | null;
-            status: components["schemas"]["HumanStatus"];
+            generated_content?: {
+                [key: string]: unknown;
+            };
+            edited_content?: {
+                [key: string]: unknown;
+            } | null;
+            approved_content?: {
+                [key: string]: unknown;
+            } | null;
+            /** @enum {string} */
+            status: "pending_review" | "approved" | "rejected" | "revision_required";
         };
         ImagePlanRef: {
             project_id: string;
             strategy_version: number;
-            /** @description Existing six-image ImagePlan; validated by image_planning.models */
-            image_plan: Record<string, never>;
-        };
-        GenerateRequest: {
-            strategy_version?: number;
-        };
-        AsyncJob: {
-            job_id: string;
-            status: components["schemas"]["AsyncStatus"];
             version?: number;
+            image_plan: {
+                [key: string]: unknown;
+            };
         };
-        ResearchRequest: {
-            urls: string[];
-        };
-        ResearchJob: components["schemas"]["AsyncJob"] & {
-            competitor_ids?: string[];
+        QAReport: {
+            qa_version: string;
+            generation_id?: string | null;
+            image_id: string;
+            product_id?: string | null;
+            overall_status: string;
+            details?: {
+                [key: string]: unknown;
+            };
         };
         VideoPlanInput: {
             video_goal: string;
@@ -348,7 +556,9 @@ export interface components {
             duration: number;
             hook: string;
             selling_points: string[];
-            scene_plan: Record<string, never>[];
+            scene_plan: {
+                [key: string]: unknown;
+            }[];
             visual_direction: string;
             narration: string;
             on_screen_text: string[];
@@ -357,31 +567,89 @@ export interface components {
         VideoPlan: components["schemas"]["VideoPlanInput"] & {
             project_id: string;
             strategy_version: number;
-            status: components["schemas"]["HumanStatus"];
+            /** @enum {string} */
+            status: "pending_review" | "approved" | "rejected" | "revision_required";
             version: number;
             strategy_refs: string[];
-            listing_version?: number | null;
-            image_plan_version?: number | null;
+        };
+        Job: {
+            job_id: string;
+            project_id: string;
+            type: string;
+            /** @enum {string} */
+            status: "queued" | "running" | "completed" | "failed" | "cancelled";
+            input_version?: {
+                [key: string]: unknown;
+            };
+            idempotency_key?: string | null;
+            attempt: number;
+            /** Format: date-time */
+            created_at: string;
+            started_at?: string | null;
+            completed_at?: string | null;
+            lease_expires_at?: string | null;
+            result_ref?: string | null;
+            error_code?: string | null;
+            error_message?: string | null;
+        };
+        ApprovalCreate: {
+            artifact_version_id: string;
+            /** @enum {string} */
+            status: "pending" | "approved" | "rejected";
+            reviewer: string;
+            comment?: string;
+        };
+        Approval: components["schemas"]["ApprovalCreate"] & {
+            approval_id: string;
+            project_id: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+        };
+        ArtifactVersion: {
+            artifact_version_id: string;
+            project_id: string;
+            artifact_type: string;
+            version: number;
+            input_refs_json: {
+                [key: string]: unknown;
+            };
+            payload_json: {
+                [key: string]: unknown;
+            } | unknown[];
+            /** Format: date-time */
+            created_at: string;
+        };
+        ExportManifest: {
+            export_id: string;
+            project_id: string;
+            /** @enum {string} */
+            status: "completed" | "failed";
+            file_ref?: string | null;
+            source_versions: {
+                [key: string]: unknown;
+            };
+            artifact_versions: components["schemas"]["ArtifactVersion"][];
+            generated_files: string[];
+            qa_reports: string[];
+            approval_state: components["schemas"]["Approval"][];
+            /** Format: date-time */
+            created_at: string;
+            completed_at?: string | null;
         };
         ErrorResponse: {
             error: {
                 code: string;
                 message: string;
-                details: Record<string, never>;
+                details: {
+                    [key: string]: unknown;
+                };
             };
         };
     };
     responses: {
-        /** @description Validation error */
-        BadRequest: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["ErrorResponse"];
-            };
-        };
-        /** @description Not found */
+        /** @description Resource not found */
         NotFound: {
             headers: {
                 [name: string]: unknown;
@@ -390,8 +658,20 @@ export interface components {
                 "application/json": components["schemas"]["ErrorResponse"];
             };
         };
+        /** @description Job not found */
+        JobNotFound: {
+            headers: {
+                [name: string]: unknown;
+            };
+            content: {
+                "application/json": components["schemas"]["ErrorResponse"];
+            };
+        };
     };
-    parameters: never;
+    parameters: {
+        ProjectId: string;
+        IdempotencyKey: string;
+    };
     requestBodies: never;
     headers: never;
     pathItems: never;
@@ -440,7 +720,6 @@ export interface operations {
                     "application/json": components["schemas"]["Project"];
                 };
             };
-            400: components["responses"]["BadRequest"];
         };
     };
     getProject: {
@@ -448,13 +727,13 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                project_id: string;
+                project_id: components["parameters"]["ProjectId"];
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Project */
+            /** @description Project workspace */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -470,12 +749,14 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description ProductTruth */
+            /** @description Product truth */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -490,7 +771,9 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody: {
@@ -499,7 +782,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Updated */
+            /** @description Updated product truth */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -508,14 +791,15 @@ export interface operations {
                     "application/json": components["schemas"]["ProductTruth"];
                 };
             };
-            400: components["responses"]["BadRequest"];
         };
     };
     listCompetitors: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -534,8 +818,12 @@ export interface operations {
     startCompetitorResearch: {
         parameters: {
             query?: never;
-            header?: never;
-            path?: never;
+            header?: {
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody: {
@@ -544,23 +832,24 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Generated insight */
+            /** @description Research job */
             202: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CompetitorInsight"];
+                    "application/json": components["schemas"]["Job"];
                 };
             };
-            400: components["responses"]["BadRequest"];
         };
     };
     getCompetitorInsight: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -580,18 +869,20 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Queued */
+            /** @description Insight */
             202: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["ResearchJob"];
+                    "application/json": components["schemas"]["CompetitorInsight"];
                 };
             };
         };
@@ -600,7 +891,9 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -620,12 +913,14 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Queued */
+            /** @description Strategy */
             202: {
                 headers: {
                     [name: string]: unknown;
@@ -640,7 +935,9 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -660,16 +957,14 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["GenerateRequest"];
-            };
-        };
+        requestBody?: never;
         responses: {
-            /** @description Queued */
+            /** @description Listing */
             202: {
                 headers: {
                     [name: string]: unknown;
@@ -684,12 +979,14 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Images */
+            /** @description Image plan */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -704,12 +1001,14 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Queued */
+            /** @description Image plan */
             202: {
                 headers: {
                     [name: string]: unknown;
@@ -723,23 +1022,45 @@ export interface operations {
     generateImages: {
         parameters: {
             query?: never;
-            header?: never;
-            path?: never;
+            header?: {
+                "Idempotency-Key"?: components["parameters"]["IdempotencyKey"];
+            };
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["GenerateRequest"];
-            };
-        };
+        requestBody?: never;
         responses: {
-            /** @description Queued */
+            /** @description Image generation job */
             202: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["AsyncJob"];
+                    "application/json": components["schemas"]["Job"];
+                };
+            };
+        };
+    };
+    getQA: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description QA reports */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["QAReport"][];
                 };
             };
         };
@@ -748,7 +1069,9 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -768,7 +1091,9 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
             cookie?: never;
         };
         requestBody: {
@@ -777,7 +1102,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Created */
+            /** @description Video plan */
             201: {
                 headers: {
                     [name: string]: unknown;
@@ -786,7 +1111,188 @@ export interface operations {
                     "application/json": components["schemas"]["VideoPlan"];
                 };
             };
-            400: components["responses"]["BadRequest"];
+        };
+    };
+    listApprovals: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Approvals */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Approval"][];
+                };
+            };
+        };
+    };
+    createApproval: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApprovalCreate"];
+            };
+        };
+        responses: {
+            /** @description Approval */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Approval"];
+                };
+            };
+        };
+    };
+    exportProject: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Export manifest */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExportManifest"];
+                };
+            };
+        };
+    };
+    listExports: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Exports */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExportManifest"][];
+                };
+            };
+        };
+    };
+    getExport: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+                export_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Export manifest */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExportManifest"];
+                };
+            };
+        };
+    };
+    getJob: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Job */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Job"];
+                };
+            };
+            404: components["responses"]["JobNotFound"];
+        };
+    };
+    retryJob: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Retried job */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Job"];
+                };
+            };
+        };
+    };
+    cancelJob: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Cancelled job */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Job"];
+                };
+            };
         };
     };
 }

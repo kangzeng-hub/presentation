@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 FRONTEND_URL="${FRONTEND_URL:-http://localhost:3000}"
-BACKEND_URL="${BACKEND_URL:-http://localhost:4010}"
+BACKEND_URL="${BACKEND_URL:-http://localhost:8000}"
 printf '========================================\nPresentation System Smoke Test\n========================================\n'
 if curl --fail --silent --show-error "$FRONTEND_URL" >/dev/null; then
   echo "✓ Frontend reachable"

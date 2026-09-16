@@ -17,9 +17,9 @@ services:
     build:
       context: ./frontend
       args:
-        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:4010}
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8000}
     depends_on:
-      demo-backend:
+      python-api:
         condition: service_healthy
     ports:
       - "3000:3000"

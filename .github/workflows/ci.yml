@@ -25,6 +25,8 @@ jobs:
         run: npm --prefix frontend ci
       - name: Frontend production build
         run: npm --prefix frontend run build
+      - name: OpenAPI contract and generated client
+        run: ./scripts/check_api_contract.sh
       - name: Secret scan
         run: ./scripts/secret_scan.sh
       - name: Validate Compose configuration

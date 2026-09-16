@@ -8,6 +8,7 @@ if [[ -f .env ]]; then echo "✓ .env exists locally (must stay gitignored)"; el
 "$ROOT/scripts/secret_scan.sh" || fail=1
 [[ -f .gitignore && -f .dockerignore && -f .env.example ]] && echo "✓ Git/Docker boundary and env template" || fail=1
 "$ROOT/scripts/test.sh" || fail=1
+"$ROOT/scripts/check_api_contract.sh" || fail=1
 if command -v docker >/dev/null 2>&1 && docker compose version >/dev/null 2>&1; then
   docker compose config -q || fail=1
 else

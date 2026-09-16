@@ -4,14 +4,13 @@ Build both the six-image plan and resolved template records from the repository 
 
 ```bash
 python3 -m image_planning image-plan \
-  --catalog data/first_party_catalog.json \
-  --competitor-analysis docs/competitor-visual-analysis.md \
+  --catalog examples/demo_sku/catalog.json \
+  --competitor-analysis examples/demo_sku/competitor-analysis.md \
   --registry templates/registry.json \
-  --output image_plan.json \
-  --resolved-output resolved_templates.json
+  --output output/image_plan.json \
+  --resolved-output output/resolved_templates.json
 ```
 
-`image_plan.json` is the strategy-facing artifact. Every item contains a decision question, customer need, strategy reason, catalog-backed facts, catalog claim IDs, visual evidence, structured competitor gap, selected template, and forbidden elements.
+The checked-in public demo plan is `examples/demo_sku/generated-fixtures/image_plan.json` and the command output above is a local runtime artifact. Every item contains a decision question, customer need, strategy reason, catalog-backed facts, catalog claim IDs, visual evidence, structured competitor gap, selected template, and forbidden elements.
 
-`resolved_templates.json` is the visual-structure artifact. It contains the registry-derived canvas, composition, hierarchy, required elements, allowed style elements, and forbidden elements. It is not a Wan prompt.
-
+`examples/demo_sku/generated-fixtures/resolved_templates.json` is the checked-in visual-structure artifact. It contains the registry-derived canvas, composition, hierarchy, required elements, allowed style elements, and forbidden elements. It is not a Wan prompt.

@@ -18,7 +18,7 @@ export OPENAI_BASE_URL='https://sub2api.simplaj.top'
 
 ```bash
 python -m image_generation.cli generate \
-  --requests generation_requests.json \
+  --requests examples/demo_sku/generated-fixtures/generation_requests.json \
   --policy config/openai_gpt_image_v2.json \
   --output-dir output/gpt_image_2
 ```
@@ -27,7 +27,7 @@ python -m image_generation.cli generate \
 
 ```bash
 python -m image_generation.cli generate \
-  --requests generation_requests.json \
+  --requests examples/demo_sku/generated-fixtures/generation_requests.json \
   --policy config/openai_gpt_image_v2.json \
   --image-id image_01 --dry-run
 ```

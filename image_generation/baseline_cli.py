@@ -18,7 +18,7 @@ from .models import ModelExecutionPolicy
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Execute the fixed GPT Image 2 baseline experiment.")
-    parser.add_argument("--requests", default="generation_requests.json")
+    parser.add_argument("--requests", default="examples/demo_sku/generated-fixtures/generation_requests.json")
     parser.add_argument("--output-dir", default="output/gpt_image_2_baseline")
     parser.add_argument("--policy", default="config/openai_gpt_image_v2.json")
     args = parser.parse_args(argv)

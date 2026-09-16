@@ -6,6 +6,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const contractPath = process.env.CONTRACT_PATH || resolve(here, "../contracts/openapi.yaml");
 const contract = readFileSync(contractPath, "utf8");
 if (!contract.startsWith("openapi: 3.1.0")) throw Error("contract missing");
+const demoProduct = JSON.parse(readFileSync(resolve(here, "../examples/demo_sku/product.json"), "utf8"));
 const projects = new Map();
 const now = () => new Date().toISOString();
 const advance = (project, stage) => {
@@ -23,7 +24,7 @@ const seed = (id, sku, name) => {
     product_truth: {
       project_id: id,
       sku,
-      product_name: "ASTM F136 Titanium Hinged Septum Ring 3PCS",
+      product_name: demoProduct.product_name,
       category: "piercing jewelry",
       material: { base: "ASTM F136 titanium" },
       dimensions: { gauges: ["18G", "20G"] },
@@ -37,8 +38,8 @@ const seed = (id, sku, name) => {
           source: "catalog",
         },
       ],
-      product_images: ["examples/demo_sku/product.svg"],
-      source: ["catalog"],
+      product_images: demoProduct.product_images,
+      source: ["examples/demo_sku/product.json"],
       version: 1,
     },
   };
@@ -47,8 +48,8 @@ const seed = (id, sku, name) => {
 };
 seed(
   "demo-project",
-  "G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS",
-  "Gold 3PCS Presentation",
+  demoProduct.sku,
+  "Synthetic Demo Presentation",
 );
 const send = (r, s, b) => {
   r.writeHead(s, {
@@ -219,7 +220,7 @@ const server = createServer(async (req, res) => {
         insight_version: p.competitor_insight?.version || 1,
         strategy_version: p.strategy.version,
         title:
-          "G23Studio ASTM F136 Titanium Hinged Septum Ring 3PCS, 18K Gold PVD Septum Hoop Set, 18G/20G 8mm Multi-Style Nose Rings",
+          "Demo Studio ASTM F136 Titanium Hinged Ring 3PCS, 18K Gold PVD Set, 18G/20G 8mm Multi-Style Rings",
         bullet_points: [
           "MATERIAL SAFETY: Made with ASTM F136 implant-grade titanium, finished with 18K Gold PVD; nickel-free and lead-free material details are clearly stated for shoppers who prioritize skin comfort.",
           "3PCS MULTI-STYLE SET: Includes one classic hoop, one double-layer hoop, and one CZ accent hoop so you can switch your look without buying separate pieces.",
@@ -228,7 +229,7 @@ const server = createServer(async (req, res) => {
           "ONE SET, MORE WAYS TO WEAR: A compact Gold-3PCS collection designed for everyday styling, gifting, and easy rotation between minimalist, layered, and CZ-accent looks.",
         ],
         product_description:
-          "Build a confident everyday look with the G23Studio Gold-3PCS hinged ring set. This three-piece collection includes a classic hoop, double-layer hoop, and CZ accent hoop in an 18K Gold PVD finish over ASTM F136 implant-grade titanium. The hinged segmented construction uses a flush seam and press-to-close clasp for a clear, easy-to-understand closure design. With 18G and 20G options and an 8mm inner diameter, the set helps shoppers compare fit before purchase. Wear the styles across approved placements such as septum, nostril, helix, tragus, conch, daith, rook, or lip. The package includes exactly three rings.",
+          "Explore the synthetic Demo Studio Gold-3PCS hinged ring set. This three-piece collection includes a classic hoop, double-layer hoop, and CZ accent hoop in an 18K Gold PVD finish over ASTM F136 implant-grade titanium. The hinged segmented construction uses a flush seam and press-to-close clasp for a clear closure design. With 18G and 20G options and an 8mm inner diameter, the set supports a clear fit comparison. The package includes exactly three rings.",
         claims_used: ["claim_f136_titanium"],
         strategy_refs: [`strategy:v${p.strategy.version}`],
         version: (p.listing?.version || 0) + 1,

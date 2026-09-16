@@ -1,6 +1,6 @@
 {
   "plan_version": "1.0.0",
-  "product_id": "G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS",
+  "product_id": "DEMO_ASTMF136_HINGED_RING_3PCS",
   "strategy_summary": "以 P0 识别/内容/规格为购买证明基础，再用 P1 材质、结构和风格解决信任与选择；P2 lifestyle 暂不进入首版六张。",
   "images": [
     {
@@ -11,13 +11,13 @@
       "customer_need": "Keep the main product presentation while fixing language.",
       "strategy_reason": "Human optimization specification",
       "required_product_facts": [
-        "ASTM F136 钛合金铰链鼻中隔环鼻圈 3 件套",
+        "Demo ASTM F136 Titanium Hinged Ring 3PCS",
         "Gold-3PCS",
         "3PCS",
         "classic hoop",
         "double-layer hoop",
         "CZ accent hoop",
-        "钛基底 + 18K 金 PVD 镀层"
+        "titanium base + 18K Gold PVD finish"
       ],
       "required_claims": [],
       "required_visual_evidence": [
@@ -423,9 +423,9 @@
       "customer_need": "Preserve material and craft evidence while translating copy.",
       "strategy_reason": "Human optimization specification",
       "required_product_facts": [
-        "ASTM F136 植入级钛",
-        "钛基底 + 18K 金 PVD 镀层",
-        "AAAAA 立方氧化锆"
+        "ASTM F136 implant-grade titanium",
+        "titanium base + 18K Gold PVD finish",
+        "AAAAA cubic zirconia"
       ],
       "required_claims": [
         "claim_f136_titanium",
@@ -725,7 +725,7 @@
       "customer_need": "Show a clear hand-operated opening, insertion, and closing sequence.",
       "strategy_reason": "Human optimization specification",
       "required_product_facts": [
-        "铰链分段环，平接缝，按压卡扣闭合"
+        "hinged segmented ring, flush seam, press-to-close clasp"
       ],
       "required_claims": [
         "claim_click_top"

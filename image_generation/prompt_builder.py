@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .models import GenerationRequest, GenerationRequestBatch, ReferenceAsset, ReferenceBinding
+from .models import GenerationRequest, GenerationRequestBatch, LegacyReferenceAsset, ReferenceBinding
 from .validator import validate_generation_requests
 from image_planning.optimization_validator import validate_optimization_contract
 
@@ -73,8 +73,8 @@ def _assets_for_item(item: Any, assets: dict[str, dict[str, Any]]) -> list[dict[
     return result
 
 
-def _reference_asset(asset: dict[str, Any], is_product: bool = True) -> ReferenceAsset:
-    return ReferenceAsset(asset_id=asset["asset_id"], path=asset["path"], role="product_identity_reference" if is_product else "visual_reference", approved_uses=asset["approved_uses"])
+def _reference_asset(asset: dict[str, Any], is_product: bool = True) -> LegacyReferenceAsset:
+    return LegacyReferenceAsset(asset_id=asset["asset_id"], path=asset["path"], role="product_identity_reference" if is_product else "visual_reference", approved_uses=asset["approved_uses"])
 
 
 def _compose_prompt(item: Any, resolved: Any, catalog: dict[str, Any], claim_records: list[dict[str, Any]], reference_assets: list[ReferenceAsset], limitations: list[str], role_spec: dict[str, Any] | None = None) -> str:

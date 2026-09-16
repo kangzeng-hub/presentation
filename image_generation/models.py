@@ -249,7 +249,7 @@ if PYDANTIC_AVAILABLE:
         thinking_mode: bool = False
         reference_strategy: str = "canonical_first"
         retry: RetryPolicy = Field(default_factory=RetryPolicy)
-        timeout_seconds: int = Field(default=120, ge=1)
+        timeout_seconds: float = Field(default=120, ge=0)
         poll_interval_seconds: float = Field(default=3, ge=0)
         seed: int | None = None
         experimental_hints: dict[str, Any] = Field(default_factory=dict)
@@ -366,7 +366,7 @@ else:
         thinking_mode: bool = False
         reference_strategy: str = "canonical_first"
         retry: RetryPolicy = None
-        timeout_seconds: int = 120
+        timeout_seconds: float = 120
         poll_interval_seconds: float = 3
         seed: int | None = None
         experimental_hints: dict[str, Any] = None

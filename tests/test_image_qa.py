@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class QATests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.batch = _load_generation_batch(json.loads((ROOT / "generation_requests.json").read_text(encoding="utf-8")))
+        cls.batch = _load_generation_batch(json.loads((ROOT / "examples/demo_sku/generated-fixtures/generation_requests.json").read_text(encoding="utf-8")))
 
     def result(self, request, path="/tmp/image.png", status="succeeded"):
         return GenerationResult(generation_id=request.generation_id, image_id=request.image_id, provider="aliyun_dashscope", model="wan2.7-image-pro", status=status, output_assets=[OutputAsset(path=path, sha256="x")] if status == "succeeded" else [], request_id="r", latency_ms=1, attempt=1, policy_id="wan-listing-v1")

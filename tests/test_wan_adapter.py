@@ -38,7 +38,7 @@ class FakeHTTP:
 class WanAdapterTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.batch = _load_generation_batch(json.loads((ROOT / "generation_requests.json").read_text(encoding="utf-8")))
+        cls.batch = _load_generation_batch(json.loads((ROOT / "examples/demo_sku/generated-fixtures/generation_requests.json").read_text(encoding="utf-8")))
         cls.policy = ModelExecutionPolicy(policy_id="wan-listing-v1", model_id="wan2.7-image-pro")
 
     def test_payload_mapping_and_no_negative_prompt(self):

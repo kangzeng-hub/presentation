@@ -14,7 +14,7 @@ from .adapters import (
     WanAdapter,
     WanConfigurationError,
 )
-from .models import GenerationRequest, GenerationRequestBatch, ModelExecutionPolicy, ReferenceAsset
+from .models import GenerationRequest, GenerationRequestBatch, LegacyReferenceAsset, ModelExecutionPolicy
 from .prompt_builder import build_generation_requests
 
 
@@ -22,13 +22,13 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Compile ImagePlan and execute image generation.")
     sub = parser.add_subparsers(dest="command", required=True)
     command = sub.add_parser("prompt-build")
-    command.add_argument("--image-plan", default="image_plan.json")
-    command.add_argument("--resolved-templates", default="resolved_templates.json")
-    command.add_argument("--catalog", default="data/first_party_catalog.json")
+    command.add_argument("--image-plan", default="examples/demo_sku/generated-fixtures/image_plan.json")
+    command.add_argument("--resolved-templates", default="examples/demo_sku/generated-fixtures/resolved_templates.json")
+    command.add_argument("--catalog", default="examples/demo_sku/catalog.json")
     command.add_argument("--registry", default="templates/registry.json")
-    command.add_argument("--output", default="generation_requests.json")
+    command.add_argument("--output", default="output/generation_requests.json")
     generate = sub.add_parser("generate", help="Execute GenerationRequests with an image provider")
-    generate.add_argument("--requests", default="generation_requests.json")
+    generate.add_argument("--requests", default="examples/demo_sku/generated-fixtures/generation_requests.json")
     generate.add_argument("--output-dir", default="output/gpt_image_2")
     generate.add_argument("--policy", default="config/openai_gpt_image_v2.json")
     generate.add_argument("--provider", choices=("auto", "openai", "wan"), default="auto")
@@ -44,6 +44,7 @@ def main(argv: list[str] | None = None) -> int:
     catalog = json.loads(Path(args.catalog).read_text(encoding="utf-8"))
     registry = json.loads(Path(args.registry).read_text(encoding="utf-8"))
     output = build_generation_requests(plan, resolved, catalog, registry)
+    Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     Path(args.output).write_text(json.dumps(output.model_dump(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"wrote {args.output}")
     return 0
@@ -90,7 +91,7 @@ def _replace_references_with_prior_outputs(batch, source_dir: Path):
         path = source_dir / f"{item.image_id}.png"
         if not path.is_file():
             raise SystemExit(f"missing prior output for {item.image_id}: {path}")
-        item.reference_assets = [ReferenceAsset(
+        item.reference_assets = [LegacyReferenceAsset(
             asset_id=f"prior_{item.image_id}",
             path=str(path),
             role="prior_wan_output_reference",
@@ -101,7 +102,7 @@ def _replace_references_with_prior_outputs(batch, source_dir: Path):
 def _load_generation_batch(data):
     requests = []
     for item in data["requests"]:
-        refs = [ReferenceAsset(**ref) for ref in item.get("reference_assets", [])]
+        refs = [LegacyReferenceAsset(**ref) for ref in item.get("reference_assets", [])]
         item = {**item, "reference_assets": refs}
         requests.append(GenerationRequest(**item))
     return GenerationRequestBatch(generation_version=data["generation_version"], product_id=data["product_id"], requests=requests)

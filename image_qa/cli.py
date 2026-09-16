@@ -20,7 +20,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description="Evaluate generated images against GenerationRequests.")
     sub = parser.add_subparsers(dest="command", required=True)
     command = sub.add_parser("evaluate")
-    command.add_argument("--requests", default="generation_requests.json")
+    command.add_argument("--requests", default="examples/demo_sku/generated-fixtures/generation_requests.json")
     command.add_argument("--results", default="output/wan")
     command.add_argument("--output", default="output/qa")
     command.add_argument("--image-id")

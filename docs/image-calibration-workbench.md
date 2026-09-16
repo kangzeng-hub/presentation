@@ -2,10 +2,10 @@
 
 ## Run
 
-Backend (Python 3.11+):
+Backend (Python 3.12):
 
 ```bash
-python -m pip install -r backend/requirements.txt
+python -m pip install -r requirements-workbench.txt
 uvicorn backend.main:app --reload --port 8000
 ```
 
@@ -34,7 +34,7 @@ before a new approved version is used.
 `GET /api/artifacts/runs` discovers existing generation directories and
 `POST /api/calibration/sessions` snapshots one into a reviewable calibration
 session. The latter accepts `run_id`/`run_dir`, optional `session_id`, `sku`,
-and `roles` (defaults to every role in `image_plan.json`).
+and `roles` (defaults to every role in `examples/demo_sku/generated-fixtures/image_plan.json`).
 
 `GET /api/runs`, `GET /api/runs/{run_id}`, `GET /api/runs/{run_id}/calibration`,
 `GET /api/calibration/items/{item_id}`,

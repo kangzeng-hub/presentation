@@ -53,7 +53,7 @@ The checked-in `.env.example` was incomplete and did not document all observed n
 
 - Runtime paths are mostly project-relative. `image_generation/service.py` resolves repository resources from its module location.
 - Calibration and generated artifacts default to `output/calibration` and `output/`.
-- The frontend demo references public sample assets such as `p1/p1.jpg` through the seeded project data.
+- The frontend demo references the synthetic public asset under `examples/demo_sku/assets/` through the seeded project data.
 - Existing local-only material includes `.venv/`, `.ppt-venv/`, `frontend/node_modules/`, `frontend/dist/`, `output/`, caches, `.DS_Store`, PPTX exports, and source/customer-like product folders. These require an explicit public repository policy.
 - No source scan found hard-coded `/Users/...`, `/home/...`, `Desktop/...`, or Windows user paths outside generated/cache content.
 
@@ -67,7 +67,7 @@ Tests are Python `unittest`/pytest-compatible files under `tests/`. The reposito
 
 ## 8. Demo flow
 
-The stateful mock backend seeds a public `demo-project` and supports the complete UI contract: Product Truth, competitor research, insight, strategy, listing, image plan, image generation status, and video plan. Existing product catalog material is in `data/first_party_catalog.json`; no isolated public `examples/` fixture existed.
+The stateful mock backend seeds a public `demo-project` and supports the complete UI contract: Product Truth, competitor research, insight, strategy, listing, image plan, image generation status, and video plan. The isolated public fixture is under `examples/demo_sku/`; private product catalog material remains local-only.
 
 ## 9. Secrets / sensitive files
 

@@ -20,9 +20,9 @@ def load(name):
 class PromptBuilderTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.catalog = load("data/first_party_catalog.json")
+        cls.catalog = load("examples/demo_sku/catalog.json")
         cls.registry = load("templates/registry.json")
-        plan_data = load("image_plan.json")
+        plan_data = load("examples/demo_sku/generated-fixtures/image_plan.json")
         cls.plan = ImagePlan(
             plan_version=plan_data["plan_version"], product_id=plan_data["product_id"], strategy_summary=plan_data["strategy_summary"],
             images=[ImagePlanItem(**{**item, "competitor_gap": [CompetitorGap(**gap) for gap in item["competitor_gap"]]}) for item in plan_data["images"]],

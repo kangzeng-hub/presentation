@@ -1,0 +1,65 @@
+{
+  "catalog_version": "1.0.0",
+  "brand": {
+    "brand_id": "DEMO_STUDIO",
+    "display_name": "Demo Studio",
+    "positioning": "Synthetic public demo for structured product presentation workflows",
+    "visual_strategy": {
+      "primary_palette": ["metallic natural finish", "18K PVD gold"],
+      "image_focus": ["hinge and flush seam", "three-style comparison", "worn nose/ear proof", "titanium material texture", "CZ sparkle"],
+      "packaging_direction": "clean low-saturation gift-ready packaging",
+      "style_constraints": ["preserve metallic realism", "use clean low-saturation surfaces", "keep product readable before styling"]
+    },
+    "forbidden_claims": ["夸大医疗功效", "永久不褪色", "过敏100%零风险"]
+  },
+  "product": {
+    "product_id": "DEMO_ASTMF136_HINGED_RING_3PCS",
+    "name": "Demo ASTM F136 Titanium Hinged Ring 3PCS",
+    "material": {
+      "base": "ASTM F136 implant-grade titanium",
+      "gold_variant": "titanium base + 18K Gold PVD finish",
+      "stone": "AAAAA cubic zirconia"
+    },
+    "specifications": {
+      "gauges": ["18G", "20G"],
+      "inner_diameter": "8mm",
+      "weight": "1.06 oz",
+      "package_dimensions": "2.76 x 2.76 x 0.67 in",
+      "closure": "hinged segmented ring, flush seam, press-to-close clasp"
+    },
+    "included_set": ["classic hoop", "double-layer hoop", "CZ accent hoop"],
+    "approved_placements": ["septum", "nostril", "helix", "tragus", "conch", "daith", "rook", "lip"],
+    "pricing": {"standard": "$17.99", "gold_3pcs": "$26.99"},
+    "variants": [
+      {"variant_id": "GOLD-3PCS", "display_name": "Gold-3PCS", "finish": "18K Gold PVD", "included_count": 3, "asset_id": "asset_p1_gold_3pcs"}
+    ]
+  },
+  "assets": [
+    {
+      "asset_id": "asset_p1_gold_3pcs",
+      "path": "examples/demo_sku/assets/product.svg",
+      "asset_type": "canonical_product_photo",
+      "dimensions_px": {"width": 900, "height": 500},
+      "depicts": ["classic hoop", "CZ accent hoop", "double-layer hoop"],
+      "approved_uses": ["product identity", "contents", "finish evidence", "style configuration reference"],
+      "limitations": ["single horizontal composite", "does not prove worn scale", "does not prove closure operation", "does not replace a certificate or test report"]
+    },
+    {"asset_id": "pic02", "path": "examples/demo_sku/assets/product.svg", "asset_type": "visual_reference", "approved_uses": ["on_body wearing", "human scene", "composition reference", "atmosphere"], "limitations": ["synthetic public demo reference", "not product identity source"], "product_identity_source": false},
+    {"asset_id": "pic05", "path": "examples/demo_sku/assets/product.svg", "asset_type": "visual_reference", "approved_uses": ["multi-person wearing", "scene reference", "composition reference"], "limitations": ["synthetic public demo reference", "not product identity source"], "product_identity_source": false},
+    {"asset_id": "pic06", "path": "examples/demo_sku/assets/product.svg", "asset_type": "visual_reference", "approved_uses": ["operation demo", "hand pose", "step sequence", "camera angle"], "limitations": ["synthetic public demo reference", "not product identity source"], "product_identity_source": false}
+  ],
+  "claims": [
+    {"claim_id": "claim_f136_titanium", "approved_text": "ASTM F136 implant-grade titanium", "evidence": "Synthetic demo catalog material record", "source_file": "examples/demo_sku/product.json", "allowed_templates": ["MATERIAL_EVIDENCE", "VALUE_PACKAGING_STACK"]},
+    {"claim_id": "claim_gold_pvd", "approved_text": "18K Gold PVD finish", "evidence": "Synthetic demo catalog finish record", "source_file": "examples/demo_sku/product.json", "allowed_templates": ["MATERIAL_EVIDENCE", "VALUE_PACKAGING_STACK"]},
+    {"claim_id": "claim_click_top", "approved_text": "Precision hinged press-to-close clasp", "evidence": "Synthetic demo catalog mechanism record", "source_file": "examples/demo_sku/product.json", "allowed_templates": ["STRUCTURE_USE_DETAIL", "VALUE_PACKAGING_STACK"]},
+    {"claim_id": "claim_three_styles", "approved_text": "3PCS MULTI-STYLE SET: classic hoop, double-layer hoop, CZ accent hoop", "evidence": "Synthetic demo catalog contents record", "source_file": "examples/demo_sku/product.json", "allowed_templates": ["PRODUCT_IDENTITY_MAIN", "CONTENTS_SET", "WEAR_STYLE_TRIPTYCH"]},
+    {"claim_id": "claim_cz", "approved_text": "AAAAA cubic zirconia with secure stone setting", "evidence": "Synthetic demo catalog stone record", "source_file": "examples/demo_sku/product.json", "allowed_templates": ["MATERIAL_EVIDENCE", "STRUCTURE_USE_DETAIL", "VALUE_PACKAGING_STACK"]},
+    {"claim_id": "claim_lightweight", "approved_text": "Lightweight titanium construction", "evidence": "Synthetic demo catalog weight record", "source_file": "examples/demo_sku/product.json", "allowed_templates": ["VALUE_PACKAGING_STACK"]},
+    {"claim_id": "claim_multiple_placements", "approved_text": "Designed for septum, nostril, helix, tragus, conch, daith, rook, and lip placements", "evidence": "Synthetic demo catalog placement record", "source_file": "examples/demo_sku/product.json", "allowed_templates": ["SIZE_CHOICE_PROOF", "LIFESTYLE_MOMENTS", "VALUE_PACKAGING_STACK"]}
+  ],
+  "priority_plan": [
+    {"priority": "P0", "template_ids": ["PRODUCT_IDENTITY_MAIN", "CONTENTS_SET", "SIZE_CHOICE_PROOF"], "reason": "Establish product identity, set contents, and size/placement choices first."},
+    {"priority": "P1", "template_ids": ["MATERIAL_EVIDENCE", "STRUCTURE_USE_DETAIL", "WEAR_STYLE_TRIPTYCH", "VALUE_PACKAGING_STACK"], "reason": "Add material, structure, style, and value evidence after the core proof."},
+    {"priority": "P2", "template_ids": ["LIFESTYLE_MOMENTS"], "reason": "Use lifestyle context as a secondary expression layer."}
+  ]
+}

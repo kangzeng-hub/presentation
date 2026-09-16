@@ -12,7 +12,7 @@
     {"kind": "CLAIM", "text": "ASTM F136 implant-grade titanium", "source": "examples/demo_sku/product.json"},
     {"kind": "CLAIM", "text": "18K Gold PVD finish", "source": "examples/demo_sku/product.json"}
   ],
-  "product_images": ["examples/demo_sku/product.svg"],
+  "product_images": ["examples/demo_sku/assets/product.svg"],
   "source": ["public demo fixture"],
   "version": 1
 }

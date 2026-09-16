@@ -10,7 +10,7 @@ from .store import CalibrationStore, build_items_from_run
 st.set_page_config(page_title="Image Calibration", layout="wide")
 st.title("Image Calibration")
 store = CalibrationStore()
-plan_path = Path("image_plan.json")
+plan_path = Path("examples/demo_sku/generated-fixtures/image_plan.json")
 plan = json.loads(plan_path.read_text(encoding="utf-8")) if plan_path.exists() else {"images": []}
 run_dirs = [p for p in sorted(Path("output").glob("*")) if p.is_dir() and (p / "image_01.json").exists()]
 

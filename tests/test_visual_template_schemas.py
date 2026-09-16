@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = ROOT / "templates" / "registry.json"
-CATALOG_PATH = ROOT / "data" / "first_party_catalog.json"
+CATALOG_PATH = ROOT / "examples" / "demo_sku" / "catalog.json"
 
 
 def load_json(path):

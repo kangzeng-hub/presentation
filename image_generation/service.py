@@ -14,9 +14,9 @@ from .adapters import OpenAIImageAdapter, WanAdapter
 ROOT = Path(__file__).resolve().parents[1]
 
 def build_context():
-    catalog = json.loads((ROOT / "data/first_party_catalog.json").read_text())
+    catalog = json.loads((ROOT / "examples/demo_sku/catalog.json").read_text())
     registry = json.loads((ROOT / "templates/registry.json").read_text())
-    analysis = (ROOT / "docs/competitor-visual-analysis.md").read_text()
+    analysis = (ROOT / "examples/demo_sku/competitor-analysis.md").read_text()
     plan = build_image_plan(catalog, analysis, registry)
     resolved = resolve_image_plan(plan, registry)
     batch = build_generation_requests(plan, resolved, catalog, registry)

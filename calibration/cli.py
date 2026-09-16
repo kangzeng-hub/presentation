@@ -8,7 +8,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description="Image Calibration data tools")
     sub = parser.add_subparsers(dest="command", required=True)
     init = sub.add_parser("init", help="create a session from an existing run")
-    init.add_argument("--session-id", required=True); init.add_argument("--sku", required=True); init.add_argument("--run-dir", required=True); init.add_argument("--run-id"); init.add_argument("--plan", default="image_plan.json"); init.add_argument("--role", action="append", dest="roles")
+    init.add_argument("--session-id", required=True); init.add_argument("--sku", required=True); init.add_argument("--run-dir", required=True); init.add_argument("--run-id"); init.add_argument("--plan", default="examples/demo_sku/generated-fixtures/image_plan.json"); init.add_argument("--role", action="append", dest="roles")
     summary = sub.add_parser("summary", help="aggregate a saved session")
     summary.add_argument("session_id"); summary.add_argument("--role")
     args = parser.parse_args(argv); store = CalibrationStore()

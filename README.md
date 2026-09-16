@@ -2,6 +2,15 @@
 
 一个以 Product Truth 为源头、把竞品证据逐步转成 Strategy、Listing、ImagePlan 和 Video Prompt 的可迁移演示工作区。
 
+Python runtime is standardized on 3.12. Install `requirements.txt` for the API,
+`requirements-workbench.txt` for Streamlit calibration, `requirements-dev.txt`
+for tests, and `requirements-ppt.txt` only for archived PPT tools.
+
+```bash
+python3.12 -m venv .venv
+.venv/bin/python -m pip install -r requirements-dev.txt
+```
+
 ## 先跑起来
 
 无 Docker 的本地 Demo：
@@ -53,4 +62,4 @@ FRONTEND_URL=http://localhost:3000 BACKEND_URL=http://localhost:4010 ./scripts/s
 
 ## 架构约束
 
-`data/first_party_catalog.json` 是产品事实源；`contracts/openapi.yaml` 是 workspace API 合同；`mock-server/` 是无需外部服务的确定性演示后端；`backend/` 是独立的校准/再生 API。生成产物必须引用版本化的 Product Truth 和 Strategy，不在各模块复制事实。
+公开 Demo 的 Product Truth 位于 `examples/demo_sku/`；真实业务资料仍保留在本地并被忽略。`contracts/openapi.yaml` 是 workspace API 合同；`mock-server/` 是无需外部服务的确定性演示后端；`backend/` 是独立的校准/再生 API。生成产物必须引用版本化的 Product Truth 和 Strategy，不在各模块复制事实。

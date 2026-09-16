@@ -1,4 +1,4 @@
-fastapi>=0.110
-uvicorn[standard]>=0.27
-# Optional for competitor_ingestion's typed schema; the MVP has a stdlib fallback.
-pydantic>=2.0
+# Backward-compatible entry point. New installs should use the repository-level
+# requirements files so runtime, workbench, development, and PPT dependencies
+# remain explicitly separated.
+-r ../requirements.txt

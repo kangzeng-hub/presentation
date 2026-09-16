@@ -18,9 +18,9 @@ def load(name):
 class ImagePlanningTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.catalog = load("data/first_party_catalog.json")
+        cls.catalog = load("examples/demo_sku/catalog.json")
         cls.registry = load("templates/registry.json")
-        cls.analysis = (ROOT / "docs/competitor-visual-analysis.md").read_text(encoding="utf-8")
+        cls.analysis = (ROOT / "examples/demo_sku/competitor-analysis.md").read_text(encoding="utf-8")
         cls.plan = build_image_plan(cls.catalog, cls.analysis, cls.registry)
 
     def test_default_plan_has_six_decision_images(self):

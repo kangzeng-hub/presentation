@@ -32,7 +32,7 @@ def _discover_run_artifacts(root: Path = Path("output")) -> list[dict[str, Any]]
     """
     if not root.exists():
         return []
-    plan_path = Path("image_plan.json")
+    plan_path = Path("examples/demo_sku/generated-fixtures/image_plan.json")
     plan = json.loads(plan_path.read_text(encoding="utf-8")) if plan_path.exists() else {"images": []}
     by_id = {item.get("image_id"): item for item in plan.get("images", [])}
     result: list[dict[str, Any]] = []
@@ -92,7 +92,7 @@ def create_app(store: CalibrationStore | None = None, regeneration_service: Rege
         run_dir = Path(run_dir_value)
         if not run_dir.exists() or not run_dir.is_dir():
             raise HTTPException(400, "run_dir does not exist")
-        plan_path = Path(payload.get("plan_path", "image_plan.json"))
+        plan_path = Path(payload.get("plan_path", "examples/demo_sku/generated-fixtures/image_plan.json"))
         if not plan_path.exists():
             raise HTTPException(400, "image plan not found")
         try:

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <rect width="1200" height="900" fill="#f6f3ed"/>
+  <g font-family="Arial, sans-serif" fill="#222" text-anchor="middle">
+    <text x="600" y="70" font-size="36" font-weight="700">CONTENTS_SET</text>
+    <text x="600" y="112" font-size="22">EXACT INCLUDED COMPONENTS</text>
+  </g>
+  <g fill="#dedbd4" stroke="#555" stroke-width="3">
+    <rect x="100" y="220" width="250" height="300" rx="10"/>
+    <rect x="475" y="220" width="250" height="300" rx="10"/>
+    <rect x="850" y="220" width="250" height="300" rx="10"/>
+  </g>
+  <g fill="#fff" stroke="#777" stroke-width="2">
+    <rect x="100" y="565" width="250" height="85" rx="8"/>
+    <rect x="475" y="565" width="250" height="85" rx="8"/>
+    <rect x="850" y="565" width="250" height="85" rx="8"/>
+  </g>
+  <g font-family="Arial, sans-serif" fill="#222" text-anchor="middle">
+    <text x="225" y="375" font-size="24">COMPONENT A</text>
+    <text x="600" y="375" font-size="24">COMPONENT B</text>
+    <text x="975" y="375" font-size="24">COMPONENT C</text>
+    <text x="225" y="615" font-size="18">INCLUDED / OPTION</text>
+    <text x="600" y="615" font-size="18">INCLUDED / OPTION</text>
+    <text x="975" y="615" font-size="18">INCLUDED / OPTION</text>
+  </g>
+</svg>

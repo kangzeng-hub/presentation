@@ -1,0 +1,18 @@
+{
+  "product": {
+    "name": "ASTM F136 钛合金铰链鼻中隔环鼻圈 3 件套",
+    "category": "鼻中隔环鼻圈",
+    "material": "ASTM F136 植入级钛；钛基底 + 18K 金 PVD 镀层；AAAAA 立方氧化锆",
+    "color": "18K 金色",
+    "size": "18G/20G，内径 8mm",
+    "quantity": 3,
+    "structure": "铰链分段环，平接缝，按压卡扣闭合",
+    "appearance": "classic hoop、double-layer hoop、CZ accent hoop 三种配置"
+  },
+  "selling_points": ["三种风格配置", "铰链按压卡扣结构", "真实佩戴可见"],
+  "customer_concerns": ["产品数量是否为 3 件", "铰链结构是否真实", "佩戴后外观与尺寸"],
+  "target_scene": "干净中性商业产品演示背景和真实鼻部近景",
+  "reference_images": ["examples/demo_sku/product.svg"],
+  "video_goal": "展示三款产品差异、铰链按压卡扣结构以及真实佩戴效果。",
+  "video_style": "真实、克制、干净的 Amazon listing 产品视频；自然金属反光，浅色中性背景，产品优先。"
+}

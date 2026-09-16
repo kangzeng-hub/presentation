@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <rect width="1200" height="900" fill="#f4f1eb"/>
+  <g fill="#dedbd4" stroke="#555" stroke-width="3">
+    <rect x="80" y="205" width="460" height="460" rx="10"/>
+    <rect x="620" y="175" width="500" height="520" rx="10" fill="#fff"/>
+  </g>
+  <g font-family="Arial, sans-serif" fill="#222" text-anchor="middle">
+    <text x="600" y="70" font-size="36" font-weight="700">MATERIAL_EVIDENCE</text>
+    <text x="600" y="112" font-size="22">PRODUCT MACRO + REAL SOURCE</text>
+    <text x="310" y="435" font-size="27">PRODUCT MACRO</text>
+    <text x="870" y="300" font-size="25">APPROVED EVIDENCE</text>
+    <text x="870" y="350" font-size="21">SOURCE PANEL</text>
+    <text x="870" y="580" font-size="20">PROGRAMMATIC CLAIM + ID</text>
+  </g>
+</svg>

@@ -1,0 +1,110 @@
+{
+  "catalog_version": "1.0.0",
+  "brand": {
+    "brand_id": "G23STUDIO",
+    "display_name": "G23Studio",
+    "positioning": "简约小众穿刺饰品，医用级安全 + 潮流街头风",
+    "visual_strategy": {
+      "primary_palette": ["metallic natural finish", "18K PVD gold"],
+      "image_focus": ["hinge and flush seam", "three-style comparison", "worn nose/ear proof", "titanium material texture", "CZ sparkle"],
+      "packaging_direction": "简约礼品向包装，干净低饱和，无冗余花哨元素",
+      "style_constraints": ["preserve metallic realism", "use clean low-saturation surfaces", "keep product readable before styling"]
+    },
+    "forbidden_claims": ["夸大医疗功效", "永久不褪色", "过敏100%零风险"]
+  },
+  "product": {
+    "product_id": "G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS",
+    "name": "ASTM F136 钛合金铰链鼻中隔环鼻圈 3 件套",
+    "material": {
+      "base": "ASTM F136 植入级钛",
+      "gold_variant": "钛基底 + 18K 金 PVD 镀层",
+      "stone": "AAAAA 立方氧化锆"
+    },
+    "specifications": {
+      "gauges": ["18G", "20G"],
+      "inner_diameter": "8mm",
+      "weight": "1.06 oz",
+      "package_dimensions": "2.76 x 2.76 x 0.67 in",
+      "closure": "铰链分段环，平接缝，按压卡扣闭合"
+    },
+    "included_set": ["classic hoop", "double-layer hoop", "CZ accent hoop"],
+    "approved_placements": ["septum", "nostril", "helix", "tragus", "conch", "daith", "rook", "lip"],
+    "pricing": {
+      "standard": "$17.99",
+      "gold_3pcs": "$26.99"
+    },
+    "variants": [
+      {"variant_id": "GOLD-3PCS", "display_name": "Gold-3PCS", "finish": "18K Gold PVD", "included_count": 3, "asset_id": "asset_p1_gold_3pcs"}
+    ]
+  },
+  "assets": [
+    {
+      "asset_id": "asset_p1_gold_3pcs",
+      "path": "examples/demo_sku/product.svg",
+      "asset_type": "canonical_product_photo",
+      "dimensions_px": {"width": 900, "height": 500},
+      "depicts": ["classic hoop", "CZ accent hoop", "double-layer hoop"],
+      "approved_uses": ["product identity", "contents", "finish evidence", "style configuration reference"],
+      "limitations": ["single horizontal composite", "does not prove worn scale", "does not prove closure operation", "does not replace a certificate or test report"]
+    },
+    {"asset_id":"pic02","path":"examples/demo_sku/product.svg","asset_type":"visual_reference","approved_uses":["on_body wearing","human scene","composition reference","atmosphere"],"limitations":["synthetic public demo reference","not product identity source"],"product_identity_source":false},
+    {"asset_id":"pic05","path":"examples/demo_sku/product.svg","asset_type":"visual_reference","approved_uses":["multi-person wearing","scene reference","composition reference"],"limitations":["synthetic public demo reference","not product identity source"],"product_identity_source":false},
+    {"asset_id":"pic06","path":"examples/demo_sku/product.svg","asset_type":"visual_reference","approved_uses":["operation demo","hand pose","step sequence","camera angle"],"limitations":["synthetic public demo reference","not product identity source"],"product_identity_source":false}
+  ],
+  "claims": [
+    {
+      "claim_id": "claim_f136_titanium",
+      "approved_text": "ASTM F136 植入级钛；低敏适敏感肌；无镍无铅",
+      "evidence": "产品详情材质标注 ASTM F136 Titanium, hypoallergenic, nickel-free, lead-free",
+      "source_file": "examples/demo_sku/product.json",
+      "allowed_templates": ["MATERIAL_EVIDENCE", "VALUE_PACKAGING_STACK"]
+    },
+    {
+      "claim_id": "claim_gold_pvd",
+      "approved_text": "Gold variant: 18K Gold PVD finish",
+      "evidence": "产品详情材质标注 Gold variant 18K Gold PVD finish",
+      "source_file": "examples/demo_sku/product.json",
+      "allowed_templates": ["MATERIAL_EVIDENCE", "VALUE_PACKAGING_STACK"]
+    },
+    {
+      "claim_id": "claim_click_top",
+      "approved_text": "精密铰链按压卡扣，闭合稳固",
+      "evidence": "Precision click-top mechanism；日常活动可稳固佩戴",
+      "source_file": "examples/demo_sku/product.json",
+      "allowed_templates": ["STRUCTURE_USE_DETAIL", "VALUE_PACKAGING_STACK"]
+    },
+    {
+      "claim_id": "claim_three_styles",
+      "approved_text": "3PCS MULTI-STYLE SET：classic hoop、double-layer hoop、CZ accent hoop",
+      "evidence": "3PCS MULTI-STYLE SET 配置说明",
+      "source_file": "examples/demo_sku/product.json",
+      "allowed_templates": ["PRODUCT_IDENTITY_MAIN", "CONTENTS_SET", "WEAR_STYLE_TRIPTYCH"]
+    },
+    {
+      "claim_id": "claim_cz",
+      "approved_text": "AAAAA Cubic Zirconia；secure stone setting",
+      "evidence": "AAAAA Cubic Zirconia, secure stone setting",
+      "source_file": "examples/demo_sku/product.json",
+      "allowed_templates": ["MATERIAL_EVIDENCE", "STRUCTURE_USE_DETAIL", "VALUE_PACKAGING_STACK"]
+    },
+    {
+      "claim_id": "claim_lightweight",
+      "approved_text": "轻量化钛材质，耐久，长时间佩戴舒适",
+      "evidence": "Lightweight Titanium, durable for long-term piercing wear",
+      "source_file": "examples/demo_sku/product.json",
+      "allowed_templates": ["VALUE_PACKAGING_STACK"]
+    },
+    {
+      "claim_id": "claim_multiple_placements",
+      "approved_text": "适配 septum、nostril、helix、tragus、conch、daith、rook、lip piercings；gift-ready packaging",
+      "evidence": "适用穿刺位置与礼盒包装说明",
+      "source_file": "examples/demo_sku/product.json",
+      "allowed_templates": ["SIZE_CHOICE_PROOF", "LIFESTYLE_MOMENTS", "VALUE_PACKAGING_STACK"]
+    }
+  ],
+  "priority_plan": [
+    {"priority": "P0", "template_ids": ["PRODUCT_IDENTITY_MAIN", "CONTENTS_SET", "SIZE_CHOICE_PROOF"], "reason": "先解决产品识别、套装内容和 18G/20G、8mm 的选择/佩戴理解。"},
+    {"priority": "P1", "template_ids": ["MATERIAL_EVIDENCE", "STRUCTURE_USE_DETAIL", "WEAR_STYLE_TRIPTYCH", "VALUE_PACKAGING_STACK"], "reason": "再用已审核材质、结构、款式和卖点佐证建立信任与购买理由。"},
+    {"priority": "P2", "template_ids": ["LIFESTYLE_MOMENTS"], "reason": "最后补充穿戴场景和街头风格投射，不能替代产品证明。"}
+  ]
+}

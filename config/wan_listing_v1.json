@@ -1,0 +1,14 @@
+{
+  "policy_id": "wan-listing-v1",
+  "model_id": "wan2.7-image-pro",
+  "size": "2K",
+  "number_of_images": 1,
+  "watermark": false,
+  "enable_sequential": false,
+  "thinking_mode": false,
+  "reference_strategy": "canonical_first",
+  "retry": {"max_attempts": 3},
+  "timeout_seconds": 120,
+  "poll_interval_seconds": 3,
+  "experimental_hints": {}
+}

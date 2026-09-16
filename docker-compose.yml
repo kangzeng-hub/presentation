@@ -1,0 +1,51 @@
+services:
+  demo-backend:
+    build:
+      context: .
+      dockerfile: mock-server/Dockerfile
+    environment:
+      HOST: 0.0.0.0
+      PORT: 4010
+    ports:
+      - "4010:4010"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:4010/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:4010}
+    depends_on:
+      demo-backend:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+  python-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:-}
+      APIFY_API_TOKEN: ${APIFY_API_TOKEN:-}
+      APIFY_PRODUCT_ACTOR: ${APIFY_PRODUCT_ACTOR:-junglee/amazon-product-scraper}
+      APIFY_REVIEWS_ACTOR: ${APIFY_REVIEWS_ACTOR:-junglee/amazon-reviews-scraper}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      SUB2API_API_KEY: ${SUB2API_API_KEY:-}
+      OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
+      SUB2API_BASE_URL: ${SUB2API_BASE_URL:-}
+      ARK_API_KEY: ${ARK_API_KEY:-}
+      SEEDANCE_MODEL_ID: ${SEEDANCE_MODEL_ID:-doubao-seedance-2-5-260628}
+    volumes:
+      - presentation-output:/app/output
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+volumes:
+  presentation-output:

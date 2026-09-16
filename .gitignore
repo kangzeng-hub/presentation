@@ -1,0 +1,45 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+.ppt-venv/
+venv/
+
+# Node/build tooling
+frontend/node_modules/
+frontend/dist/
+npm-debug.log*
+
+# Runtime state and generated artifacts
+output/**
+logs/
+cache/
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Large local exports and private source material
+*.pptx
+analy-report/
+未命名文件夹/
+p1/
+c1/
+c2/

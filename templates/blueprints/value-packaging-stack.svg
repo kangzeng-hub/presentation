@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <rect width="1200" height="900" fill="#f2eee8"/>
+  <rect x="80" y="190" width="390" height="520" rx="10" fill="#d7d1c8" stroke="#555" stroke-width="3"/>
+  <g fill="#fff" stroke="#777" stroke-width="2">
+    <rect x="545" y="190" width="575" height="85" rx="8"/>
+    <rect x="545" y="305" width="575" height="85" rx="8"/>
+    <rect x="545" y="420" width="575" height="85" rx="8"/>
+    <rect x="545" y="535" width="575" height="85" rx="8"/>
+    <rect x="545" y="650" width="575" height="85" rx="8"/>
+  </g>
+  <g font-family="Arial, sans-serif" fill="#222" text-anchor="middle">
+    <text x="600" y="65" font-size="36" font-weight="700">VALUE_PACKAGING_STACK</text>
+    <text x="600" y="105" font-size="22">PROGRAMMATIC EVIDENCE BLOCKS</text>
+    <text x="275" y="455" font-size="25">PRODUCT REGION</text>
+    <text x="832" y="242" font-size="20">VERIFIED BENEFIT 01</text>
+    <text x="832" y="357" font-size="20">VERIFIED BENEFIT 02</text>
+    <text x="832" y="472" font-size="20">VERIFIED BENEFIT 03</text>
+    <text x="832" y="587" font-size="20">VERIFIED BENEFIT 04</text>
+    <text x="832" y="702" font-size="20">OPTIONAL VERIFIED BENEFIT 05</text>
+  </g>
+</svg>

@@ -1,0 +1,204 @@
+[
+  {
+    "image_id": "image_01",
+    "template_id": "PRODUCT_IDENTITY_MAIN",
+    "layout": "1:1 or marketplace-approved square; white field",
+    "composition": "two or three canonical product slots; optional small worn-proof slot",
+    "visual_hierarchy": [
+      "product silhouette",
+      "approved variant relationship",
+      "optional worn scale cue"
+    ],
+    "required_elements": [
+      "canonical product views",
+      "approved assortment",
+      "three actual configurations shown simultaneously and clearly distinguished",
+      "color-accurate metallic finish",
+      "product-dominant white-field presentation"
+    ],
+    "allowed_style_elements": [
+      "controlled product photography",
+      "bright diffuse studio light with restrained contact shadows",
+      "white",
+      "neutral and color-accurate",
+      "commercial photorealism"
+    ],
+    "forbidden_elements": [
+      "competitor brand or logo",
+      "unapproved variant count",
+      "generated measurements",
+      "extra jewelry",
+      "invented variant",
+      "competitor product identity"
+    ]
+  },
+  {
+    "image_id": "image_02",
+    "template_id": "WEAR_STYLE_TRIPTYCH",
+    "layout": "1:1 or 4:5 triptych",
+    "composition": "three equal close-up panels; short style label band per panel; optional closing line",
+    "visual_hierarchy": [
+      "visible configuration",
+      "style name",
+      "short descriptor"
+    ],
+    "required_elements": [
+      "three distinct looks",
+      "product readability",
+      "consistent anatomy",
+      "on-body appearance",
+      "realistic product-to-face relationship"
+    ],
+    "allowed_style_elements": [
+      "beauty editorial close-up",
+      "soft beauty light, controlled highlights on product",
+      "simple neutral skin/background",
+      "natural with restrained styling accents",
+      "photorealistic"
+    ],
+    "forbidden_elements": [
+      "competitor style names",
+      "unapproved product combinations",
+      "unreadable generated labels",
+      "three-piece configuration explanation",
+      "unlisted component"
+    ]
+  },
+  {
+    "image_id": "image_03",
+    "template_id": "SIZE_CHOICE_PROOF",
+    "layout": "1:1 or 4:5 comparison canvas",
+    "composition": "short title; two to four equal macro proof cells; programmatic size labels",
+    "visual_hierarchy": [
+      "body relationship",
+      "size difference",
+      "selection cue"
+    ],
+    "required_elements": [
+      "anatomical scale",
+      "multiple approved sizes",
+      "clear edge/closure",
+      "18G/20G and 8mm labels",
+      "piercing location diagram",
+      "gift box"
+    ],
+    "allowed_style_elements": [
+      "beauty macro with measurement discipline",
+      "soft diffuse light with enough edge contrast",
+      "neutral skin/background",
+      "natural skin and accurate product finish",
+      "photorealistic close-up"
+    ],
+    "forbidden_elements": [
+      "competitor exact measurements",
+      "unapproved placement compatibility",
+      "generated anatomy labels",
+      "exact worn scale inferred from p1.jpg",
+      "unapproved anatomy claims",
+      "extra sizes"
+    ]
+  },
+  {
+    "image_id": "image_04",
+    "template_id": "MATERIAL_EVIDENCE",
+    "layout": "4:5 portrait secondary canvas",
+    "composition": "headline band; large product macro; evidence document or source panel; short claim blocks",
+    "visual_hierarchy": [
+      "approved claim",
+      "visible product finish",
+      "supporting source"
+    ],
+    "required_elements": [
+      "canonical product macro",
+      "approved evidence asset",
+      "source identifier",
+      "ASTM F136 titanium",
+      "PVD gold plating",
+      "zirconia detail",
+      "hinge structure detail"
+    ],
+    "allowed_style_elements": [
+      "macro product plus documentary evidence",
+      "soft directional macro light; flat, neutral document exposure",
+      "neutral studio field",
+      "accurate finish; restrained accent color",
+      "photorealistic composite"
+    ],
+    "forbidden_elements": [
+      "fabricated pass/fail result",
+      "unverified hypoallergenic or skin claim",
+      "competitor report details",
+      "certificate proof",
+      "fabricated test report",
+      "medical cure claim",
+      "100% allergy-free claim"
+    ]
+  },
+  {
+    "image_id": "image_05",
+    "template_id": "LIFESTYLE_MOMENTS",
+    "layout": "4:5 portrait or storefront module",
+    "composition": "two smaller portrait scenes; one wide anchor scene; short context labels",
+    "visual_hierarchy": [
+      "context",
+      "product presence",
+      "style cue"
+    ],
+    "required_elements": [
+      "recognizable worn product",
+      "context variation",
+      "consistent styling direction",
+      "multiple people",
+      "different piercing positions",
+      "realistic on-body appearance",
+      "scene variation"
+    ],
+    "allowed_style_elements": [
+      "natural portrait/lifestyle photography",
+      "window light or controlled ambient scene light",
+      "approved everyday interiors or restrained urban context",
+      "natural skin, coherent brand treatment, no heavy effects",
+      "photorealistic"
+    ],
+    "forbidden_elements": [
+      "performance claims implied by scene",
+      "competitor labels",
+      "product too small to inspect",
+      "hinge structure explanation",
+      "material detail explanation"
+    ]
+  },
+  {
+    "image_id": "image_06",
+    "template_id": "STRUCTURE_USE_DETAIL",
+    "layout": "4:5 portrait secondary canvas",
+    "composition": "short title; two by two macro/detail cells; numbered caption bands",
+    "visual_hierarchy": [
+      "mechanism/feature",
+      "visual proof",
+      "short use implication"
+    ],
+    "required_elements": [
+      "closure detail",
+      "edge/finish detail",
+      "approved construction feature",
+      "hand operation",
+      "opening state",
+      "closing state",
+      "operation sequence"
+    ],
+    "allowed_style_elements": [
+      "precise commercial macro",
+      "soft directional light with controlled reflections",
+      "neutral warm studio surface",
+      "finish-accurate and low-glare",
+      "photorealistic product detail"
+    ],
+    "forbidden_elements": [
+      "unverified comfort guarantee",
+      "competitor comparison",
+      "generated dimensions",
+      "three-product wearing comparison"
+    ]
+  }
+]

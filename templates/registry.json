@@ -1,0 +1,742 @@
+{
+  "registry_version": "1.0.0",
+  "source_status": {
+    "first_party_product_assets": "available",
+    "existing_listing_images": "missing",
+    "existing_analysis": "missing",
+    "existing_strategy": "available"
+  },
+  "first_party_catalog": "data/first_party_catalog.json",
+  "roles": [
+    {
+      "role_id": "product_identity",
+      "image_type": "main",
+      "decision_stage": "recognition",
+      "consumer_question": "What exactly is the product and what variants are included?",
+      "objective": "Establish first-scan product identity and approved assortment without text dependence.",
+      "priority": "P0",
+      "expected_visual_evidence": ["canonical product silhouette", "approved variant count", "finish and construction visibility", "optional small worn scale cue"],
+      "suitable_subject": ["isolated product set", "canonical product render", "approved macro worn proof"],
+      "whether_model_required": false,
+      "whether_product_macro_required": true,
+      "whether_text_overlay_required": false,
+      "whether_real_asset_required": true,
+      "renderer_preference": "PRODUCT_ASSET_COMPOSITE",
+      "acceptance_principles": ["product is the dominant subject", "no invented variant or component", "worn cue does not replace product view", "no competitor identity is visible"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/m1.jpg; c2/m1.jpg", "note": "Both main images show three separated product presentations on white with a small worn cue."},
+        {"type": "inference", "source": "cross-set comparison", "note": "Identity and assortment are the first shared visual task."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/p1.jpg", "note": "Canonical Gold-3PCS asset depicts classic, CZ accent, and double-layer hoops; render on the approved marketplace canvas."}
+      ]
+    },
+    {
+      "role_id": "contents",
+      "image_type": "secondary",
+      "decision_stage": "verification",
+      "consumer_question": "What pieces, configurations, or included options will arrive?",
+      "objective": "Make included contents and option relationships explicit through canonical assets.",
+      "priority": "P0",
+      "expected_visual_evidence": ["complete included set", "separated components", "option relationship", "one-to-one asset mapping"],
+      "suitable_subject": ["product grouping", "component row", "variant matrix"],
+      "whether_model_required": false,
+      "whether_product_macro_required": true,
+      "whether_text_overlay_required": true,
+      "whether_real_asset_required": true,
+      "renderer_preference": "PRODUCT_ASSET_COMPOSITE",
+      "acceptance_principles": ["every displayed component is actually included or explicitly marked as an option", "labels match approved catalog data", "no generated product identity"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/m1.jpg; c2/m1.jpg; c1/s1.jpg; c2/s1.jpg", "note": "Both sets repeatedly group multiple product variants for quick assortment reading."},
+        {"type": "inference", "source": "cross-set comparison", "note": "Contents deserves a separate role so the main image stays low-density."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/产品规格 : 变体清单.txt", "note": "The approved 3-piece contents are classic hoop, double-layer hoop, and CZ accent hoop."}
+      ]
+    },
+    {
+      "role_id": "material_evidence",
+      "image_type": "secondary",
+      "decision_stage": "trust",
+      "consumer_question": "What material or finish evidence supports the approved product claim?",
+      "objective": "Connect verified material/finish claims to visible product or evidence assets.",
+      "priority": "P1",
+      "expected_visual_evidence": ["product finish macro", "approved evidence document or test asset", "source-linked claim blocks"],
+      "suitable_subject": ["product macro", "real test report", "approved material sample"],
+      "whether_model_required": false,
+      "whether_product_macro_required": true,
+      "whether_text_overlay_required": true,
+      "whether_real_asset_required": true,
+      "renderer_preference": "EVIDENCE_COMPOSITE",
+      "acceptance_principles": ["claims are source-linked", "real evidence is not fabricated", "product remains visible beside evidence", "unverified skin or material claims are omitted"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/s3.jpg; c2/s1.jpg", "note": "One set foregrounds a test report and the other uses a material/benefit stack."},
+        {"type": "inference", "source": "cross-set comparison", "note": "Trust is best handled as evidence packaging, not as atmospheric styling."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/审核通过的卖点及佐证材料.txt", "note": "Use only the registered ASTM F136, hypoallergenic, nickel-free, lead-free, and 18K Gold PVD wording; no certificate image was supplied."}
+      ]
+    },
+    {
+      "role_id": "size_choice",
+      "image_type": "secondary",
+      "decision_stage": "selection",
+      "consumer_question": "Which size or diameter is appropriate for my intended placement or look?",
+      "objective": "Show size-to-body relationship with direct, comparable visual evidence.",
+      "priority": "P0",
+      "expected_visual_evidence": ["consistent body placement", "multiple size states", "exact programmatic labels", "clear product outline"],
+      "suitable_subject": ["nose/ear macro", "equal comparison panels", "approved placement diagram"],
+      "whether_model_required": true,
+      "whether_product_macro_required": true,
+      "whether_text_overlay_required": true,
+      "whether_real_asset_required": true,
+      "renderer_preference": "MODEL_PROOF_COMPOSITE",
+      "acceptance_principles": ["product is readable before facial expression", "anatomy and placement are plausible", "size labels match catalog data", "panel states are directly comparable"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/s2.jpg; c1/s5.jpg", "note": "Competitor images use repeated nose close-ups and anatomy labels to answer size/placement questions."},
+        {"type": "inference", "source": "selection-risk analysis", "note": "Size is a P0 blocker because an attractive image without scale cannot resolve fit."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/产品规格 : 变体清单.txt", "note": "Approved catalog values are 18G/20G and 8mm inner diameter; placement list is registered for programmatic labels."}
+      ]
+    },
+    {
+      "role_id": "structure_use",
+      "image_type": "secondary",
+      "decision_stage": "usability",
+      "consumer_question": "How does the product open, close, layer, or sit on the body?",
+      "objective": "Expose construction and use mechanics with macro evidence or verified diagrams.",
+      "priority": "P1",
+      "expected_visual_evidence": ["closure state", "edge/finish detail", "layering or fastening relationship", "step or diagram evidence"],
+      "suitable_subject": ["closure macro", "detail grid", "verified line diagram"],
+      "whether_model_required": false,
+      "whether_product_macro_required": true,
+      "whether_text_overlay_required": true,
+      "whether_real_asset_required": true,
+      "renderer_preference": "PRODUCT_MACRO_COMPOSITE",
+      "acceptance_principles": ["actual mechanism is shown", "macro texture is not invented", "diagrams match canonical geometry", "text describes only approved use"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/s4.jpg; c2/s5.jpg", "note": "Competitor images use closure diagrams and four macro feature cells."},
+        {"type": "inference", "source": "usability analysis", "note": "Mechanics can be answered more clearly with product-first evidence than with a distant model scene."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/产品规格 : 变体清单.txt", "note": "Show the approved hinged segmented ring, flush seam, and press-to-close mechanism; do not invent a closure diagram from the image alone."}
+      ]
+    },
+    {
+      "role_id": "wear_style",
+      "image_type": "secondary",
+      "decision_stage": "projection",
+      "consumer_question": "What visual styles can the product create?",
+      "objective": "Show a controlled set of approved configurations while keeping the product identifiable.",
+      "priority": "P1",
+      "expected_visual_evidence": ["distinct styling states", "same anatomy/crop for comparison", "product configuration clarity", "short style labels"],
+      "suitable_subject": ["nose/ear close-up", "three-panel style grid", "approved product stack"],
+      "whether_model_required": true,
+      "whether_product_macro_required": true,
+      "whether_text_overlay_required": true,
+      "whether_real_asset_required": true,
+      "renderer_preference": "MODEL_PROOF_COMPOSITE",
+      "acceptance_principles": ["style differences are visible without changing product identity", "product remains sharp and legible", "no extra pieces are invented", "labels are programmatic"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/s5.jpg; c2/s3.jpg", "note": "The sets connect product placement, color/size, and three close-up looks."},
+        {"type": "inference", "source": "projection analysis", "note": "A controlled close-up triptych supports self-projection while retaining proof value."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/品牌视觉策略.txt", "note": "Use the three approved configurations and G23Studio's clean niche-piercing, medical-grade-safety plus street-style direction."}
+      ]
+    },
+    {
+      "role_id": "lifestyle_context",
+      "image_type": "storefront",
+      "decision_stage": "aspiration",
+      "consumer_question": "Can I imagine wearing it across everyday contexts and occasions?",
+      "objective": "Create context and self-projection after identity and fit evidence are established.",
+      "priority": "P2",
+      "expected_visual_evidence": ["recognizable product presence", "distinct contexts", "consistent brand-safe styling", "natural human/product relationship"],
+      "suitable_subject": ["portrait lifestyle", "2+1 image grid", "everyday scene"],
+      "whether_model_required": true,
+      "whether_product_macro_required": false,
+      "whether_text_overlay_required": true,
+      "whether_real_asset_required": true,
+      "renderer_preference": "LIFESTYLE_COMPOSITE",
+      "acceptance_principles": ["context supports rather than hides the product", "product remains plausible and identifiable", "model is not treated as product identity", "scene does not make unapproved performance claims"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/s4.jpg; c2/s4.jpg", "note": "Competitor sets use wider portraits and lifestyle backdrops for style and occasion cues."},
+        {"type": "inference", "source": "aspiration analysis", "note": "Wider scenes belong after proof-oriented images because product scale is smaller."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/品牌视觉策略.txt", "note": "Use clean, low-saturation gift-ready packaging language and restrained street-style contexts; product remains canonical."}
+      ]
+    },
+    {
+      "role_id": "value_packaging",
+      "image_type": "secondary",
+      "decision_stage": "confidence",
+      "consumer_question": "What verified benefits justify choosing this product?",
+      "objective": "Present approved benefits as scannable evidence blocks next to the product.",
+      "priority": "P1",
+      "expected_visual_evidence": ["product/benefit connection", "four to five concise blocks", "source-linked wording", "visible supporting detail where available"],
+      "suitable_subject": ["product hero", "benefit stack", "evidence icon row"],
+      "whether_model_required": false,
+      "whether_product_macro_required": false,
+      "whether_text_overlay_required": true,
+      "whether_real_asset_required": true,
+      "renderer_preference": "PROGRAMMATIC_COMPOSITE",
+      "acceptance_principles": ["every claim has an approved source", "numbers are programmatic", "comparison language is disabled unless evidenced", "benefits do not obscure the product"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/s1.jpg; c2/s1.jpg; c2/s2.jpg", "note": "Competitor images organize benefits and comparisons into repeated blocks or rows."},
+        {"type": "inference", "source": "information-density analysis", "note": "A dedicated benefit stack improves scanability when exact copy is rendered programmatically."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/审核通过的卖点及佐证材料.txt", "note": "Claims must resolve to registered claim IDs; prohibited medical exaggeration, permanent-fade, and zero-risk allergy language remains disabled."}
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "template_id": "PRODUCT_IDENTITY_MAIN",
+      "role_id": "product_identity",
+      "layout": {
+        "canvas": "1:1 or marketplace-approved square; white field",
+        "major_regions": ["two or three canonical product slots", "optional small worn-proof slot"],
+        "subject_location": "product slots occupy the central 70-85%; optional worn proof sits in a corner at 10-18%",
+        "text_location": "none",
+        "information_hierarchy": ["product silhouette", "approved variant relationship", "optional worn scale cue"],
+        "whitespace": "clean white breathing room around each product",
+        "visual_density": "low",
+        "relative_proportions": "product area dominant; worn proof subordinate"
+      },
+      "result": {
+        "user_should_see": "A clean, immediately identifiable first-party product family with the approved variant count.",
+        "product_state": "isolated, fully visible, canonical finish and geometry",
+        "required_relationships": ["variants are separated enough to read individually", "worn cue is visibly secondary"],
+        "required_visual_evidence": ["canonical product views", "approved assortment"]
+      },
+      "style": {
+        "camera_feel": "controlled product photography",
+        "lighting": "bright diffuse studio light with restrained contact shadows",
+        "background": "white",
+        "color_treatment": "neutral and color-accurate",
+        "realism": "commercial photorealism",
+        "commercial_character": "clear, catalog-first, low ornament"
+      },
+      "product_reference": {
+        "policy": "CANONICAL_PRODUCT",
+        "required_assets": ["asset_p1_gold_3pcs", "product.variants", "product.included_set"],
+        "identity_source": "first-party canonical product assets only",
+        "forbidden_identity_sources": ["c1/m1.jpg", "c2/m1.jpg", "any competitor product image", "generated product geometry"]
+      },
+      "style_reference": "Optional style cue from neutral studio lighting in c1/m1.jpg and c2/m1.jpg only.",
+      "layout_reference": "Abstracted three-slot product spread with subordinate worn-proof slot from c1/m1.jpg and c2/m1.jpg.",
+      "model_layer": {
+        "policy_id": "NONE",
+        "required": false,
+        "crop": "no model",
+        "task": "none",
+        "product_scale": "dominant",
+        "product_identity_proof": false
+      },
+      "information_layer": {
+        "allowed_text": [],
+        "text_rendering": [],
+        "data_policy": "No text; assortment is expressed through canonical assets.",
+        "forbidden_content": ["competitor brand or logo", "unapproved variant count", "generated measurements"]
+      },
+      "renderer_policy": {
+        "mode": "PRODUCT_ASSET_COMPOSITE",
+        "asset_stage": "select and place canonical assets",
+        "generation_stage": "optional background cleanup only; do not generate product geometry",
+        "text_stage": "none"
+      },
+      "generation_constraints": ["do not copy competitor product geometry or finish", "do not add accessories or extra pieces", "keep product identity sharper than any worn cue"],
+      "acceptance_checks": ["product identity", "approved assortment count", "white background and low density", "no competitor identity", "optional worn cue is subordinate"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/m1.jpg; c2/m1.jpg", "note": "Both sets use a low-density white product spread with a small worn cue."},
+        {"type": "inference", "source": "template conversion", "note": "The structure is reusable after product slots replace competitor products."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/p1.jpg", "note": "Use the registered Gold-3PCS canonical asset and approved three-style set."}
+      ]
+    },
+    {
+      "template_id": "CONTENTS_SET",
+      "role_id": "contents",
+      "layout": {
+        "canvas": "4:5 or square secondary canvas",
+        "major_regions": ["header region", "separated component row or matrix", "optional short labels"],
+        "subject_location": "canonical components centered in the middle 60-70%",
+        "text_location": "header top; labels directly below or beside mapped assets",
+        "information_hierarchy": ["what is included", "component identity", "option relationship"],
+        "whitespace": "consistent gaps between product slots",
+        "visual_density": "medium",
+        "relative_proportions": "product grouping 65%; labels and breathing room 35%"
+      },
+      "result": {
+        "user_should_see": "The exact included set and how its pieces relate.",
+        "product_state": "separated and fully inspectable",
+        "required_relationships": ["each label maps to one canonical asset", "optional items are visually distinguished from included items"],
+        "required_visual_evidence": ["complete set", "component separation"]
+      },
+      "style": {
+        "camera_feel": "straightforward catalog macro",
+        "lighting": "soft directional light",
+        "background": "neutral white or approved warm surface",
+        "color_treatment": "accurate finish and restrained contrast",
+        "realism": "commercial photorealism",
+        "commercial_character": "scannable and inventory-clear"
+      },
+      "product_reference": {
+        "policy": "CANONICAL_PRODUCT",
+        "required_assets": ["asset_p1_gold_3pcs", "product.included_set", "product.variants"],
+        "identity_source": "first-party canonical product assets only",
+        "forbidden_identity_sources": ["competitor grouped product photos", "generated substitute components", "competitor labels"]
+      },
+      "style_reference": "Soft warm surface treatment may be abstracted from c1/s1.jpg and c2/s1.jpg.",
+      "layout_reference": "Centered grouping and mapped label pattern abstracted from c1/s1.jpg and c2/s1.jpg.",
+      "model_layer": {
+        "policy_id": "NONE",
+        "required": false,
+        "crop": "no model",
+        "task": "none",
+        "product_scale": "large",
+        "product_identity_proof": false
+      },
+      "information_layer": {
+        "allowed_text": ["included/optional labels", "variant names from approved catalog"],
+        "text_rendering": [{"content_type": "contents labels", "mode": "programmatic", "source_requirement": "approved contents manifest"}],
+        "data_policy": "Render exact inclusion and option data programmatically.",
+        "forbidden_content": ["invented set contents", "competitor names", "unverified quantity"]
+      },
+      "renderer_policy": {
+        "mode": "PRODUCT_ASSET_COMPOSITE",
+        "asset_stage": "select canonical assets from contents manifest",
+        "generation_stage": "optional surface/background only",
+        "text_stage": "programmatic labels"
+      },
+      "generation_constraints": ["do not generate missing components", "preserve one-to-one mapping between asset and label", "keep components separated enough to count"],
+      "acceptance_checks": ["complete contents", "asset-label mapping", "no extra product", "readable hierarchy", "canonical geometry"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/m1.jpg; c2/m1.jpg; c1/s1.jpg; c2/s1.jpg", "note": "Competitor sets group multiple products and use a clear product-to-information hierarchy."},
+        {"type": "inference", "source": "template conversion", "note": "A separate contents template reduces information load on the main image."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/产品规格 : 变体清单.txt", "note": "Use the approved classic, double-layer, and CZ accent contents."}
+      ]
+    },
+    {
+      "template_id": "MATERIAL_EVIDENCE",
+      "role_id": "material_evidence",
+      "layout": {
+        "canvas": "4:5 portrait secondary canvas",
+        "major_regions": ["headline band", "large product macro", "evidence document or source panel", "short claim blocks"],
+        "subject_location": "product macro occupies 35-45%; evidence panel occupies 35-45%",
+        "text_location": "headline top; source-linked claims adjacent to evidence",
+        "information_hierarchy": ["approved claim", "visible product finish", "supporting source"],
+        "whitespace": "clear separation between product and document",
+        "visual_density": "high",
+        "relative_proportions": "evidence and product balanced; document never fully hides product"
+      },
+      "result": {
+        "user_should_see": "A visible product finish connected to an approved material or test source.",
+        "product_state": "macro finish view beside real evidence",
+        "required_relationships": ["claim maps to a source", "evidence is visually legible enough to inspect"],
+        "required_visual_evidence": ["canonical product macro", "approved evidence asset", "source identifier"]
+      },
+      "style": {
+        "camera_feel": "macro product plus documentary evidence",
+        "lighting": "soft directional macro light; flat, neutral document exposure",
+        "background": "neutral studio field",
+        "color_treatment": "accurate finish; restrained accent color",
+        "realism": "photorealistic composite",
+        "commercial_character": "proof-oriented and transparent"
+      },
+      "product_reference": {
+        "policy": "CANONICAL_PRODUCT",
+        "required_assets": ["asset_p1_gold_3pcs", "claim_f136_titanium", "claim_gold_pvd", "claim_cz"],
+        "identity_source": "first-party canonical product assets and approved evidence assets",
+        "forbidden_identity_sources": ["competitor test report", "competitor material grade", "generated certificate or result"]
+      },
+      "style_reference": "Document-over-product evidence hierarchy may be abstracted from c1/s3.jpg.",
+      "layout_reference": "Product/evidence split abstracted from c1/s3.jpg and the benefit-stack rhythm in c2/s1.jpg.",
+      "model_layer": {
+        "policy_id": "NONE",
+        "required": false,
+        "crop": "no model",
+        "task": "none",
+        "product_scale": "large",
+        "product_identity_proof": false
+      },
+      "information_layer": {
+        "allowed_text": ["approved material name", "approved test statement", "source identifier"],
+        "text_rendering": [
+          {"content_type": "claim and source labels", "mode": "programmatic", "source_requirement": "approved claim registry and evidence record"},
+          {"content_type": "document pixels", "mode": "generative", "source_requirement": "real approved document asset only; never regenerate factual text"}
+        ],
+        "data_policy": "All claims, dates, measurements, and test outcomes are source-linked and programmatic.",
+        "forbidden_content": ["fabricated pass/fail result", "unverified hypoallergenic or skin claim", "competitor report details"]
+      },
+      "renderer_policy": {
+        "mode": "EVIDENCE_COMPOSITE",
+        "asset_stage": "select canonical macro and real evidence assets",
+        "generation_stage": "background and non-factual surface treatment only",
+        "text_stage": "programmatic claim and source labels"
+      },
+      "generation_constraints": ["do not hallucinate certificates", "do not replace a real document with generated text", "keep product finish color-accurate"],
+      "acceptance_checks": ["product identity", "evidence source present", "claim-source mapping", "document legibility", "no unverified claim", "no competitor identity"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/s3.jpg; c2/s1.jpg", "note": "Competitor images foreground material evidence through a report or stacked claims."},
+        {"type": "inference", "source": "template conversion", "note": "The reusable structure is evidence packaging, not the competitor's claim content."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/审核通过的卖点及佐证材料.txt", "note": "Use registered material and finish claims; no certificate image was supplied."}
+      ]
+    },
+    {
+      "template_id": "SIZE_CHOICE_PROOF",
+      "role_id": "size_choice",
+      "layout": {
+        "canvas": "1:1 or 4:5 comparison canvas",
+        "major_regions": ["short title", "two to four equal macro proof cells", "programmatic size labels"],
+        "subject_location": "nose/ear/target anatomy fills each proof cell",
+        "text_location": "title above; labels within reserved lower band of each cell",
+        "information_hierarchy": ["body relationship", "size difference", "selection cue"],
+        "whitespace": "equal gutters and label bands",
+        "visual_density": "medium",
+        "relative_proportions": "proof cells 80%; text bands 20%"
+      },
+      "result": {
+        "user_should_see": "Comparable body-scale states that make size selection easier.",
+        "product_state": "worn on the approved placement with a clean, visible outline",
+        "required_relationships": ["same placement/camera logic across cells", "size labels map to the visible state"],
+        "required_visual_evidence": ["anatomical scale", "multiple approved sizes", "clear edge/closure"]
+      },
+      "style": {
+        "camera_feel": "beauty macro with measurement discipline",
+        "lighting": "soft diffuse light with enough edge contrast",
+        "background": "neutral skin/background",
+        "color_treatment": "natural skin and accurate product finish",
+        "realism": "photorealistic close-up",
+        "commercial_character": "proof-first, comparison-clear"
+      },
+      "product_reference": {
+        "policy": "CANONICAL_PRODUCT",
+        "required_assets": ["asset_p1_gold_3pcs", "product.specifications.gauges", "product.specifications.inner_diameter", "product.approved_placements"],
+        "identity_source": "canonical product assets; model is only scale context",
+        "forbidden_identity_sources": ["competitor nose/ear imagery", "competitor size labels", "generated alternate size geometry"]
+      },
+      "style_reference": "Soft close-up beauty light abstracted from c1/s2.jpg and c2/s3.jpg.",
+      "layout_reference": "Equal comparison panels abstracted from c1/s2.jpg and c2/s3.jpg.",
+      "model_layer": {
+        "policy_id": "PRODUCT_PROOF_MODEL",
+        "required": true,
+        "crop": "macro close-up of target anatomy; nose/ear only as approved by placement",
+        "task": "provide body-scale reference",
+        "product_scale": "large and clearly inspectable",
+        "product_identity_proof": false
+      },
+      "information_layer": {
+        "allowed_text": ["approved size names", "approved measurements", "short selection cue"],
+        "text_rendering": [{"content_type": "size labels and measurements", "mode": "programmatic", "source_requirement": "approved size table"}],
+        "data_policy": "Measurements and recommendation logic are programmatic.",
+        "forbidden_content": ["competitor exact measurements", "unapproved placement compatibility", "generated anatomy labels"]
+      },
+      "renderer_policy": {
+        "mode": "MODEL_PROOF_COMPOSITE",
+        "asset_stage": "select canonical product assets and size records",
+        "generation_stage": "generate/select controlled proof model layer, then composite product",
+        "text_stage": "programmatic labels"
+      },
+      "generation_constraints": ["same crop logic across cells", "product must remain sharper than model skin", "do not add piercings or accessories", "do not alter diameter to satisfy a label"],
+      "acceptance_checks": ["product identity", "same-placement comparability", "size-label accuracy", "model/product contact", "product legibility", "no extra product"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/s2.jpg; c1/s5.jpg", "note": "Competitor images directly use close-up body context and labels for size/placement."},
+        {"type": "inference", "source": "template conversion", "note": "The equal-panel structure is reusable, while all product and data content must be replaced."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/产品规格 : 变体清单.txt", "note": "Use approved 18G/20G, 8mm, and placement values programmatically."}
+      ]
+    },
+    {
+      "template_id": "STRUCTURE_USE_DETAIL",
+      "role_id": "structure_use",
+      "layout": {
+        "canvas": "4:5 portrait secondary canvas",
+        "major_regions": ["short title", "two by two macro/detail cells", "numbered caption bands"],
+        "subject_location": "one verified construction feature per cell",
+        "text_location": "caption band inside each cell; title at top",
+        "information_hierarchy": ["mechanism/feature", "visual proof", "short use implication"],
+        "whitespace": "thin gutters with clear caption separation",
+        "visual_density": "high",
+        "relative_proportions": "image cells 70-75%; captions 25-30%"
+      },
+      "result": {
+        "user_should_see": "The real closure, edge, layering, or fastening details that support use.",
+        "product_state": "macro and, where needed, open/closed states",
+        "required_relationships": ["each caption maps to the feature shown", "mechanism state is physically plausible"],
+        "required_visual_evidence": ["closure detail", "edge/finish detail", "approved construction feature"]
+      },
+      "style": {
+        "camera_feel": "precise commercial macro",
+        "lighting": "soft directional light with controlled reflections",
+        "background": "neutral warm studio surface",
+        "color_treatment": "finish-accurate and low-glare",
+        "realism": "photorealistic product detail",
+        "commercial_character": "technical but approachable"
+      },
+      "product_reference": {
+        "policy": "CANONICAL_PRODUCT",
+        "required_assets": ["asset_p1_gold_3pcs", "product.specifications.closure", "claim_click_top"],
+        "identity_source": "first-party canonical macro assets",
+        "forbidden_identity_sources": ["competitor closure diagrams", "competitor product macro", "generated mechanism geometry"]
+      },
+      "style_reference": "Soft macro surface and detail framing abstracted from c2/s5.jpg.",
+      "layout_reference": "2x2 numbered detail grid abstracted from c2/s5.jpg; closure comparison logic abstracted from c1/s4.jpg.",
+      "model_layer": {
+        "policy_id": "NONE",
+        "required": false,
+        "crop": "no model",
+        "task": "none",
+        "product_scale": "large macro",
+        "product_identity_proof": false
+      },
+      "information_layer": {
+        "allowed_text": ["verified feature names", "short use descriptions", "step numbers"],
+        "text_rendering": [{"content_type": "feature captions and steps", "mode": "programmatic", "source_requirement": "approved product specification"}],
+        "data_policy": "Technical labels are programmatic and source-linked.",
+        "forbidden_content": ["unverified comfort guarantee", "competitor comparison", "generated dimensions"]
+      },
+      "renderer_policy": {
+        "mode": "PRODUCT_MACRO_COMPOSITE",
+        "asset_stage": "select canonical macro assets and geometry records",
+        "generation_stage": "optional neutral background only",
+        "text_stage": "programmatic captions"
+      },
+      "generation_constraints": ["show only verified states", "preserve closure geometry", "avoid reflections that hide the mechanism", "do not add or remove stones/components"],
+      "acceptance_checks": ["product identity", "mechanism accuracy", "macro sharpness", "caption-feature mapping", "no extra product", "no copied competitor diagram"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/s4.jpg; c2/s5.jpg", "note": "Competitor sets use mechanism diagrams and a 2x2 macro detail grid."},
+        {"type": "inference", "source": "template conversion", "note": "The structure is reusable as generic evidence cells without competitor product geometry."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/产品规格 : 变体清单.txt", "note": "Use the registered closure specification; a dedicated closure macro is still needed for final proof."}
+      ]
+    },
+    {
+      "template_id": "WEAR_STYLE_TRIPTYCH",
+      "role_id": "wear_style",
+      "layout": {
+        "canvas": "1:1 or 4:5 triptych",
+        "major_regions": ["three equal close-up panels", "short style label band per panel", "optional closing line"],
+        "subject_location": "same target anatomy and comparable crop in all panels",
+        "text_location": "lower label band inside each panel",
+        "information_hierarchy": ["visible configuration", "style name", "short descriptor"],
+        "whitespace": "equal gutters and consistent panel margins",
+        "visual_density": "medium",
+        "relative_proportions": "image panels 80%; labels 20%"
+      },
+      "result": {
+        "user_should_see": "Three approved configurations that read as meaningfully different styling directions.",
+        "product_state": "worn close-up with clear product outline",
+        "required_relationships": ["same crop supports comparison", "style label maps to one configuration"],
+        "required_visual_evidence": ["three distinct looks", "product readability", "consistent anatomy"]
+      },
+      "style": {
+        "camera_feel": "beauty editorial close-up",
+        "lighting": "soft beauty light, controlled highlights on product",
+        "background": "simple neutral skin/background",
+        "color_treatment": "natural with restrained styling accents",
+        "realism": "photorealistic",
+        "commercial_character": "expressive but product-led"
+      },
+      "product_reference": {
+        "policy": "CANONICAL_PRODUCT",
+        "required_assets": ["asset_p1_gold_3pcs", "product.included_set", "claim_three_styles", "brand.visual_strategy"],
+        "identity_source": "canonical product assets; model supports styling projection",
+        "forbidden_identity_sources": ["competitor model or product", "competitor look names", "unapproved stacking"]
+      },
+      "style_reference": "Close-up styling and warm beauty treatment abstracted from c2/s3.jpg.",
+      "layout_reference": "Equal three-panel look grid abstracted from c2/s3.jpg.",
+      "model_layer": {
+        "policy_id": "STYLE_MODEL",
+        "required": true,
+        "crop": "half-face or target-anatomy close-up",
+        "task": "support style self-projection",
+        "product_scale": "medium-large and readable",
+        "product_identity_proof": false
+      },
+      "information_layer": {
+        "allowed_text": ["approved look names", "short style descriptors"],
+        "text_rendering": [{"content_type": "look labels and descriptors", "mode": "programmatic", "source_requirement": "approved styling manifest"}],
+        "data_policy": "Look taxonomy and descriptions are programmatic.",
+        "forbidden_content": ["competitor style names", "unapproved product combinations", "unreadable generated labels"]
+      },
+      "renderer_policy": {
+        "mode": "MODEL_PROOF_COMPOSITE",
+        "asset_stage": "select canonical product configuration per look",
+        "generation_stage": "generate/select controlled style model layer, then composite product",
+        "text_stage": "programmatic labels"
+      },
+      "generation_constraints": ["keep crop comparable", "do not let makeup or hair obscure product", "do not invent extra jewelry", "preserve product finish and shape"],
+      "acceptance_checks": ["product identity", "three distinct approved looks", "panel comparability", "product legibility", "model/product plausibility", "text readability"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/s5.jpg; c2/s3.jpg", "note": "Competitor images connect close-up wear states to style labels."},
+        {"type": "inference", "source": "template conversion", "note": "The triptych is reusable as a style relationship pattern, not a product reference."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/品牌视觉策略.txt", "note": "Use the three approved configurations and G23Studio visual direction."}
+      ]
+    },
+    {
+      "template_id": "LIFESTYLE_MOMENTS",
+      "role_id": "lifestyle_context",
+      "layout": {
+        "canvas": "4:5 portrait or storefront module",
+        "major_regions": ["two smaller portrait scenes", "one wide anchor scene", "short context labels"],
+        "subject_location": "models occupy scene naturally; product remains within a legibility floor",
+        "text_location": "quiet lower image bands or programmatic captions",
+        "information_hierarchy": ["context", "product presence", "style cue"],
+        "whitespace": "image-led with breathing room around captions",
+        "visual_density": "medium",
+        "relative_proportions": "wide anchor scene 50-60%; two smaller scenes share the remainder"
+      },
+      "result": {
+        "user_should_see": "A small range of everyday contexts in which the product remains plausible and recognizable.",
+        "product_state": "worn naturally in approved styling",
+        "required_relationships": ["context supports product", "product is visible in every scene", "scenes differ without changing product identity"],
+        "required_visual_evidence": ["recognizable worn product", "context variation", "consistent styling direction"]
+      },
+      "style": {
+        "camera_feel": "natural portrait/lifestyle photography",
+        "lighting": "window light or controlled ambient scene light",
+        "background": "approved everyday interiors or restrained urban context",
+        "color_treatment": "natural skin, coherent brand treatment, no heavy effects",
+        "realism": "photorealistic",
+        "commercial_character": "aspirational but grounded"
+      },
+      "product_reference": {
+        "policy": "CANONICAL_PRODUCT",
+        "required_assets": ["asset_p1_gold_3pcs", "brand.visual_strategy", "product.approved_placements"],
+        "identity_source": "canonical product assets; model and setting are contextual",
+        "forbidden_identity_sources": ["competitor model", "competitor lifestyle scene as identity", "generated alternate product"]
+      },
+      "style_reference": "Natural portrait language abstracted from c1/s4.jpg and c2/s4.jpg.",
+      "layout_reference": "2+1 editorial grid abstracted from c2/s4.jpg.",
+      "model_layer": {
+        "policy_id": "LIFESTYLE_MODEL",
+        "required": true,
+        "crop": "full-face portrait or wider lifestyle",
+        "task": "support occasion and self-projection",
+        "product_scale": "small-medium with legibility floor",
+        "product_identity_proof": false
+      },
+      "information_layer": {
+        "allowed_text": ["approved context/style labels", "short non-claiming descriptors"],
+        "text_rendering": [{"content_type": "context labels", "mode": "programmatic", "source_requirement": "approved brand/styling direction"}],
+        "data_policy": "Only contextual labels; no factual claims are authored by the image model.",
+        "forbidden_content": ["performance claims implied by scene", "competitor labels", "product too small to inspect"]
+      },
+      "renderer_policy": {
+        "mode": "LIFESTYLE_COMPOSITE",
+        "asset_stage": "select canonical product/worn assets and approved styling",
+        "generation_stage": "generate/select lifestyle model and scene; preserve canonical product identity",
+        "text_stage": "programmatic captions"
+      },
+      "generation_constraints": ["product must remain visible in every panel", "do not use atmosphere to hide product errors", "keep model styling consistent with approved direction", "do not imply unsupported use cases"],
+      "acceptance_checks": ["product presence", "model/product plausibility", "scene variation", "context readability", "no competitor identity", "product legibility floor"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/s4.jpg; c2/s4.jpg", "note": "Competitor sets use portrait/lifestyle scenes for style and occasion cues."},
+        {"type": "inference", "source": "template conversion", "note": "The 2+1 grid is reusable for context while product identity remains canonical."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/品牌视觉策略.txt", "note": "Use clean low-saturation packaging language and restrained street-style context."}
+      ]
+    },
+    {
+      "template_id": "VALUE_PACKAGING_STACK",
+      "role_id": "value_packaging",
+      "layout": {
+        "canvas": "4:5 portrait secondary canvas",
+        "major_regions": ["headline", "product region", "four to five stacked evidence blocks"],
+        "subject_location": "product in upper or left third; evidence blocks in remaining clear region",
+        "text_location": "headline top; exact blocks in reserved rows",
+        "information_hierarchy": ["approved value proposition", "product proof", "supporting benefits"],
+        "whitespace": "consistent row height and spacing",
+        "visual_density": "high",
+        "relative_proportions": "product 35-45%; information blocks 45-55%"
+      },
+      "result": {
+        "user_should_see": "A scannable set of verified benefits connected to the visible product.",
+        "product_state": "clear hero or macro-lite product view",
+        "required_relationships": ["each benefit is source-backed", "benefit blocks do not obscure product"],
+        "required_visual_evidence": ["visible product", "approved benefit stack", "optional supporting detail"]
+      },
+      "style": {
+        "camera_feel": "clean editorial product communication",
+        "lighting": "soft studio light",
+        "background": "approved neutral brand surface",
+        "color_treatment": "restrained, high-contrast text, accurate product finish",
+        "realism": "photorealistic product with programmatic graphic layer",
+        "commercial_character": "structured and evidence-led"
+      },
+      "product_reference": {
+        "policy": "CANONICAL_PRODUCT",
+        "required_assets": ["asset_p1_gold_3pcs", "claims", "brand.forbidden_claims"],
+        "identity_source": "first-party canonical product asset",
+        "forbidden_identity_sources": ["competitor benefit image", "competitor wording", "generated numeric claim"]
+      },
+      "style_reference": "Warm neutral benefit-poster treatment abstracted from c2/s1.jpg.",
+      "layout_reference": "Stacked block hierarchy abstracted from c2/s1.jpg and c2/s2.jpg.",
+      "model_layer": {
+        "policy_id": "NONE",
+        "required": false,
+        "crop": "no model",
+        "task": "none",
+        "product_scale": "medium-large",
+        "product_identity_proof": false
+      },
+      "information_layer": {
+        "allowed_text": ["approved headline", "approved benefit labels", "approved short explanations"],
+        "text_rendering": [{"content_type": "all claims, numbers, and labels", "mode": "programmatic", "source_requirement": "approved claim registry"}],
+        "data_policy": "Every factual string is rendered from a source-linked data object.",
+        "forbidden_content": ["unverified comparison", "competitor negatives", "generated claim copy", "unsupported superlatives"]
+      },
+      "renderer_policy": {
+        "mode": "PROGRAMMATIC_COMPOSITE",
+        "asset_stage": "select canonical product asset",
+        "generation_stage": "optional background/surface only",
+        "text_stage": "programmatic layout, copy, icons, and numbers"
+      },
+      "generation_constraints": ["do not ask the image model to render factual text", "disable competitor comparison by default", "preserve product visibility", "do not add decorative claims"],
+      "acceptance_checks": ["claim-source mapping", "product identity", "text readability", "information hierarchy", "no competitor identity", "no unsupported claim"],
+      "source_basis": [
+        {"type": "competitor_visual_fact", "source": "c1/s1.jpg; c2/s1.jpg; c2/s2.jpg", "note": "Competitor sets use benefit blocks and comparison rows."},
+        {"type": "inference", "source": "template conversion", "note": "The reusable structure is a programmatic evidence stack, not competitor copy."},
+        {"type": "existing_strategy_requirement", "source": "data/first_party_catalog.json; p1/审核通过的卖点及佐证材料.txt", "note": "Use registered claim IDs only; comparative claims remain disabled without comparative evidence."}
+      ]
+    }
+  ],
+  "reference_policies": [
+    {
+      "policy_id": "CANONICAL_PRODUCT",
+      "purpose": "Supply first-party product identity, geometry, finish, count, and approved configurations.",
+      "allowed_effect": ["product shape", "product finish", "component count", "approved product state"],
+      "forbidden_effect": ["layout invention", "competitor identity", "unapproved claims", "generated substitute product"],
+      "source_types": ["first-party product photo", "first-party product render", "approved product manifest"]
+    },
+    {
+      "policy_id": "LAYOUT_REFERENCE",
+      "purpose": "Supply abstract spatial relationships and composition.",
+      "allowed_effect": ["region placement", "relative scale", "panel count", "gutter and whitespace rhythm", "subject relationship"],
+      "forbidden_effect": ["product geometry", "brand identity", "competitor text", "competitor model identity"],
+      "source_types": ["abstracted competitor blueprint", "wireframe", "approved layout spec"]
+    },
+    {
+      "policy_id": "STYLE_REFERENCE",
+      "purpose": "Supply photography language and non-identity visual treatment.",
+      "allowed_effect": ["camera feel", "lighting direction", "background mood", "color treatment", "depth of field"],
+      "forbidden_effect": ["product shape", "logo", "exact model identity", "exact competitor styling copy"],
+      "source_types": ["style board", "abstracted competitor crop", "approved brand photography reference"]
+    },
+    {
+      "policy_id": "INFORMATION_REFERENCE",
+      "purpose": "Supply information hierarchy and block organization.",
+      "allowed_effect": ["headline-to-proof hierarchy", "number of information blocks", "label placement", "comparison row rhythm"],
+      "forbidden_effect": ["competitor claims", "competitor numbers", "test outcomes", "generated factual copy"],
+      "source_types": ["abstracted information blueprint", "approved information architecture"]
+    },
+    {
+      "policy_id": "COMPETITOR_PRODUCT_IDENTITY",
+      "purpose": "Explicitly deny competitor product identity as a generation source.",
+      "allowed_effect": [],
+      "forbidden_effect": ["any product shape", "any product finish", "any component count", "any logo or brand identity"],
+      "source_types": ["competitor image only as evidence, never as identity reference"]
+    }
+  ],
+  "model_layers": [
+    {"policy_id": "NONE", "consumer_question": "Can I inspect the product itself?", "product_scale": "dominant", "crop": "no model", "visual_priority": "product", "acceptable_generation_freedom": "none", "reference_policy": "CANONICAL_PRODUCT"},
+    {"policy_id": "PRODUCT_PROOF_MODEL", "consumer_question": "What will the product look like and how large will it be on the body?", "product_scale": "large", "crop": "macro close-up", "visual_priority": "product proof over expression", "acceptable_generation_freedom": "low", "reference_policy": "CANONICAL_PRODUCT"},
+    {"policy_id": "STYLE_MODEL", "consumer_question": "Which styling direction can I imagine for myself?", "product_scale": "medium-large", "crop": "half-face or close-up", "visual_priority": "product plus styling", "acceptable_generation_freedom": "medium for human styling, low for product", "reference_policy": "CANONICAL_PRODUCT"},
+    {"policy_id": "LIFESTYLE_MODEL", "consumer_question": "Can I imagine wearing it in an everyday context?", "product_scale": "small-medium with legibility floor", "crop": "portrait or wider lifestyle", "visual_priority": "context with product present", "acceptable_generation_freedom": "higher for environment, low for product", "reference_policy": "CANONICAL_PRODUCT"}
+  ],
+  "selection_rules": [
+    {"image_task": "product_identity", "select_template_id": "PRODUCT_IDENTITY_MAIN", "model_layer": "NONE", "required_reference_policies": ["CANONICAL_PRODUCT"]},
+    {"image_task": "contents", "select_template_id": "CONTENTS_SET", "model_layer": "NONE", "required_reference_policies": ["CANONICAL_PRODUCT"]},
+    {"image_task": "material_evidence", "select_template_id": "MATERIAL_EVIDENCE", "model_layer": "NONE", "required_reference_policies": ["CANONICAL_PRODUCT", "INFORMATION_REFERENCE"]},
+    {"image_task": "size_choice", "select_template_id": "SIZE_CHOICE_PROOF", "model_layer": "PRODUCT_PROOF_MODEL", "required_reference_policies": ["CANONICAL_PRODUCT", "LAYOUT_REFERENCE"]},
+    {"image_task": "structure_use", "select_template_id": "STRUCTURE_USE_DETAIL", "model_layer": "NONE", "required_reference_policies": ["CANONICAL_PRODUCT", "INFORMATION_REFERENCE"]},
+    {"image_task": "wear_style", "select_template_id": "WEAR_STYLE_TRIPTYCH", "model_layer": "STYLE_MODEL", "required_reference_policies": ["CANONICAL_PRODUCT", "LAYOUT_REFERENCE"]},
+    {"image_task": "lifestyle_context", "select_template_id": "LIFESTYLE_MOMENTS", "model_layer": "LIFESTYLE_MODEL", "required_reference_policies": ["CANONICAL_PRODUCT", "LAYOUT_REFERENCE"]},
+    {"image_task": "value_packaging", "select_template_id": "VALUE_PACKAGING_STACK", "model_layer": "NONE", "required_reference_policies": ["CANONICAL_PRODUCT", "INFORMATION_REFERENCE"]}
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "schema": "CompetitorSnapshot[]",
+  "source": "synthetic public demo fixture; no live customer data",
+  "items": [
+    {"competitor_id": "demo-competitor-1", "url": "https://example.com/products/hinged-ring-a", "asin": null, "title": "Example hinged titanium ring", "bullet_points": ["Hypoallergenic material callout", "Multiple sizes shown"], "description": "Synthetic evidence for local demo", "rating": 4.2, "price": 19.99, "reviews": [{"rating": 2, "text": "Size was hard to choose"}], "negative_reviews": [{"rating": 2, "text": "Size was hard to choose"}], "neutral_reviews": [], "positive_reviews": [], "images": [], "crawl_status": "completed", "raw_source": {"synthetic": true}},
+    {"competitor_id": "demo-competitor-2", "url": "https://example.com/products/hinged-ring-b", "asin": null, "title": "Example 3-piece ring set", "bullet_points": ["Three styles in one set", "Lifestyle imagery"], "description": "Synthetic evidence for local demo", "rating": 4.0, "price": 21.99, "reviews": [], "negative_reviews": [], "neutral_reviews": [], "positive_reviews": [], "images": [], "crawl_status": "completed", "raw_source": {"synthetic": true}}
+  ]
+}

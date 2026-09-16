@@ -1,0 +1,18 @@
+{
+  "policy_id": "openai-gpt-image-2-default",
+  "model_id": "gpt-image-2",
+  "size": "1K",
+  "number_of_images": 1,
+  "watermark": false,
+  "enable_sequential": false,
+  "thinking_mode": false,
+  "reference_strategy": "canonical_first",
+  "retry": {"max_attempts": 3},
+  "timeout_seconds": 600,
+  "poll_interval_seconds": 0,
+  "experimental_hints": {
+    "quality": "low",
+    "output_format": "png",
+    "partial_images": 3
+  }
+}

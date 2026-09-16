@@ -1,0 +1,18 @@
+{
+  "product_id": "DEMO_ASTMF136_HINGED_RING_3PCS",
+  "sku": "DEMO-GOLD-3PCS",
+  "product_name": "Demo ASTM F136 Titanium Hinged Ring 3PCS",
+  "category": "piercing jewelry",
+  "material": {"base": "ASTM F136 implant-grade titanium", "finish": "18K Gold PVD", "stone": "AAAAA cubic zirconia"},
+  "dimensions": {"gauges": ["18G", "20G"], "inner_diameter": "8mm"},
+  "variants": [{"variant_id": "GOLD-3PCS", "included_count": 3}],
+  "package_contents": ["classic hoop", "double-layer hoop", "CZ accent hoop"],
+  "product_features": ["hinged segmented ring", "flush seam", "press-to-close clasp"],
+  "verified_claims": [
+    {"kind": "CLAIM", "text": "ASTM F136 implant-grade titanium", "source": "examples/demo_sku/product.json"},
+    {"kind": "CLAIM", "text": "18K Gold PVD finish", "source": "examples/demo_sku/product.json"}
+  ],
+  "product_images": ["examples/demo_sku/product.svg"],
+  "source": ["public demo fixture"],
+  "version": 1
+}

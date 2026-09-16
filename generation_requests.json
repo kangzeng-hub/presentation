@@ -1,0 +1,873 @@
+{
+  "generation_version": "1.0.0",
+  "product_id": "G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS",
+  "requests": [
+    {
+      "generation_id": "gen_image_01",
+      "image_id": "image_01",
+      "role": "product_main_image",
+      "template_id": "PRODUCT_IDENTITY_MAIN",
+      "product_id": "G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS",
+      "reference_assets": [
+        {
+          "asset_id": "asset_p1_gold_3pcs",
+          "path": "examples/demo_sku/product.svg",
+          "role": "product_identity_reference",
+          "allowed_for_generation": true,
+          "purpose": "product identity",
+          "approved_uses": [
+            "product identity",
+            "contents",
+            "finish evidence",
+            "style configuration reference"
+          ]
+        }
+      ],
+      "generation_goal": "What is the product and its included set?",
+      "prompt": "[ROLE]\nOptimization role: product_main_image\nOptimization action: KEEP_LAYOUT\nOptimization objective: Replace all Chinese copy with natural English without changing the existing product composition.\nCompile one image whose purchase decision question is: What is the product and its included set?\nThe customer need is: Keep the main product presentation while fixing language.\n[PRODUCT]\nUse only product G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS: ASTM F136 钛合金铰链鼻中隔环鼻圈 3 件套.\nPreserve the exact first-party product shape, count, configuration, and finish from the canonical reference.\n[REFERENCE]\nUse canonical asset asset_p1_gold_3pcs at examples/demo_sku/product.svg for product identity; do not substitute competitor or invented product geometry.\n[LAYOUT]\nFollow resolved template PRODUCT_IDENTITY_MAIN; layout: 1:1 or marketplace-approved square; white field.\nComposition regions: two or three canonical product slots; optional small worn-proof slot.\n[VISUAL HIERARCHY]\n1. product silhouette\n2. approved variant relationship\n3. optional worn scale cue\n[REQUIRED FACTS]\nOnly communicate this catalog fact: ASTM F136 钛合金铰链鼻中隔环鼻圈 3 件套\nOnly communicate this catalog fact: Gold-3PCS\nOnly communicate this catalog fact: 3PCS\nOnly communicate this catalog fact: classic hoop\nOnly communicate this catalog fact: double-layer hoop\nOnly communicate this catalog fact: CZ accent hoop\nOnly communicate this catalog fact: 钛基底 + 18K 金 PVD 镀层\n[REQUIRED CLAIMS]\n[VISUAL EVIDENCE]\nVisually demonstrate: three actual configurations shown simultaneously and clearly distinguished\nVisually demonstrate: color-accurate metallic finish\nVisually demonstrate: product-dominant white-field presentation\n[TEMPLATE REQUIREMENTS]\nRequired template element: canonical product views\nRequired template element: approved assortment\nRequired template element: three actual configurations shown simultaneously and clearly distinguished\nRequired template element: color-accurate metallic finish\nRequired template element: product-dominant white-field presentation\n[BRAND STYLE]\nUse brand palette/direction: metallic natural finish, 18K PVD gold.\nVisual focus: hinge and flush seam, three-style comparison, worn nose/ear proof, titanium material texture, CZ sparkle.\nStyle constraints: preserve metallic realism, use clean low-saturation surfaces, keep product readable before styling.\nProduct Truth, then visual evidence, then template structure, has priority over styling.\n[ASSET LIMITATIONS]\nDo not infer from the canonical asset: single horizontal composite\nDo not infer from the canonical asset: does not prove worn scale\nDo not infer from the canonical asset: does not prove closure operation\nDo not infer from the canonical asset: does not replace a certificate or test report\n[NEGATIVE CONSTRAINTS]\nDo not include: competitor brand or logo\nDo not include: unapproved variant count\nDo not include: generated measurements\nDo not include: extra jewelry\nDo not include: invented variant\nDo not include: competitor product identity\nDo not include: single horizontal composite\nDo not include: does not prove worn scale\nDo not include: does not prove closure operation\nDo not include: does not replace a certificate or test report\n[OPTIMIZATION CONTRACT]\nPRESERVE_EXISTING_COMPOSITION\nPreserve current composition, product placement, visual hierarchy, and layout. Only perform explicitly requested changes.\nMust preserve: current product arrangement\nMust preserve: current layout\nMust preserve: current lighting\nMust preserve: current visual hierarchy\nMust change: replace all Chinese copy with natural English\nCopy language: English",
+      "negative_constraints": [
+        "competitor brand or logo",
+        "unapproved variant count",
+        "generated measurements",
+        "extra jewelry",
+        "invented variant",
+        "competitor product identity",
+        "single horizontal composite",
+        "does not prove worn scale",
+        "does not prove closure operation",
+        "does not replace a certificate or test report"
+      ],
+      "required_visual_evidence": [
+        "three actual configurations shown simultaneously and clearly distinguished",
+        "color-accurate metallic finish",
+        "product-dominant white-field presentation"
+      ],
+      "required_facts": [
+        "ASTM F136 钛合金铰链鼻中隔环鼻圈 3 件套",
+        "Gold-3PCS",
+        "3PCS",
+        "classic hoop",
+        "double-layer hoop",
+        "CZ accent hoop",
+        "钛基底 + 18K 金 PVD 镀层"
+      ],
+      "required_claims": [],
+      "asset_limitations": [
+        "single horizontal composite",
+        "does not prove worn scale",
+        "does not prove closure operation",
+        "does not replace a certificate or test report"
+      ],
+      "generation_metadata": {
+        "priority": "P0",
+        "compiler": "deterministic",
+        "source_plan_version": "1.0.0",
+        "role_spec_version": null
+      },
+      "action": "KEEP_LAYOUT",
+      "reference_policy": null,
+      "optimization_contract": {
+        "image_id": "image_01",
+        "role": "product_main_image",
+        "action": "KEEP_LAYOUT",
+        "objective": "Replace all Chinese copy with natural English without changing the existing product composition.",
+        "content_focus": [
+          "three_piece_product_set"
+        ],
+        "must_preserve": [
+          "current product arrangement",
+          "current layout",
+          "current lighting",
+          "current visual hierarchy"
+        ],
+        "must_change": [
+          "replace all Chinese copy with natural English"
+        ],
+        "reference_policy": null,
+        "copy_language": "English",
+        "copy_focus": [
+          "product title",
+          "product labels",
+          "material statement"
+        ],
+        "generation_constraints": [
+          "do not redesign composition",
+          "do not add people",
+          "do not change product quantity",
+          "do not alter product appearance"
+        ],
+        "qa_requirements": [
+          "English copy compliance",
+          "layout preservation"
+        ],
+        "forbidden_topics": []
+      },
+      "copy_language": "English",
+      "canonical_product_assets": [
+        "asset_p1_gold_3pcs"
+      ],
+      "reference_bindings": []
+    },
+    {
+      "generation_id": "gen_image_02",
+      "image_id": "image_02",
+      "role": "on_body_wearing_scene",
+      "template_id": "WEAR_STYLE_TRIPTYCH",
+      "product_id": "G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS",
+      "reference_assets": [
+        {
+          "asset_id": "asset_p1_gold_3pcs",
+          "path": "examples/demo_sku/product.svg",
+          "role": "product_identity_reference",
+          "allowed_for_generation": true,
+          "purpose": "product identity",
+          "approved_uses": [
+            "product identity",
+            "contents",
+            "finish evidence",
+            "style configuration reference"
+          ]
+        },
+        {
+          "asset_id": "pic02",
+          "path": "examples/demo_sku/product.svg",
+          "role": "visual_reference",
+          "allowed_for_generation": true,
+          "purpose": "product identity",
+          "approved_uses": [
+            "on_body wearing",
+            "human scene",
+            "composition reference",
+            "atmosphere"
+          ]
+        }
+      ],
+      "generation_goal": "How does the product look when worn?",
+      "prompt": "[ROLE]\nOptimization role: on_body_wearing_scene\nOptimization action: REBUILD_COMPOSITION\nOptimization objective: Show the realistic on-face effect, expression, and atmosphere of a person wearing the nose ring.\nCompile one image whose purchase decision question is: How does the product look when worn?\nThe customer need is: Show realistic on-body wearing effect.\n[PRODUCT]\nUse only product G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS: ASTM F136 钛合金铰链鼻中隔环鼻圈 3 件套.\nPreserve the exact first-party product shape, count, configuration, and finish from the canonical reference.\n[REFERENCE]\nUse canonical asset asset_p1_gold_3pcs at examples/demo_sku/product.svg for product identity; do not substitute competitor or invented product geometry.\nUse canonical asset pic02 at examples/demo_sku/product.svg for product identity; do not substitute competitor or invented product geometry.\n[LAYOUT]\nFollow resolved template WEAR_STYLE_TRIPTYCH; layout: 1:1 or 4:5 triptych.\nComposition regions: three equal close-up panels; short style label band per panel; optional closing line.\n[VISUAL HIERARCHY]\n1. visible configuration\n2. style name\n3. short descriptor\n[REQUIRED FACTS]\nOnly communicate this catalog fact: classic hoop\nOnly communicate this catalog fact: double-layer hoop\nOnly communicate this catalog fact: CZ accent hoop\n[REQUIRED CLAIMS]\n[VISUAL EVIDENCE]\nVisually demonstrate: on-body appearance\nVisually demonstrate: realistic product-to-face relationship\n[TEMPLATE REQUIREMENTS]\nRequired template element: three distinct looks\nRequired template element: product readability\nRequired template element: consistent anatomy\nRequired template element: on-body appearance\nRequired template element: realistic product-to-face relationship\n[BRAND STYLE]\nUse brand palette/direction: metallic natural finish, 18K PVD gold.\nVisual focus: hinge and flush seam, three-style comparison, worn nose/ear proof, titanium material texture, CZ sparkle.\nStyle constraints: preserve metallic realism, use clean low-saturation surfaces, keep product readable before styling.\nProduct Truth, then visual evidence, then template structure, has priority over styling.\n[ASSET LIMITATIONS]\nDo not infer from the canonical asset: single horizontal composite\nDo not infer from the canonical asset: does not prove worn scale\nDo not infer from the canonical asset: does not prove closure operation\nDo not infer from the canonical asset: does not replace a certificate or test report\nDo not infer from the canonical asset: visual reference only\nDo not infer from the canonical asset: not product identity source\n[NEGATIVE CONSTRAINTS]\nDo not include: competitor style names\nDo not include: unapproved product combinations\nDo not include: unreadable generated labels\nDo not include: three-piece configuration explanation\nDo not include: unlisted component\nDo not include: single horizontal composite\nDo not include: does not prove worn scale\nDo not include: does not prove closure operation\nDo not include: does not replace a certificate or test report\nDo not include: visual reference only\nDo not include: not product identity source\n[OPTIMIZATION CONTRACT]\nREBUILD_FROM_OPTIMIZATION_SPEC\nDiscard the previous composition and image role. Build a new composition from this specification and do not inherit the previous image strategy.\nMust preserve: first-party product identity\nMust preserve: product geometry\nMust preserve: product material appearance\nMust change: discard current three-piece configuration composition\nMust change: remove redundant product configuration listing\nReference asset pic02: purposes=wearing_pose, human_scene, composition, atmosphere; allowed effects=guide human pose, guide scene composition, guide visual atmosphere; product identity source=false\nCopy language: English\nForbidden topic: three-piece configuration explanation",
+      "negative_constraints": [
+        "competitor style names",
+        "unapproved product combinations",
+        "unreadable generated labels",
+        "three-piece configuration explanation",
+        "unlisted component",
+        "single horizontal composite",
+        "does not prove worn scale",
+        "does not prove closure operation",
+        "does not replace a certificate or test report",
+        "visual reference only",
+        "not product identity source"
+      ],
+      "required_visual_evidence": [
+        "on-body appearance",
+        "realistic product-to-face relationship"
+      ],
+      "required_facts": [
+        "classic hoop",
+        "double-layer hoop",
+        "CZ accent hoop"
+      ],
+      "required_claims": [],
+      "asset_limitations": [
+        "single horizontal composite",
+        "does not prove worn scale",
+        "does not prove closure operation",
+        "does not replace a certificate or test report",
+        "visual reference only",
+        "not product identity source"
+      ],
+      "generation_metadata": {
+        "priority": "P0",
+        "compiler": "deterministic",
+        "source_plan_version": "1.0.0",
+        "role_spec_version": null
+      },
+      "action": "REBUILD_COMPOSITION",
+      "reference_policy": {
+        "mode": "REQUIRED",
+        "asset_ids": [
+          "pic02"
+        ],
+        "purposes": [
+          "wearing_pose",
+          "human_scene",
+          "composition",
+          "atmosphere"
+        ],
+        "allowed_effects": [
+          "guide human pose",
+          "guide scene composition",
+          "guide visual atmosphere"
+        ],
+        "product_identity_source": false
+      },
+      "optimization_contract": {
+        "image_id": "image_02",
+        "role": "on_body_wearing_scene",
+        "action": "REBUILD_COMPOSITION",
+        "objective": "Show the realistic on-face effect, expression, and atmosphere of a person wearing the nose ring.",
+        "content_focus": [
+          "on-body wearing",
+          "facial appearance",
+          "wearing atmosphere",
+          "realistic product-to-face relationship"
+        ],
+        "must_preserve": [
+          "first-party product identity",
+          "product geometry",
+          "product material appearance"
+        ],
+        "must_change": [
+          "discard current three-piece configuration composition",
+          "remove redundant product configuration listing"
+        ],
+        "reference_policy": {
+          "mode": "REQUIRED",
+          "asset_ids": [
+            "pic02"
+          ],
+          "purposes": [
+            "wearing_pose",
+            "human_scene",
+            "composition",
+            "atmosphere"
+          ],
+          "allowed_effects": [
+            "guide human pose",
+            "guide scene composition",
+            "guide visual atmosphere"
+          ],
+          "product_identity_source": false
+        },
+        "copy_language": "English",
+        "copy_focus": [
+          "wearing effect",
+          "wearing atmosphere"
+        ],
+        "generation_constraints": [
+          "must show a person wearing the product",
+          "must not repeat three-piece configuration explanation",
+          "must not use reference product as product identity"
+        ],
+        "qa_requirements": [
+          "on-body appearance",
+          "wearing realism",
+          "piercing placement",
+          "product consistency",
+          "human anatomy"
+        ],
+        "forbidden_topics": [
+          "three-piece configuration explanation"
+        ]
+      },
+      "copy_language": "English",
+      "canonical_product_assets": [
+        "asset_p1_gold_3pcs"
+      ],
+      "reference_bindings": [
+        {
+          "asset_id": "pic02",
+          "purpose": [
+            "wearing_pose",
+            "human_scene",
+            "composition",
+            "atmosphere"
+          ],
+          "allowed_effects": [
+            "guide human pose",
+            "guide scene composition",
+            "guide visual atmosphere"
+          ],
+          "product_identity_source": false
+        }
+      ]
+    },
+    {
+      "generation_id": "gen_image_03",
+      "image_id": "image_03",
+      "role": "size_and_piercing_guide",
+      "template_id": "SIZE_CHOICE_PROOF",
+      "product_id": "G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS",
+      "reference_assets": [
+        {
+          "asset_id": "asset_p1_gold_3pcs",
+          "path": "examples/demo_sku/product.svg",
+          "role": "product_identity_reference",
+          "allowed_for_generation": true,
+          "purpose": "product identity",
+          "approved_uses": [
+            "product identity",
+            "contents",
+            "finish evidence",
+            "style configuration reference"
+          ]
+        }
+      ],
+      "generation_goal": "How should I understand 18G, 20G, and 8mm?",
+      "prompt": "[ROLE]\nOptimization role: size_and_piercing_guide\nOptimization action: KEEP_LAYOUT\nOptimization objective: Preserve the size and piercing guide while replacing Chinese copy with English.\nCompile one image whose purchase decision question is: How should I understand 18G, 20G, and 8mm?\nThe customer need is: Preserve the size and piercing guide while translating copy.\n[PRODUCT]\nUse only product G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS: ASTM F136 钛合金铰链鼻中隔环鼻圈 3 件套.\nPreserve the exact first-party product shape, count, configuration, and finish from the canonical reference.\n[REFERENCE]\nUse canonical asset asset_p1_gold_3pcs at examples/demo_sku/product.svg for product identity; do not substitute competitor or invented product geometry.\n[LAYOUT]\nFollow resolved template SIZE_CHOICE_PROOF; layout: 1:1 or 4:5 comparison canvas.\nComposition regions: short title; two to four equal macro proof cells; programmatic size labels.\n[VISUAL HIERARCHY]\n1. body relationship\n2. size difference\n3. selection cue\n[REQUIRED FACTS]\nOnly communicate this catalog fact: 18G\nOnly communicate this catalog fact: 20G\nOnly communicate this catalog fact: 8mm\nOnly communicate this catalog fact: septum\nOnly communicate this catalog fact: nostril\nOnly communicate this catalog fact: helix\nOnly communicate this catalog fact: tragus\nOnly communicate this catalog fact: conch\nOnly communicate this catalog fact: daith\nOnly communicate this catalog fact: rook\nOnly communicate this catalog fact: lip\n[REQUIRED CLAIMS]\nUse claim ID claim_multiple_placements only with its approved wording: 适配 septum、nostril、helix、tragus、conch、daith、rook、lip piercings；gift-ready packaging. Evidence note: 适用穿刺位置与礼盒包装说明\n[VISUAL EVIDENCE]\nVisually demonstrate: 18G/20G and 8mm labels\nVisually demonstrate: piercing location diagram\nVisually demonstrate: gift box\n[TEMPLATE REQUIREMENTS]\nRequired template element: anatomical scale\nRequired template element: multiple approved sizes\nRequired template element: clear edge/closure\nRequired template element: 18G/20G and 8mm labels\nRequired template element: piercing location diagram\nRequired template element: gift box\n[BRAND STYLE]\nUse brand palette/direction: metallic natural finish, 18K PVD gold.\nVisual focus: hinge and flush seam, three-style comparison, worn nose/ear proof, titanium material texture, CZ sparkle.\nStyle constraints: preserve metallic realism, use clean low-saturation surfaces, keep product readable before styling.\nProduct Truth, then visual evidence, then template structure, has priority over styling.\n[ASSET LIMITATIONS]\nDo not infer from the canonical asset: single horizontal composite\nDo not infer from the canonical asset: does not prove worn scale\nDo not infer from the canonical asset: does not prove closure operation\nDo not infer from the canonical asset: does not replace a certificate or test report\n[NEGATIVE CONSTRAINTS]\nDo not include: competitor exact measurements\nDo not include: unapproved placement compatibility\nDo not include: generated anatomy labels\nDo not include: exact worn scale inferred from p1.jpg\nDo not include: unapproved anatomy claims\nDo not include: extra sizes\nDo not include: single horizontal composite\nDo not include: does not prove worn scale\nDo not include: does not prove closure operation\nDo not include: does not replace a certificate or test report\n[OPTIMIZATION CONTRACT]\nPRESERVE_EXISTING_COMPOSITION\nPreserve current composition, product placement, visual hierarchy, and layout. Only perform explicitly requested changes.\nMust preserve: 18G\nMust preserve: 20G\nMust preserve: 8mm inner diameter\nMust preserve: piercing location diagram\nMust preserve: body placement\nMust preserve: gift box\nMust preserve: current layout\nMust change: replace all Chinese copy with natural English\nCopy language: English",
+      "negative_constraints": [
+        "competitor exact measurements",
+        "unapproved placement compatibility",
+        "generated anatomy labels",
+        "exact worn scale inferred from p1.jpg",
+        "unapproved anatomy claims",
+        "extra sizes",
+        "single horizontal composite",
+        "does not prove worn scale",
+        "does not prove closure operation",
+        "does not replace a certificate or test report"
+      ],
+      "required_visual_evidence": [
+        "18G/20G and 8mm labels",
+        "piercing location diagram",
+        "gift box"
+      ],
+      "required_facts": [
+        "18G",
+        "20G",
+        "8mm",
+        "septum",
+        "nostril",
+        "helix",
+        "tragus",
+        "conch",
+        "daith",
+        "rook",
+        "lip"
+      ],
+      "required_claims": [
+        "claim_multiple_placements"
+      ],
+      "asset_limitations": [
+        "single horizontal composite",
+        "does not prove worn scale",
+        "does not prove closure operation",
+        "does not replace a certificate or test report"
+      ],
+      "generation_metadata": {
+        "priority": "P0",
+        "compiler": "deterministic",
+        "source_plan_version": "1.0.0",
+        "role_spec_version": null
+      },
+      "action": "KEEP_LAYOUT",
+      "reference_policy": null,
+      "optimization_contract": {
+        "image_id": "image_03",
+        "role": "size_and_piercing_guide",
+        "action": "KEEP_LAYOUT",
+        "objective": "Preserve the size and piercing guide while replacing Chinese copy with English.",
+        "content_focus": [
+          "18G",
+          "20G",
+          "8mm inner diameter",
+          "piercing location diagram",
+          "body placement",
+          "gift box"
+        ],
+        "must_preserve": [
+          "18G",
+          "20G",
+          "8mm inner diameter",
+          "piercing location diagram",
+          "body placement",
+          "gift box",
+          "current layout"
+        ],
+        "must_change": [
+          "replace all Chinese copy with natural English"
+        ],
+        "reference_policy": null,
+        "copy_language": "English",
+        "copy_focus": [
+          "gauge",
+          "inner diameter",
+          "piercing location"
+        ],
+        "generation_constraints": [
+          "do not invent measurements",
+          "do not change Product Truth"
+        ],
+        "qa_requirements": [
+          "18G/20G unchanged",
+          "8mm unchanged",
+          "piercing position unchanged",
+          "English fact consistency"
+        ],
+        "forbidden_topics": []
+      },
+      "copy_language": "English",
+      "canonical_product_assets": [
+        "asset_p1_gold_3pcs"
+      ],
+      "reference_bindings": []
+    },
+    {
+      "generation_id": "gen_image_04",
+      "image_id": "image_04",
+      "role": "material_and_craft",
+      "template_id": "MATERIAL_EVIDENCE",
+      "product_id": "G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS",
+      "reference_assets": [
+        {
+          "asset_id": "asset_p1_gold_3pcs",
+          "path": "examples/demo_sku/product.svg",
+          "role": "product_identity_reference",
+          "allowed_for_generation": true,
+          "purpose": "product identity",
+          "approved_uses": [
+            "product identity",
+            "contents",
+            "finish evidence",
+            "style configuration reference"
+          ]
+        }
+      ],
+      "generation_goal": "What material and craft details are shown?",
+      "prompt": "[ROLE]\nOptimization role: material_and_craft\nOptimization action: KEEP_LAYOUT\nOptimization objective: Preserve the material and craft close-up while replacing Chinese copy with English.\nCompile one image whose purchase decision question is: What material and craft details are shown?\nThe customer need is: Preserve material and craft evidence while translating copy.\n[PRODUCT]\nUse only product G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS: ASTM F136 钛合金铰链鼻中隔环鼻圈 3 件套.\nPreserve the exact first-party product shape, count, configuration, and finish from the canonical reference.\n[REFERENCE]\nUse canonical asset asset_p1_gold_3pcs at examples/demo_sku/product.svg for product identity; do not substitute competitor or invented product geometry.\n[LAYOUT]\nFollow resolved template MATERIAL_EVIDENCE; layout: 4:5 portrait secondary canvas.\nComposition regions: headline band; large product macro; evidence document or source panel; short claim blocks.\n[VISUAL HIERARCHY]\n1. approved claim\n2. visible product finish\n3. supporting source\n[REQUIRED FACTS]\nOnly communicate this catalog fact: ASTM F136 植入级钛\nOnly communicate this catalog fact: 钛基底 + 18K 金 PVD 镀层\nOnly communicate this catalog fact: AAAAA 立方氧化锆\n[REQUIRED CLAIMS]\nUse claim ID claim_f136_titanium only with its approved wording: ASTM F136 植入级钛；低敏适敏感肌；无镍无铅. Evidence note: 产品详情材质标注 ASTM F136 Titanium, hypoallergenic, nickel-free, lead-free\nUse claim ID claim_gold_pvd only with its approved wording: Gold variant: 18K Gold PVD finish. Evidence note: 产品详情材质标注 Gold variant 18K Gold PVD finish\nUse claim ID claim_cz only with its approved wording: AAAAA Cubic Zirconia；secure stone setting. Evidence note: AAAAA Cubic Zirconia, secure stone setting\n[VISUAL EVIDENCE]\nVisually demonstrate: ASTM F136 titanium\nVisually demonstrate: PVD gold plating\nVisually demonstrate: zirconia detail\nVisually demonstrate: hinge structure detail\n[TEMPLATE REQUIREMENTS]\nRequired template element: canonical product macro\nRequired template element: approved evidence asset\nRequired template element: source identifier\nRequired template element: ASTM F136 titanium\nRequired template element: PVD gold plating\nRequired template element: zirconia detail\nRequired template element: hinge structure detail\n[BRAND STYLE]\nUse brand palette/direction: metallic natural finish, 18K PVD gold.\nVisual focus: hinge and flush seam, three-style comparison, worn nose/ear proof, titanium material texture, CZ sparkle.\nStyle constraints: preserve metallic realism, use clean low-saturation surfaces, keep product readable before styling.\nProduct Truth, then visual evidence, then template structure, has priority over styling.\n[ASSET LIMITATIONS]\nDo not infer from the canonical asset: single horizontal composite\nDo not infer from the canonical asset: does not prove worn scale\nDo not infer from the canonical asset: does not prove closure operation\nDo not infer from the canonical asset: does not replace a certificate or test report\n[NEGATIVE CONSTRAINTS]\nDo not include: fabricated pass/fail result\nDo not include: unverified hypoallergenic or skin claim\nDo not include: competitor report details\nDo not include: certificate proof\nDo not include: fabricated test report\nDo not include: medical cure claim\nDo not include: 100% allergy-free claim\nDo not include: single horizontal composite\nDo not include: does not prove worn scale\nDo not include: does not prove closure operation\nDo not include: does not replace a certificate or test report\n[OPTIMIZATION CONTRACT]\nPRESERVE_EXISTING_COMPOSITION\nPreserve current composition, product placement, visual hierarchy, and layout. Only perform explicitly requested changes.\nMust preserve: ASTM F136 titanium\nMust preserve: PVD gold plating\nMust preserve: stone / zirconia detail\nMust preserve: hinge structure detail\nMust preserve: current layout\nMust change: replace all Chinese copy with natural English\nCopy language: English",
+      "negative_constraints": [
+        "fabricated pass/fail result",
+        "unverified hypoallergenic or skin claim",
+        "competitor report details",
+        "certificate proof",
+        "fabricated test report",
+        "medical cure claim",
+        "100% allergy-free claim",
+        "single horizontal composite",
+        "does not prove worn scale",
+        "does not prove closure operation",
+        "does not replace a certificate or test report"
+      ],
+      "required_visual_evidence": [
+        "ASTM F136 titanium",
+        "PVD gold plating",
+        "zirconia detail",
+        "hinge structure detail"
+      ],
+      "required_facts": [
+        "ASTM F136 植入级钛",
+        "钛基底 + 18K 金 PVD 镀层",
+        "AAAAA 立方氧化锆"
+      ],
+      "required_claims": [
+        "claim_f136_titanium",
+        "claim_gold_pvd",
+        "claim_cz"
+      ],
+      "asset_limitations": [
+        "single horizontal composite",
+        "does not prove worn scale",
+        "does not prove closure operation",
+        "does not replace a certificate or test report"
+      ],
+      "generation_metadata": {
+        "priority": "P1",
+        "compiler": "deterministic",
+        "source_plan_version": "1.0.0",
+        "role_spec_version": null
+      },
+      "action": "KEEP_LAYOUT",
+      "reference_policy": null,
+      "optimization_contract": {
+        "image_id": "image_04",
+        "role": "material_and_craft",
+        "action": "KEEP_LAYOUT",
+        "objective": "Preserve the material and craft close-up while replacing Chinese copy with English.",
+        "content_focus": [
+          "ASTM F136 titanium",
+          "PVD gold plating",
+          "zirconia detail",
+          "hinge structure detail"
+        ],
+        "must_preserve": [
+          "ASTM F136 titanium",
+          "PVD gold plating",
+          "stone / zirconia detail",
+          "hinge structure detail",
+          "current layout"
+        ],
+        "must_change": [
+          "replace all Chinese copy with natural English"
+        ],
+        "reference_policy": null,
+        "copy_language": "English",
+        "copy_focus": [
+          "material",
+          "finish",
+          "stone",
+          "hinge"
+        ],
+        "generation_constraints": [
+          "do not add unsupported material facts",
+          "do not redesign composition"
+        ],
+        "qa_requirements": [
+          "ASTM F136",
+          "titanium",
+          "PVD gold plating",
+          "zirconia / stone",
+          "hinge structure"
+        ],
+        "forbidden_topics": []
+      },
+      "copy_language": "English",
+      "canonical_product_assets": [
+        "asset_p1_gold_3pcs"
+      ],
+      "reference_bindings": []
+    },
+    {
+      "generation_id": "gen_image_05",
+      "image_id": "image_05",
+      "role": "multi_scene_wearing",
+      "template_id": "LIFESTYLE_MOMENTS",
+      "product_id": "G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS",
+      "reference_assets": [
+        {
+          "asset_id": "asset_p1_gold_3pcs",
+          "path": "examples/demo_sku/product.svg",
+          "role": "product_identity_reference",
+          "allowed_for_generation": true,
+          "purpose": "product identity",
+          "approved_uses": [
+            "product identity",
+            "contents",
+            "finish evidence",
+            "style configuration reference"
+          ]
+        },
+        {
+          "asset_id": "pic05",
+          "path": "examples/demo_sku/product.svg",
+          "role": "visual_reference",
+          "allowed_for_generation": true,
+          "purpose": "product identity",
+          "approved_uses": [
+            "multi-person wearing",
+            "scene reference",
+            "composition reference"
+          ]
+        }
+      ],
+      "generation_goal": "How does the product look across real wearing scenes?",
+      "prompt": "[ROLE]\nOptimization role: multi_scene_wearing\nOptimization action: REBUILD_COMPOSITION\nOptimization objective: Show realistic wearing effects across multiple people, piercing positions, and scenes.\nCompile one image whose purchase decision question is: How does the product look across real wearing scenes?\nThe customer need is: Show multiple people, positions, and looks.\n[PRODUCT]\nUse only product G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS: ASTM F136 钛合金铰链鼻中隔环鼻圈 3 件套.\nPreserve the exact first-party product shape, count, configuration, and finish from the canonical reference.\n[REFERENCE]\nUse canonical asset asset_p1_gold_3pcs at examples/demo_sku/product.svg for product identity; do not substitute competitor or invented product geometry.\nUse canonical asset pic05 at examples/demo_sku/product.svg for product identity; do not substitute competitor or invented product geometry.\n[LAYOUT]\nFollow resolved template LIFESTYLE_MOMENTS; layout: 4:5 portrait or storefront module.\nComposition regions: two smaller portrait scenes; one wide anchor scene; short context labels.\n[VISUAL HIERARCHY]\n1. context\n2. product presence\n3. style cue\n[REQUIRED FACTS]\nOnly communicate this catalog fact: classic hoop\nOnly communicate this catalog fact: double-layer hoop\nOnly communicate this catalog fact: CZ accent hoop\n[REQUIRED CLAIMS]\n[VISUAL EVIDENCE]\nVisually demonstrate: multiple people\nVisually demonstrate: different piercing positions\nVisually demonstrate: realistic on-body appearance\nVisually demonstrate: scene variation\n[TEMPLATE REQUIREMENTS]\nRequired template element: recognizable worn product\nRequired template element: context variation\nRequired template element: consistent styling direction\nRequired template element: multiple people\nRequired template element: different piercing positions\nRequired template element: realistic on-body appearance\nRequired template element: scene variation\n[BRAND STYLE]\nUse brand palette/direction: metallic natural finish, 18K PVD gold.\nVisual focus: hinge and flush seam, three-style comparison, worn nose/ear proof, titanium material texture, CZ sparkle.\nStyle constraints: preserve metallic realism, use clean low-saturation surfaces, keep product readable before styling.\nProduct Truth, then visual evidence, then template structure, has priority over styling.\n[ASSET LIMITATIONS]\nDo not infer from the canonical asset: single horizontal composite\nDo not infer from the canonical asset: does not prove worn scale\nDo not infer from the canonical asset: does not prove closure operation\nDo not infer from the canonical asset: does not replace a certificate or test report\nDo not infer from the canonical asset: visual reference only\nDo not infer from the canonical asset: not product identity source\n[NEGATIVE CONSTRAINTS]\nDo not include: performance claims implied by scene\nDo not include: competitor labels\nDo not include: product too small to inspect\nDo not include: hinge structure explanation\nDo not include: material detail explanation\nDo not include: single horizontal composite\nDo not include: does not prove worn scale\nDo not include: does not prove closure operation\nDo not include: does not replace a certificate or test report\nDo not include: visual reference only\nDo not include: not product identity source\n[OPTIMIZATION CONTRACT]\nREBUILD_FROM_OPTIMIZATION_SPEC\nDiscard the previous composition and image role. Build a new composition from this specification and do not inherit the previous image strategy.\nMust preserve: first-party product identity\nMust preserve: product geometry\nMust preserve: product material appearance\nMust change: discard current hinge structure composition\nMust change: remove hinge explanation\nMust change: remove craft explanation\nReference asset pic05: purposes=multi_person_composition, wearing_variation, scene_reference; allowed effects=guide multi-person composition, guide wearing variation, guide scene structure; product identity source=false\nCopy language: English\nForbidden topic: hinge structure explanation\nForbidden topic: material detail explanation",
+      "negative_constraints": [
+        "performance claims implied by scene",
+        "competitor labels",
+        "product too small to inspect",
+        "hinge structure explanation",
+        "material detail explanation",
+        "single horizontal composite",
+        "does not prove worn scale",
+        "does not prove closure operation",
+        "does not replace a certificate or test report",
+        "visual reference only",
+        "not product identity source"
+      ],
+      "required_visual_evidence": [
+        "multiple people",
+        "different piercing positions",
+        "realistic on-body appearance",
+        "scene variation"
+      ],
+      "required_facts": [
+        "classic hoop",
+        "double-layer hoop",
+        "CZ accent hoop"
+      ],
+      "required_claims": [],
+      "asset_limitations": [
+        "single horizontal composite",
+        "does not prove worn scale",
+        "does not prove closure operation",
+        "does not replace a certificate or test report",
+        "visual reference only",
+        "not product identity source"
+      ],
+      "generation_metadata": {
+        "priority": "P1",
+        "compiler": "deterministic",
+        "source_plan_version": "1.0.0",
+        "role_spec_version": null
+      },
+      "action": "REBUILD_COMPOSITION",
+      "reference_policy": {
+        "mode": "REQUIRED",
+        "asset_ids": [
+          "pic05"
+        ],
+        "purposes": [
+          "multi_person_composition",
+          "wearing_variation",
+          "scene_reference"
+        ],
+        "allowed_effects": [
+          "guide multi-person composition",
+          "guide wearing variation",
+          "guide scene structure"
+        ],
+        "product_identity_source": false
+      },
+      "optimization_contract": {
+        "image_id": "image_05",
+        "role": "multi_scene_wearing",
+        "action": "REBUILD_COMPOSITION",
+        "objective": "Show realistic wearing effects across multiple people, piercing positions, and scenes.",
+        "content_focus": [
+          "multiple people",
+          "different piercing positions",
+          "different wearing looks",
+          "realistic on-body appearance",
+          "scene variation"
+        ],
+        "must_preserve": [
+          "first-party product identity",
+          "product geometry",
+          "product material appearance"
+        ],
+        "must_change": [
+          "discard current hinge structure composition",
+          "remove hinge explanation",
+          "remove craft explanation"
+        ],
+        "reference_policy": {
+          "mode": "REQUIRED",
+          "asset_ids": [
+            "pic05"
+          ],
+          "purposes": [
+            "multi_person_composition",
+            "wearing_variation",
+            "scene_reference"
+          ],
+          "allowed_effects": [
+            "guide multi-person composition",
+            "guide wearing variation",
+            "guide scene structure"
+          ],
+          "product_identity_source": false
+        },
+        "copy_language": "English",
+        "copy_focus": [
+          "multiple ways to wear",
+          "different looks",
+          "real-life wearing reference"
+        ],
+        "generation_constraints": [
+          "must show multiple people",
+          "must show variation in wearing positions or looks",
+          "must not return to hinge explanation",
+          "must not copy competitor product identity"
+        ],
+        "qa_requirements": [
+          "multi-person consistency",
+          "wearing position",
+          "on-body realism",
+          "product identity",
+          "scene diversity"
+        ],
+        "forbidden_topics": [
+          "hinge structure explanation",
+          "material detail explanation"
+        ]
+      },
+      "copy_language": "English",
+      "canonical_product_assets": [
+        "asset_p1_gold_3pcs"
+      ],
+      "reference_bindings": [
+        {
+          "asset_id": "pic05",
+          "purpose": [
+            "multi_person_composition",
+            "wearing_variation",
+            "scene_reference"
+          ],
+          "allowed_effects": [
+            "guide multi-person composition",
+            "guide wearing variation",
+            "guide scene structure"
+          ],
+          "product_identity_source": false
+        }
+      ]
+    },
+    {
+      "generation_id": "gen_image_06",
+      "image_id": "image_06",
+      "role": "hinge_operation_demo",
+      "template_id": "STRUCTURE_USE_DETAIL",
+      "product_id": "G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS",
+      "reference_assets": [
+        {
+          "asset_id": "asset_p1_gold_3pcs",
+          "path": "examples/demo_sku/product.svg",
+          "role": "product_identity_reference",
+          "allowed_for_generation": true,
+          "purpose": "product identity",
+          "approved_uses": [
+            "product identity",
+            "contents",
+            "finish evidence",
+            "style configuration reference"
+          ]
+        },
+        {
+          "asset_id": "pic06",
+          "path": "examples/demo_sku/product.svg",
+          "role": "visual_reference",
+          "allowed_for_generation": true,
+          "purpose": "product identity",
+          "approved_uses": [
+            "operation demo",
+            "hand pose",
+            "step sequence",
+            "camera angle"
+          ]
+        }
+      ],
+      "generation_goal": "How does the hinged ring open, position, and close?",
+      "prompt": "[ROLE]\nOptimization role: hinge_operation_demo\nOptimization action: REBUILD_COMPOSITION\nOptimization objective: Show by hand-operation steps how the hinged nose ring opens, is positioned, and closes.\nCompile one image whose purchase decision question is: How does the hinged ring open, position, and close?\nThe customer need is: Show a clear hand-operated opening, insertion, and closing sequence.\n[PRODUCT]\nUse only product G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS: ASTM F136 钛合金铰链鼻中隔环鼻圈 3 件套.\nPreserve the exact first-party product shape, count, configuration, and finish from the canonical reference.\n[REFERENCE]\nUse canonical asset asset_p1_gold_3pcs at examples/demo_sku/product.svg for product identity; do not substitute competitor or invented product geometry.\nUse canonical asset pic06 at examples/demo_sku/product.svg for product identity; do not substitute competitor or invented product geometry.\n[LAYOUT]\nFollow resolved template STRUCTURE_USE_DETAIL; layout: 4:5 portrait secondary canvas.\nComposition regions: short title; two by two macro/detail cells; numbered caption bands.\n[VISUAL HIERARCHY]\n1. mechanism/feature\n2. visual proof\n3. short use implication\n[REQUIRED FACTS]\nOnly communicate this catalog fact: 铰链分段环，平接缝，按压卡扣闭合\n[REQUIRED CLAIMS]\nUse claim ID claim_click_top only with its approved wording: 精密铰链按压卡扣，闭合稳固. Evidence note: Precision click-top mechanism；日常活动可稳固佩戴\n[VISUAL EVIDENCE]\nVisually demonstrate: hand operation\nVisually demonstrate: opening state\nVisually demonstrate: closing state\nVisually demonstrate: operation sequence\n[TEMPLATE REQUIREMENTS]\nRequired template element: closure detail\nRequired template element: edge/finish detail\nRequired template element: approved construction feature\nRequired template element: hand operation\nRequired template element: opening state\nRequired template element: closing state\nRequired template element: operation sequence\n[BRAND STYLE]\nUse brand palette/direction: metallic natural finish, 18K PVD gold.\nVisual focus: hinge and flush seam, three-style comparison, worn nose/ear proof, titanium material texture, CZ sparkle.\nStyle constraints: preserve metallic realism, use clean low-saturation surfaces, keep product readable before styling.\nProduct Truth, then visual evidence, then template structure, has priority over styling.\n[ASSET LIMITATIONS]\nDo not infer from the canonical asset: single horizontal composite\nDo not infer from the canonical asset: does not prove worn scale\nDo not infer from the canonical asset: does not prove closure operation\nDo not infer from the canonical asset: does not replace a certificate or test report\nDo not infer from the canonical asset: visual reference only\nDo not infer from the canonical asset: not product identity source\n[NEGATIVE CONSTRAINTS]\nDo not include: unverified comfort guarantee\nDo not include: competitor comparison\nDo not include: generated dimensions\nDo not include: three-product wearing comparison\nDo not include: single horizontal composite\nDo not include: does not prove worn scale\nDo not include: does not prove closure operation\nDo not include: does not replace a certificate or test report\nDo not include: visual reference only\nDo not include: not product identity source\n[OPTIMIZATION CONTRACT]\nREBUILD_FROM_OPTIMIZATION_SPEC\nDiscard the previous composition and image role. Build a new composition from this specification and do not inherit the previous image strategy.\nMust preserve: first-party product identity\nMust preserve: product geometry\nMust preserve: hinge mechanism\nMust change: discard current three-product wearing comparison\nMust change: replace with operation demonstration\nReference asset pic06: purposes=hand_pose, operation_demo, step_sequence, camera_angle; allowed effects=guide hand position, guide operation sequence, guide composition; product identity source=false\nCopy language: English\nForbidden topic: three-product wearing comparison",
+      "negative_constraints": [
+        "unverified comfort guarantee",
+        "competitor comparison",
+        "generated dimensions",
+        "three-product wearing comparison",
+        "single horizontal composite",
+        "does not prove worn scale",
+        "does not prove closure operation",
+        "does not replace a certificate or test report",
+        "visual reference only",
+        "not product identity source"
+      ],
+      "required_visual_evidence": [
+        "hand operation",
+        "opening state",
+        "closing state",
+        "operation sequence"
+      ],
+      "required_facts": [
+        "铰链分段环，平接缝，按压卡扣闭合"
+      ],
+      "required_claims": [
+        "claim_click_top"
+      ],
+      "asset_limitations": [
+        "single horizontal composite",
+        "does not prove worn scale",
+        "does not prove closure operation",
+        "does not replace a certificate or test report",
+        "visual reference only",
+        "not product identity source"
+      ],
+      "generation_metadata": {
+        "priority": "P1",
+        "compiler": "deterministic",
+        "source_plan_version": "1.0.0",
+        "role_spec_version": null
+      },
+      "action": "REBUILD_COMPOSITION",
+      "reference_policy": {
+        "mode": "REQUIRED",
+        "asset_ids": [
+          "pic06"
+        ],
+        "purposes": [
+          "hand_pose",
+          "operation_demo",
+          "step_sequence",
+          "camera_angle"
+        ],
+        "allowed_effects": [
+          "guide hand position",
+          "guide operation sequence",
+          "guide composition"
+        ],
+        "product_identity_source": false
+      },
+      "optimization_contract": {
+        "image_id": "image_06",
+        "role": "hinge_operation_demo",
+        "action": "REBUILD_COMPOSITION",
+        "objective": "Show by hand-operation steps how the hinged nose ring opens, is positioned, and closes.",
+        "content_focus": [
+          "opening",
+          "insertion",
+          "closing",
+          "hand operation",
+          "hinge mechanism"
+        ],
+        "must_preserve": [
+          "first-party product identity",
+          "product geometry",
+          "hinge mechanism"
+        ],
+        "must_change": [
+          "discard current three-product wearing comparison",
+          "replace with operation demonstration"
+        ],
+        "reference_policy": {
+          "mode": "REQUIRED",
+          "asset_ids": [
+            "pic06"
+          ],
+          "purposes": [
+            "hand_pose",
+            "operation_demo",
+            "step_sequence",
+            "camera_angle"
+          ],
+          "allowed_effects": [
+            "guide hand position",
+            "guide operation sequence",
+            "guide composition"
+          ],
+          "product_identity_source": false
+        },
+        "copy_language": "English",
+        "copy_focus": [
+          "open",
+          "insert",
+          "close"
+        ],
+        "generation_constraints": [
+          "must show hand operation",
+          "must make opening and closing understandable",
+          "must not return to wearing comparison",
+          "must not copy reference product identity"
+        ],
+        "qa_requirements": [
+          "hand anatomy",
+          "hinge visibility",
+          "opening state",
+          "closing state",
+          "operation sequence",
+          "product consistency"
+        ],
+        "forbidden_topics": [
+          "three-product wearing comparison"
+        ]
+      },
+      "copy_language": "English",
+      "canonical_product_assets": [
+        "asset_p1_gold_3pcs"
+      ],
+      "reference_bindings": [
+        {
+          "asset_id": "pic06",
+          "purpose": [
+            "hand_pose",
+            "operation_demo",
+            "step_sequence",
+            "camera_angle"
+          ],
+          "allowed_effects": [
+            "guide hand position",
+            "guide operation sequence",
+            "guide composition"
+          ],
+          "product_identity_source": false
+        }
+      ]
+    }
+  ]
+}

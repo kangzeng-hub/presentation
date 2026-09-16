@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/image_role.json",
+  "title": "ImageRole",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "role_id",
+    "image_type",
+    "decision_stage",
+    "consumer_question",
+    "objective",
+    "priority",
+    "expected_visual_evidence",
+    "suitable_subject",
+    "whether_model_required",
+    "whether_product_macro_required",
+    "whether_text_overlay_required",
+    "whether_real_asset_required",
+    "renderer_preference",
+    "acceptance_principles",
+    "source_basis"
+  ],
+  "properties": {
+    "role_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]+$"
+    },
+    "image_type": {
+      "type": "string",
+      "enum": ["main", "secondary", "storefront"]
+    },
+    "decision_stage": {
+      "type": "string",
+      "enum": ["recognition", "verification", "trust", "selection", "usability", "projection", "aspiration", "confidence"]
+    },
+    "consumer_question": {
+      "type": "string",
+      "minLength": 1
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 1
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["P0", "P1", "P2"]
+    },
+    "expected_visual_evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "suitable_subject": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "whether_model_required": {"type": "boolean"},
+    "whether_product_macro_required": {"type": "boolean"},
+    "whether_text_overlay_required": {"type": "boolean"},
+    "whether_real_asset_required": {"type": "boolean"},
+    "renderer_preference": {
+      "type": "string",
+      "enum": [
+        "PRODUCT_ASSET_COMPOSITE",
+        "PRODUCT_MACRO_COMPOSITE",
+        "MODEL_PROOF_COMPOSITE",
+        "EVIDENCE_COMPOSITE",
+        "PROGRAMMATIC_COMPOSITE",
+        "LIFESTYLE_COMPOSITE"
+      ]
+    },
+    "acceptance_principles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "source_basis": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "source", "note"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["competitor_visual_fact", "inference", "existing_strategy_requirement"]
+          },
+          "source": {"type": "string", "minLength": 1},
+          "note": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

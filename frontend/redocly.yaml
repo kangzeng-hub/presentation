@@ -1,0 +1,7 @@
+extends: []
+rules:
+  operation-summary: off
+  operation-4xx-response: off
+  path-parameters-defined: off
+  security-defined: off
+  info-license: off

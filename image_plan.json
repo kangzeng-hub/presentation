@@ -1,0 +1,898 @@
+{
+  "plan_version": "1.0.0",
+  "product_id": "G23STUDIO_ASTMF136_HINGED_SEPTUM_RING_3PCS",
+  "strategy_summary": "以 P0 识别/内容/规格为购买证明基础，再用 P1 材质、结构和风格解决信任与选择；P2 lifestyle 暂不进入首版六张。",
+  "images": [
+    {
+      "image_id": "image_01",
+      "role": "product_main_image",
+      "priority": "P0",
+      "decision_question": "What is the product and its included set?",
+      "customer_need": "Keep the main product presentation while fixing language.",
+      "strategy_reason": "Human optimization specification",
+      "required_product_facts": [
+        "ASTM F136 钛合金铰链鼻中隔环鼻圈 3 件套",
+        "Gold-3PCS",
+        "3PCS",
+        "classic hoop",
+        "double-layer hoop",
+        "CZ accent hoop",
+        "钛基底 + 18K 金 PVD 镀层"
+      ],
+      "required_claims": [],
+      "required_visual_evidence": [
+        "three actual configurations shown simultaneously and clearly distinguished",
+        "color-accurate metallic finish",
+        "product-dominant white-field presentation"
+      ],
+      "competitor_gap": [
+        {
+          "dimension": "product_identity",
+          "competitor_pattern": "竞品主图使用白底、三件分组和小型佩戴提示。",
+          "our_opportunity": "用我方 canonical asset 固定 Gold-3PCS 的三种真实款式。"
+        }
+      ],
+      "template_id": "PRODUCT_IDENTITY_MAIN",
+      "forbidden_elements": [
+        "extra jewelry",
+        "invented variant",
+        "competitor product identity"
+      ],
+      "selection_reason": "Human optimization specification.",
+      "optimization_spec": {
+        "image_id": "image_01",
+        "role": "product_main_image",
+        "action": "KEEP_LAYOUT",
+        "objective": "Replace all Chinese copy with natural English without changing the existing product composition.",
+        "content_focus": [
+          "three_piece_product_set"
+        ],
+        "must_preserve": [
+          "current product arrangement",
+          "current layout",
+          "current lighting",
+          "current visual hierarchy"
+        ],
+        "must_change": [
+          "replace all Chinese copy with natural English"
+        ],
+        "reference_policy": null,
+        "copy_language": "English",
+        "copy_focus": [
+          "product title",
+          "product labels",
+          "material statement"
+        ],
+        "generation_constraints": [
+          "do not redesign composition",
+          "do not add people",
+          "do not change product quantity",
+          "do not alter product appearance"
+        ],
+        "qa_requirements": [
+          "English copy compliance",
+          "layout preservation"
+        ],
+        "forbidden_topics": []
+      },
+      "action": "KEEP_LAYOUT",
+      "reference_policy": null,
+      "optimization_contract": {
+        "image_id": "image_01",
+        "role": "product_main_image",
+        "action": "KEEP_LAYOUT",
+        "objective": "Replace all Chinese copy with natural English without changing the existing product composition.",
+        "content_focus": [
+          "three_piece_product_set"
+        ],
+        "must_preserve": [
+          "current product arrangement",
+          "current layout",
+          "current lighting",
+          "current visual hierarchy"
+        ],
+        "must_change": [
+          "replace all Chinese copy with natural English"
+        ],
+        "reference_policy": null,
+        "copy_language": "English",
+        "copy_focus": [
+          "product title",
+          "product labels",
+          "material statement"
+        ],
+        "generation_constraints": [
+          "do not redesign composition",
+          "do not add people",
+          "do not change product quantity",
+          "do not alter product appearance"
+        ],
+        "qa_requirements": [
+          "English copy compliance",
+          "layout preservation"
+        ],
+        "forbidden_topics": []
+      }
+    },
+    {
+      "image_id": "image_02",
+      "role": "on_body_wearing_scene",
+      "priority": "P0",
+      "decision_question": "How does the product look when worn?",
+      "customer_need": "Show realistic on-body wearing effect.",
+      "strategy_reason": "Human optimization specification",
+      "required_product_facts": [
+        "classic hoop",
+        "double-layer hoop",
+        "CZ accent hoop"
+      ],
+      "required_claims": [],
+      "required_visual_evidence": [
+        "on-body appearance",
+        "realistic product-to-face relationship"
+      ],
+      "competitor_gap": [
+        {
+          "dimension": "style_projection",
+          "competitor_pattern": "竞品样本使用三联近景和 2+1 人像场景承载风格投射。",
+          "our_opportunity": "先用三款批准配置做可比较的近景风格图，P2 生活方式后置。"
+        }
+      ],
+      "template_id": "WEAR_STYLE_TRIPTYCH",
+      "forbidden_elements": [
+        "three-piece configuration explanation",
+        "unlisted component"
+      ],
+      "selection_reason": "Human optimization specification.",
+      "optimization_spec": {
+        "image_id": "image_02",
+        "role": "on_body_wearing_scene",
+        "action": "REBUILD_COMPOSITION",
+        "objective": "Show the realistic on-face effect, expression, and atmosphere of a person wearing the nose ring.",
+        "content_focus": [
+          "on-body wearing",
+          "facial appearance",
+          "wearing atmosphere",
+          "realistic product-to-face relationship"
+        ],
+        "must_preserve": [
+          "first-party product identity",
+          "product geometry",
+          "product material appearance"
+        ],
+        "must_change": [
+          "discard current three-piece configuration composition",
+          "remove redundant product configuration listing"
+        ],
+        "reference_policy": {
+          "mode": "REQUIRED",
+          "asset_ids": [
+            "pic02"
+          ],
+          "purposes": [
+            "wearing_pose",
+            "human_scene",
+            "composition",
+            "atmosphere"
+          ],
+          "allowed_effects": [
+            "guide human pose",
+            "guide scene composition",
+            "guide visual atmosphere"
+          ],
+          "product_identity_source": false
+        },
+        "copy_language": "English",
+        "copy_focus": [
+          "wearing effect",
+          "wearing atmosphere"
+        ],
+        "generation_constraints": [
+          "must show a person wearing the product",
+          "must not repeat three-piece configuration explanation",
+          "must not use reference product as product identity"
+        ],
+        "qa_requirements": [
+          "on-body appearance",
+          "wearing realism",
+          "piercing placement",
+          "product consistency",
+          "human anatomy"
+        ],
+        "forbidden_topics": [
+          "three-piece configuration explanation"
+        ]
+      },
+      "action": "REBUILD_COMPOSITION",
+      "reference_policy": {
+        "mode": "REQUIRED",
+        "asset_ids": [
+          "pic02"
+        ],
+        "purposes": [
+          "wearing_pose",
+          "human_scene",
+          "composition",
+          "atmosphere"
+        ],
+        "allowed_effects": [
+          "guide human pose",
+          "guide scene composition",
+          "guide visual atmosphere"
+        ],
+        "product_identity_source": false
+      },
+      "optimization_contract": {
+        "image_id": "image_02",
+        "role": "on_body_wearing_scene",
+        "action": "REBUILD_COMPOSITION",
+        "objective": "Show the realistic on-face effect, expression, and atmosphere of a person wearing the nose ring.",
+        "content_focus": [
+          "on-body wearing",
+          "facial appearance",
+          "wearing atmosphere",
+          "realistic product-to-face relationship"
+        ],
+        "must_preserve": [
+          "first-party product identity",
+          "product geometry",
+          "product material appearance"
+        ],
+        "must_change": [
+          "discard current three-piece configuration composition",
+          "remove redundant product configuration listing"
+        ],
+        "reference_policy": {
+          "mode": "REQUIRED",
+          "asset_ids": [
+            "pic02"
+          ],
+          "purposes": [
+            "wearing_pose",
+            "human_scene",
+            "composition",
+            "atmosphere"
+          ],
+          "allowed_effects": [
+            "guide human pose",
+            "guide scene composition",
+            "guide visual atmosphere"
+          ],
+          "product_identity_source": false
+        },
+        "copy_language": "English",
+        "copy_focus": [
+          "wearing effect",
+          "wearing atmosphere"
+        ],
+        "generation_constraints": [
+          "must show a person wearing the product",
+          "must not repeat three-piece configuration explanation",
+          "must not use reference product as product identity"
+        ],
+        "qa_requirements": [
+          "on-body appearance",
+          "wearing realism",
+          "piercing placement",
+          "product consistency",
+          "human anatomy"
+        ],
+        "forbidden_topics": [
+          "three-piece configuration explanation"
+        ]
+      }
+    },
+    {
+      "image_id": "image_03",
+      "role": "size_and_piercing_guide",
+      "priority": "P0",
+      "decision_question": "How should I understand 18G, 20G, and 8mm?",
+      "customer_need": "Preserve the size and piercing guide while translating copy.",
+      "strategy_reason": "Human optimization specification",
+      "required_product_facts": [
+        "18G",
+        "20G",
+        "8mm",
+        "septum",
+        "nostril",
+        "helix",
+        "tragus",
+        "conch",
+        "daith",
+        "rook",
+        "lip"
+      ],
+      "required_claims": [
+        "claim_multiple_placements"
+      ],
+      "required_visual_evidence": [
+        "18G/20G and 8mm labels",
+        "piercing location diagram",
+        "gift box"
+      ],
+      "competitor_gap": [
+        {
+          "dimension": "size_selection",
+          "competitor_pattern": "竞品样本使用鼻部近景、重复面板和尺寸标签回答选择问题。",
+          "our_opportunity": "用已批准的 18G/20G、8mm 和位置列表建立选择结构，但不从主图推断佩戴比例。"
+        }
+      ],
+      "template_id": "SIZE_CHOICE_PROOF",
+      "forbidden_elements": [
+        "exact worn scale inferred from p1.jpg",
+        "unapproved anatomy claims",
+        "extra sizes"
+      ],
+      "selection_reason": "Human optimization specification.",
+      "optimization_spec": {
+        "image_id": "image_03",
+        "role": "size_and_piercing_guide",
+        "action": "KEEP_LAYOUT",
+        "objective": "Preserve the size and piercing guide while replacing Chinese copy with English.",
+        "content_focus": [
+          "18G",
+          "20G",
+          "8mm inner diameter",
+          "piercing location diagram",
+          "body placement",
+          "gift box"
+        ],
+        "must_preserve": [
+          "18G",
+          "20G",
+          "8mm inner diameter",
+          "piercing location diagram",
+          "body placement",
+          "gift box",
+          "current layout"
+        ],
+        "must_change": [
+          "replace all Chinese copy with natural English"
+        ],
+        "reference_policy": null,
+        "copy_language": "English",
+        "copy_focus": [
+          "gauge",
+          "inner diameter",
+          "piercing location"
+        ],
+        "generation_constraints": [
+          "do not invent measurements",
+          "do not change Product Truth"
+        ],
+        "qa_requirements": [
+          "18G/20G unchanged",
+          "8mm unchanged",
+          "piercing position unchanged",
+          "English fact consistency"
+        ],
+        "forbidden_topics": []
+      },
+      "action": "KEEP_LAYOUT",
+      "reference_policy": null,
+      "optimization_contract": {
+        "image_id": "image_03",
+        "role": "size_and_piercing_guide",
+        "action": "KEEP_LAYOUT",
+        "objective": "Preserve the size and piercing guide while replacing Chinese copy with English.",
+        "content_focus": [
+          "18G",
+          "20G",
+          "8mm inner diameter",
+          "piercing location diagram",
+          "body placement",
+          "gift box"
+        ],
+        "must_preserve": [
+          "18G",
+          "20G",
+          "8mm inner diameter",
+          "piercing location diagram",
+          "body placement",
+          "gift box",
+          "current layout"
+        ],
+        "must_change": [
+          "replace all Chinese copy with natural English"
+        ],
+        "reference_policy": null,
+        "copy_language": "English",
+        "copy_focus": [
+          "gauge",
+          "inner diameter",
+          "piercing location"
+        ],
+        "generation_constraints": [
+          "do not invent measurements",
+          "do not change Product Truth"
+        ],
+        "qa_requirements": [
+          "18G/20G unchanged",
+          "8mm unchanged",
+          "piercing position unchanged",
+          "English fact consistency"
+        ],
+        "forbidden_topics": []
+      }
+    },
+    {
+      "image_id": "image_04",
+      "role": "material_and_craft",
+      "priority": "P1",
+      "decision_question": "What material and craft details are shown?",
+      "customer_need": "Preserve material and craft evidence while translating copy.",
+      "strategy_reason": "Human optimization specification",
+      "required_product_facts": [
+        "ASTM F136 植入级钛",
+        "钛基底 + 18K 金 PVD 镀层",
+        "AAAAA 立方氧化锆"
+      ],
+      "required_claims": [
+        "claim_f136_titanium",
+        "claim_gold_pvd",
+        "claim_cz"
+      ],
+      "required_visual_evidence": [
+        "ASTM F136 titanium",
+        "PVD gold plating",
+        "zirconia detail",
+        "hinge structure detail"
+      ],
+      "competitor_gap": [
+        {
+          "dimension": "material_trust",
+          "competitor_pattern": "竞品样本使用材质利益块或测试报告式证据区域。",
+          "our_opportunity": "用已审核 claim ID 做 source-linked 材质展示；没有真实证书就不生成 certificate proof。"
+        }
+      ],
+      "template_id": "MATERIAL_EVIDENCE",
+      "forbidden_elements": [
+        "certificate proof",
+        "fabricated test report",
+        "medical cure claim",
+        "100% allergy-free claim"
+      ],
+      "selection_reason": "Human optimization specification.",
+      "optimization_spec": {
+        "image_id": "image_04",
+        "role": "material_and_craft",
+        "action": "KEEP_LAYOUT",
+        "objective": "Preserve the material and craft close-up while replacing Chinese copy with English.",
+        "content_focus": [
+          "ASTM F136 titanium",
+          "PVD gold plating",
+          "zirconia detail",
+          "hinge structure detail"
+        ],
+        "must_preserve": [
+          "ASTM F136 titanium",
+          "PVD gold plating",
+          "stone / zirconia detail",
+          "hinge structure detail",
+          "current layout"
+        ],
+        "must_change": [
+          "replace all Chinese copy with natural English"
+        ],
+        "reference_policy": null,
+        "copy_language": "English",
+        "copy_focus": [
+          "material",
+          "finish",
+          "stone",
+          "hinge"
+        ],
+        "generation_constraints": [
+          "do not add unsupported material facts",
+          "do not redesign composition"
+        ],
+        "qa_requirements": [
+          "ASTM F136",
+          "titanium",
+          "PVD gold plating",
+          "zirconia / stone",
+          "hinge structure"
+        ],
+        "forbidden_topics": []
+      },
+      "action": "KEEP_LAYOUT",
+      "reference_policy": null,
+      "optimization_contract": {
+        "image_id": "image_04",
+        "role": "material_and_craft",
+        "action": "KEEP_LAYOUT",
+        "objective": "Preserve the material and craft close-up while replacing Chinese copy with English.",
+        "content_focus": [
+          "ASTM F136 titanium",
+          "PVD gold plating",
+          "zirconia detail",
+          "hinge structure detail"
+        ],
+        "must_preserve": [
+          "ASTM F136 titanium",
+          "PVD gold plating",
+          "stone / zirconia detail",
+          "hinge structure detail",
+          "current layout"
+        ],
+        "must_change": [
+          "replace all Chinese copy with natural English"
+        ],
+        "reference_policy": null,
+        "copy_language": "English",
+        "copy_focus": [
+          "material",
+          "finish",
+          "stone",
+          "hinge"
+        ],
+        "generation_constraints": [
+          "do not add unsupported material facts",
+          "do not redesign composition"
+        ],
+        "qa_requirements": [
+          "ASTM F136",
+          "titanium",
+          "PVD gold plating",
+          "zirconia / stone",
+          "hinge structure"
+        ],
+        "forbidden_topics": []
+      }
+    },
+    {
+      "image_id": "image_05",
+      "role": "multi_scene_wearing",
+      "priority": "P1",
+      "decision_question": "How does the product look across real wearing scenes?",
+      "customer_need": "Show multiple people, positions, and looks.",
+      "strategy_reason": "Human optimization specification",
+      "required_product_facts": [
+        "classic hoop",
+        "double-layer hoop",
+        "CZ accent hoop"
+      ],
+      "required_claims": [],
+      "required_visual_evidence": [
+        "multiple people",
+        "different piercing positions",
+        "realistic on-body appearance",
+        "scene variation"
+      ],
+      "competitor_gap": [
+        {
+          "dimension": "style_projection",
+          "competitor_pattern": "竞品样本使用三联近景和 2+1 人像场景承载风格投射。",
+          "our_opportunity": "先用三款批准配置做可比较的近景风格图，P2 生活方式后置。"
+        }
+      ],
+      "template_id": "LIFESTYLE_MOMENTS",
+      "forbidden_elements": [
+        "hinge structure explanation",
+        "material detail explanation"
+      ],
+      "selection_reason": "Human optimization specification.",
+      "optimization_spec": {
+        "image_id": "image_05",
+        "role": "multi_scene_wearing",
+        "action": "REBUILD_COMPOSITION",
+        "objective": "Show realistic wearing effects across multiple people, piercing positions, and scenes.",
+        "content_focus": [
+          "multiple people",
+          "different piercing positions",
+          "different wearing looks",
+          "realistic on-body appearance",
+          "scene variation"
+        ],
+        "must_preserve": [
+          "first-party product identity",
+          "product geometry",
+          "product material appearance"
+        ],
+        "must_change": [
+          "discard current hinge structure composition",
+          "remove hinge explanation",
+          "remove craft explanation"
+        ],
+        "reference_policy": {
+          "mode": "REQUIRED",
+          "asset_ids": [
+            "pic05"
+          ],
+          "purposes": [
+            "multi_person_composition",
+            "wearing_variation",
+            "scene_reference"
+          ],
+          "allowed_effects": [
+            "guide multi-person composition",
+            "guide wearing variation",
+            "guide scene structure"
+          ],
+          "product_identity_source": false
+        },
+        "copy_language": "English",
+        "copy_focus": [
+          "multiple ways to wear",
+          "different looks",
+          "real-life wearing reference"
+        ],
+        "generation_constraints": [
+          "must show multiple people",
+          "must show variation in wearing positions or looks",
+          "must not return to hinge explanation",
+          "must not copy competitor product identity"
+        ],
+        "qa_requirements": [
+          "multi-person consistency",
+          "wearing position",
+          "on-body realism",
+          "product identity",
+          "scene diversity"
+        ],
+        "forbidden_topics": [
+          "hinge structure explanation",
+          "material detail explanation"
+        ]
+      },
+      "action": "REBUILD_COMPOSITION",
+      "reference_policy": {
+        "mode": "REQUIRED",
+        "asset_ids": [
+          "pic05"
+        ],
+        "purposes": [
+          "multi_person_composition",
+          "wearing_variation",
+          "scene_reference"
+        ],
+        "allowed_effects": [
+          "guide multi-person composition",
+          "guide wearing variation",
+          "guide scene structure"
+        ],
+        "product_identity_source": false
+      },
+      "optimization_contract": {
+        "image_id": "image_05",
+        "role": "multi_scene_wearing",
+        "action": "REBUILD_COMPOSITION",
+        "objective": "Show realistic wearing effects across multiple people, piercing positions, and scenes.",
+        "content_focus": [
+          "multiple people",
+          "different piercing positions",
+          "different wearing looks",
+          "realistic on-body appearance",
+          "scene variation"
+        ],
+        "must_preserve": [
+          "first-party product identity",
+          "product geometry",
+          "product material appearance"
+        ],
+        "must_change": [
+          "discard current hinge structure composition",
+          "remove hinge explanation",
+          "remove craft explanation"
+        ],
+        "reference_policy": {
+          "mode": "REQUIRED",
+          "asset_ids": [
+            "pic05"
+          ],
+          "purposes": [
+            "multi_person_composition",
+            "wearing_variation",
+            "scene_reference"
+          ],
+          "allowed_effects": [
+            "guide multi-person composition",
+            "guide wearing variation",
+            "guide scene structure"
+          ],
+          "product_identity_source": false
+        },
+        "copy_language": "English",
+        "copy_focus": [
+          "multiple ways to wear",
+          "different looks",
+          "real-life wearing reference"
+        ],
+        "generation_constraints": [
+          "must show multiple people",
+          "must show variation in wearing positions or looks",
+          "must not return to hinge explanation",
+          "must not copy competitor product identity"
+        ],
+        "qa_requirements": [
+          "multi-person consistency",
+          "wearing position",
+          "on-body realism",
+          "product identity",
+          "scene diversity"
+        ],
+        "forbidden_topics": [
+          "hinge structure explanation",
+          "material detail explanation"
+        ]
+      }
+    },
+    {
+      "image_id": "image_06",
+      "role": "hinge_operation_demo",
+      "priority": "P1",
+      "decision_question": "How does the hinged ring open, position, and close?",
+      "customer_need": "Show a clear hand-operated opening, insertion, and closing sequence.",
+      "strategy_reason": "Human optimization specification",
+      "required_product_facts": [
+        "铰链分段环，平接缝，按压卡扣闭合"
+      ],
+      "required_claims": [
+        "claim_click_top"
+      ],
+      "required_visual_evidence": [
+        "hand operation",
+        "opening state",
+        "closing state",
+        "operation sequence"
+      ],
+      "competitor_gap": [
+        {
+          "dimension": "structure_use",
+          "competitor_pattern": "竞品样本使用闭合示意和 2x2 宏观细节网格。",
+          "our_opportunity": "展示我方已登记的铰链、平接缝和按压卡扣结构，静态证据不冒充操作实拍。"
+        }
+      ],
+      "template_id": "STRUCTURE_USE_DETAIL",
+      "forbidden_elements": [
+        "three-product wearing comparison"
+      ],
+      "selection_reason": "Human optimization specification.",
+      "optimization_spec": {
+        "image_id": "image_06",
+        "role": "hinge_operation_demo",
+        "action": "REBUILD_COMPOSITION",
+        "objective": "Show by hand-operation steps how the hinged nose ring opens, is positioned, and closes.",
+        "content_focus": [
+          "opening",
+          "insertion",
+          "closing",
+          "hand operation",
+          "hinge mechanism"
+        ],
+        "must_preserve": [
+          "first-party product identity",
+          "product geometry",
+          "hinge mechanism"
+        ],
+        "must_change": [
+          "discard current three-product wearing comparison",
+          "replace with operation demonstration"
+        ],
+        "reference_policy": {
+          "mode": "REQUIRED",
+          "asset_ids": [
+            "pic06"
+          ],
+          "purposes": [
+            "hand_pose",
+            "operation_demo",
+            "step_sequence",
+            "camera_angle"
+          ],
+          "allowed_effects": [
+            "guide hand position",
+            "guide operation sequence",
+            "guide composition"
+          ],
+          "product_identity_source": false
+        },
+        "copy_language": "English",
+        "copy_focus": [
+          "open",
+          "insert",
+          "close"
+        ],
+        "generation_constraints": [
+          "must show hand operation",
+          "must make opening and closing understandable",
+          "must not return to wearing comparison",
+          "must not copy reference product identity"
+        ],
+        "qa_requirements": [
+          "hand anatomy",
+          "hinge visibility",
+          "opening state",
+          "closing state",
+          "operation sequence",
+          "product consistency"
+        ],
+        "forbidden_topics": [
+          "three-product wearing comparison"
+        ]
+      },
+      "action": "REBUILD_COMPOSITION",
+      "reference_policy": {
+        "mode": "REQUIRED",
+        "asset_ids": [
+          "pic06"
+        ],
+        "purposes": [
+          "hand_pose",
+          "operation_demo",
+          "step_sequence",
+          "camera_angle"
+        ],
+        "allowed_effects": [
+          "guide hand position",
+          "guide operation sequence",
+          "guide composition"
+        ],
+        "product_identity_source": false
+      },
+      "optimization_contract": {
+        "image_id": "image_06",
+        "role": "hinge_operation_demo",
+        "action": "REBUILD_COMPOSITION",
+        "objective": "Show by hand-operation steps how the hinged nose ring opens, is positioned, and closes.",
+        "content_focus": [
+          "opening",
+          "insertion",
+          "closing",
+          "hand operation",
+          "hinge mechanism"
+        ],
+        "must_preserve": [
+          "first-party product identity",
+          "product geometry",
+          "hinge mechanism"
+        ],
+        "must_change": [
+          "discard current three-product wearing comparison",
+          "replace with operation demonstration"
+        ],
+        "reference_policy": {
+          "mode": "REQUIRED",
+          "asset_ids": [
+            "pic06"
+          ],
+          "purposes": [
+            "hand_pose",
+            "operation_demo",
+            "step_sequence",
+            "camera_angle"
+          ],
+          "allowed_effects": [
+            "guide hand position",
+            "guide operation sequence",
+            "guide composition"
+          ],
+          "product_identity_source": false
+        },
+        "copy_language": "English",
+        "copy_focus": [
+          "open",
+          "insert",
+          "close"
+        ],
+        "generation_constraints": [
+          "must show hand operation",
+          "must make opening and closing understandable",
+          "must not return to wearing comparison",
+          "must not copy reference product identity"
+        ],
+        "qa_requirements": [
+          "hand anatomy",
+          "hinge visibility",
+          "opening state",
+          "closing state",
+          "operation sequence",
+          "product consistency"
+        ],
+        "forbidden_topics": [
+          "three-product wearing comparison"
+        ]
+      }
+    }
+  ]
+}

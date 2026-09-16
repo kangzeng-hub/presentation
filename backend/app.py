@@ -8,10 +8,15 @@ from typing import Any
 from calibration.models import HumanEvaluation
 from calibration.store import CalibrationStore
 from calibration.regeneration import RegenerationService
+from backend.api.workspace import create_workspace_router
+from backend.repositories.workspace import WorkspaceRepository
+from backend.services.workspace import WorkspaceService
 
 try:
-    from fastapi import FastAPI, HTTPException
-    from fastapi.responses import FileResponse
+    from fastapi import FastAPI, HTTPException, Request
+    from fastapi.exceptions import RequestValidationError
+    from fastapi.responses import FileResponse, JSONResponse
+    from fastapi.middleware.cors import CORSMiddleware
 except ImportError:  # pragma: no cover - optional runtime dependency
     FastAPI = None
 
@@ -68,10 +73,37 @@ def _discover_run_artifacts(root: Path = Path("output")) -> list[dict[str, Any]]
     return result
 
 
-def create_app(store: CalibrationStore | None = None, regeneration_service: RegenerationService | None = None):
+def create_app(store: CalibrationStore | None = None, regeneration_service: RegenerationService | None = None, workspace_service: WorkspaceService | None = None):
     if FastAPI is None:
         raise RuntimeError("FastAPI is required to run the API. Install fastapi and uvicorn.")
-    app = FastAPI(title="Image Calibration & Regeneration Workbench", version="1.0.0")
+    app = FastAPI(title="Presentation Workspace Production API", version="2.0.0")
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=[
+            "http://localhost:3000",
+            "http://localhost:5173",
+            "http://127.0.0.1:3000",
+            "http://127.0.0.1:5173",
+        ],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+
+    @app.exception_handler(HTTPException)
+    async def http_error_handler(request: Request, exc: HTTPException):
+        detail = exc.detail if isinstance(exc.detail, dict) else {"code": "RESOURCE_NOT_FOUND" if exc.status_code == 404 else "CONFLICT" if exc.status_code == 409 else "INTERNAL_ERROR", "message": str(exc.detail), "details": {}}
+        if "error" in detail:
+            return JSONResponse(status_code=exc.status_code, content=detail)
+        return JSONResponse(status_code=exc.status_code, content={"error": {"code": detail.get("code", "INTERNAL_ERROR"), "message": detail.get("message", "Request failed"), "details": detail.get("details", {})}})
+
+    @app.exception_handler(RequestValidationError)
+    async def validation_error_handler(request: Request, exc: RequestValidationError):
+        return JSONResponse(status_code=422, content={"error": {"code": "VALIDATION_ERROR", "message": "Request validation failed", "details": {"errors": exc.errors()}}})
+    workspace_service = workspace_service or WorkspaceService(WorkspaceRepository())
+    workspace_service.ensure_demo_project()
+    workspace_service.runner.recover(workspace_service.handler_for_job)
+    app.include_router(create_workspace_router(workspace_service))
     store = store or CalibrationStore()
     regeneration_service = regeneration_service or RegenerationService(store)
 

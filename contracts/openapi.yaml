@@ -1,9 +1,9 @@
 openapi: 3.1.0
 info:
   title: Presentation Workspace API
-  version: 0.1.0
+  version: 2.0.0
 servers:
-  - url: /api
+  - url: http://localhost:8000
 paths:
   /projects:
     get:
@@ -13,59 +13,155 @@ paths:
     post:
       operationId: createProject
       requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/CreateProject'}}}}
-      responses: {'201': {description: Created, content: {application/json: {schema: {$ref: '#/components/schemas/Project'}}}}, '400': {$ref: '#/components/responses/BadRequest'}}
+      responses: {'201': {description: Created, content: {application/json: {schema: {$ref: '#/components/schemas/Project'}}}}}
   /projects/{project_id}:
-    parameters: [{name: project_id, in: path, required: true, schema: {type: string}}]
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
     get:
       operationId: getProject
-      responses: {'200': {description: Project, content: {application/json: {schema: {$ref: '#/components/schemas/ProjectWorkspace'}}}}, '404': {$ref: '#/components/responses/NotFound'}}
+      responses: {'200': {description: Project workspace, content: {application/json: {schema: {$ref: '#/components/schemas/ProjectWorkspace'}}}}, '404': {$ref: '#/components/responses/NotFound'}}
   /projects/{project_id}/product-truth:
-    get: {operationId: getProductTruth, responses: {'200': {description: ProductTruth, content: {application/json: {schema: {$ref: '#/components/schemas/ProductTruth'}}}}}}
-    put: {operationId: updateProductTruth, requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/ProductTruth'}}}}, responses: {'200': {description: Updated, content: {application/json: {schema: {$ref: '#/components/schemas/ProductTruth'}}}}, '400': {$ref: '#/components/responses/BadRequest'}}}
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    get:
+      operationId: getProductTruth
+      responses: {'200': {description: Product truth, content: {application/json: {schema: {$ref: '#/components/schemas/ProductTruth'}}}}}
+    put:
+      operationId: updateProductTruth
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/ProductTruth'}}}}
+      responses: {'200': {description: Updated product truth, content: {application/json: {schema: {$ref: '#/components/schemas/ProductTruth'}}}}}
   /projects/{project_id}/competitors:
-    get: {operationId: listCompetitors, responses: {'200': {description: Competitors, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/CompetitorSnapshot'}}}}}}}
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    get:
+      operationId: listCompetitors
+      responses: {'200': {description: Competitors, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/CompetitorSnapshot'}}}}}}
   /projects/{project_id}/competitor-research:
-    post: {operationId: startCompetitorResearch, requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/ResearchRequest'}}}}, responses: {'202': {description: Queued, content: {application/json: {schema: {$ref: '#/components/schemas/ResearchJob'}}}}, '400': {$ref: '#/components/responses/BadRequest'}}}
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    post:
+      operationId: startCompetitorResearch
+      parameters: [{$ref: '#/components/parameters/IdempotencyKey'}]
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/ResearchRequest'}}}}
+      responses: {'202': {description: Research job, content: {application/json: {schema: {$ref: '#/components/schemas/Job'}}}}}
   /projects/{project_id}/competitor-insight:
-    get: {operationId: getCompetitorInsight, responses: {'200': {description: Insight, content: {application/json: {schema: {$ref: '#/components/schemas/CompetitorInsight'}}}}}}
-    post: {operationId: generateCompetitorInsight, responses: {'202': {description: Generated insight, content: {application/json: {schema: {$ref: '#/components/schemas/CompetitorInsight'}}}}}}
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    get:
+      operationId: getCompetitorInsight
+      responses: {'200': {description: Insight, content: {application/json: {schema: {$ref: '#/components/schemas/CompetitorInsight'}}}}}
+    post:
+      operationId: generateCompetitorInsight
+      responses: {'202': {description: Insight, content: {application/json: {schema: {$ref: '#/components/schemas/CompetitorInsight'}}}}}
   /projects/{project_id}/strategy:
-    get: {operationId: getStrategy, responses: {'200': {description: Strategy, content: {application/json: {schema: {$ref: '#/components/schemas/PresentationStrategy'}}}}}}
-    post: {operationId: generateStrategy, responses: {'202': {description: Queued, content: {application/json: {schema: {$ref: '#/components/schemas/PresentationStrategy'}}}}}}
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    get:
+      operationId: getStrategy
+      responses: {'200': {description: Strategy, content: {application/json: {schema: {$ref: '#/components/schemas/PresentationStrategy'}}}}}
+    post:
+      operationId: generateStrategy
+      responses: {'202': {description: Strategy, content: {application/json: {schema: {$ref: '#/components/schemas/PresentationStrategy'}}}}}
   /projects/{project_id}/listing:
-    get: {operationId: getListing, responses: {'200': {description: Listing, content: {application/json: {schema: {$ref: '#/components/schemas/ListingPlan'}}}}}}
-    post: {operationId: generateListing, requestBody: {required: false, content: {application/json: {schema: {$ref: '#/components/schemas/GenerateRequest'}}}}, responses: {'202': {description: Queued, content: {application/json: {schema: {$ref: '#/components/schemas/ListingPlan'}}}}}}
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    get:
+      operationId: getListing
+      responses: {'200': {description: Listing, content: {application/json: {schema: {$ref: '#/components/schemas/ListingPlan'}}}}}
+    post:
+      operationId: generateListing
+      responses: {'202': {description: Listing, content: {application/json: {schema: {$ref: '#/components/schemas/ListingPlan'}}}}}
   /projects/{project_id}/images:
-    get: {operationId: listImages, responses: {'200': {description: Images, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/ImagePlanRef'}}}}}}}
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    get:
+      operationId: listImages
+      responses: {'200': {description: Image plan, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/ImagePlanRef'}}}}}}
   /projects/{project_id}/images/plan:
-    post: {operationId: generateImagePlan, responses: {'202': {description: Queued, content: {application/json: {schema: {$ref: '#/components/schemas/ImagePlanRef'}}}}}}
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    post:
+      operationId: generateImagePlan
+      responses: {'202': {description: Image plan, content: {application/json: {schema: {$ref: '#/components/schemas/ImagePlanRef'}}}}}
   /projects/{project_id}/images/generate:
-    post: {operationId: generateImages, requestBody: {required: false, content: {application/json: {schema: {$ref: '#/components/schemas/GenerateRequest'}}}}, responses: {'202': {description: Queued, content: {application/json: {schema: {$ref: '#/components/schemas/AsyncJob'}}}}}}
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    post:
+      operationId: generateImages
+      parameters: [{$ref: '#/components/parameters/IdempotencyKey'}]
+      responses: {'202': {description: Image generation job, content: {application/json: {schema: {$ref: '#/components/schemas/Job'}}}}}
+  /projects/{project_id}/qa:
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    get:
+      operationId: getQA
+      responses: {'200': {description: QA reports, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/QAReport'}}}}}}
   /projects/{project_id}/video:
-    get: {operationId: getVideoPlan, responses: {'200': {description: Video plan, content: {application/json: {schema: {$ref: '#/components/schemas/VideoPlan'}}}}}}
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    get:
+      operationId: getVideoPlan
+      responses: {'200': {description: Video plan, content: {application/json: {schema: {$ref: '#/components/schemas/VideoPlan'}}}}}
   /projects/{project_id}/video/plan:
-    post: {operationId: generateVideoPlan, requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/VideoPlanInput'}}}}, responses: {'201': {description: Created, content: {application/json: {schema: {$ref: '#/components/schemas/VideoPlan'}}}}, '400': {$ref: '#/components/responses/BadRequest'}}}
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    post:
+      operationId: generateVideoPlan
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/VideoPlanInput'}}}}
+      responses: {'201': {description: Video plan, content: {application/json: {schema: {$ref: '#/components/schemas/VideoPlan'}}}}}
+  /projects/{project_id}/approvals:
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    get:
+      operationId: listApprovals
+      responses: {'200': {description: Approvals, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/Approval'}}}}}}
+    post:
+      operationId: createApproval
+      requestBody: {required: true, content: {application/json: {schema: {$ref: '#/components/schemas/ApprovalCreate'}}}}
+      responses: {'201': {description: Approval, content: {application/json: {schema: {$ref: '#/components/schemas/Approval'}}}}}
+  /projects/{project_id}/export:
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    post:
+      operationId: exportProject
+      responses: {'200': {description: Export manifest, content: {application/json: {schema: {$ref: '#/components/schemas/ExportManifest'}}}}}
+  /projects/{project_id}/exports:
+    parameters: [{$ref: '#/components/parameters/ProjectId'}]
+    get:
+      operationId: listExports
+      responses: {'200': {description: Exports, content: {application/json: {schema: {type: array, items: {$ref: '#/components/schemas/ExportManifest'}}}}}}
+  /projects/{project_id}/exports/{export_id}:
+    parameters:
+      - {$ref: '#/components/parameters/ProjectId'}
+      - {name: export_id, in: path, required: true, schema: {type: string}}
+    get:
+      operationId: getExport
+      responses: {'200': {description: Export manifest, content: {application/json: {schema: {$ref: '#/components/schemas/ExportManifest'}}}}}
+  /jobs/{job_id}:
+    parameters: [{name: job_id, in: path, required: true, schema: {type: string}}]
+    get:
+      operationId: getJob
+      responses: {'200': {description: Job, content: {application/json: {schema: {$ref: '#/components/schemas/Job'}}}}, '404': {$ref: '#/components/responses/JobNotFound'}}
+  /jobs/{job_id}/retry:
+    parameters: [{name: job_id, in: path, required: true, schema: {type: string}}]
+    post:
+      operationId: retryJob
+      responses: {'200': {description: Retried job, content: {application/json: {schema: {$ref: '#/components/schemas/Job'}}}}}
+  /jobs/{job_id}/cancel:
+    parameters: [{name: job_id, in: path, required: true, schema: {type: string}}]
+    post:
+      operationId: cancelJob
+      responses: {'200': {description: Cancelled job, content: {application/json: {schema: {$ref: '#/components/schemas/Job'}}}}}
 components:
+  parameters:
+    ProjectId: {name: project_id, in: path, required: true, schema: {type: string}}
+    IdempotencyKey: {name: Idempotency-Key, in: header, required: false, schema: {type: string}}
   responses:
-    BadRequest: {description: Validation error, content: {application/json: {schema: {$ref: '#/components/schemas/ErrorResponse'}}}}
-    NotFound: {description: Not found, content: {application/json: {schema: {$ref: '#/components/schemas/ErrorResponse'}}}}
+    NotFound: {description: Resource not found, content: {application/json: {schema: {$ref: '#/components/schemas/ErrorResponse'}}}}
+    JobNotFound: {description: Job not found, content: {application/json: {schema: {$ref: '#/components/schemas/ErrorResponse'}}}}
   schemas:
-    AsyncStatus: {type: string, enum: [queued, running, completed, failed, cancelled]}
-    HumanStatus: {type: string, enum: [pending_review, approved, rejected, revision_required]}
-    CreateProject: {type: object, required: [sku, project_name], properties: {sku: {type: string, minLength: 1}, project_name: {type: string, minLength: 1}}}
-    Project: {type: object, required: [project_id, sku, project_name, overall_status, current_stage, created_at], properties: {project_id: {type: string}, sku: {type: string}, project_name: {type: string}, overall_status: {$ref: '#/components/schemas/AsyncStatus'}, current_stage: {type: string}, created_at: {type: string, format: date-time}}}
-    ProjectWorkspace: {allOf: [{$ref: '#/components/schemas/Project'}, {type: object, properties: {product_truth: {$ref: '#/components/schemas/ProductTruth'}, competitor_insight: {$ref: '#/components/schemas/CompetitorInsight'}, strategy: {$ref: '#/components/schemas/PresentationStrategy'}}}]}
-    ProductTruth: {type: object, required: [project_id, sku, product_name, category, material, dimensions, variants, package_contents, product_features, verified_claims, product_images, source, version], properties: {project_id: {type: string}, sku: {type: string}, product_name: {type: string}, category: {type: string}, material: {type: object}, dimensions: {type: object}, variants: {type: array, items: {type: object}}, package_contents: {type: array, items: {type: string}}, product_features: {type: array, items: {type: string}}, verified_claims: {type: array, items: {type: object}}, product_images: {type: array, items: {type: string}}, source: {type: array, items: {type: string}, minItems: 1}, version: {type: integer, minimum: 1}}}
-    CompetitorSnapshot: {type: object, required: [competitor_id, url, crawl_status], properties: {competitor_id: {type: string}, url: {type: string, format: uri}, asin: {type: [string, 'null']}, title: {type: [string, 'null']}, bullet_points: {type: array, items: {type: string}}, description: {type: [string, 'null']}, rating: {type: [number, 'null'], minimum: 0, maximum: 5}, price: {type: [number, 'null']}, reviews: {type: array, items: {type: object}}, negative_reviews: {type: array, items: {type: object}}, neutral_reviews: {type: array, items: {type: object}}, positive_reviews: {type: array, items: {type: object}}, images: {type: array, items: {type: string}}, crawl_status: {$ref: '#/components/schemas/AsyncStatus'}, crawled_at: {type: [string, 'null'], format: date-time}, raw_source: {}}}
+    CreateProject: {type: object, required: [sku, project_name], properties: {sku: {type: string, minLength: 1}, project_name: {type: string, minLength: 1}}, additionalProperties: false}
+    Project: {type: object, required: [project_id, sku, project_name, overall_status, current_stage, created_at], properties: {project_id: {type: string}, sku: {type: string}, project_name: {type: string}, overall_status: {type: string, enum: [queued, running, completed, failed, cancelled]}, current_stage: {type: string}, created_at: {type: string, format: date-time}, updated_at: {type: [string, 'null'], format: date-time}}}
+    ProjectWorkspace: {allOf: [{$ref: '#/components/schemas/Project'}, {type: object, properties: {product_truth: {$ref: '#/components/schemas/ProductTruth'}, competitors: {type: array, items: {$ref: '#/components/schemas/CompetitorSnapshot'}}, research: {$ref: '#/components/schemas/Job'}, competitor_insight: {$ref: '#/components/schemas/CompetitorInsight'}, strategy: {$ref: '#/components/schemas/PresentationStrategy'}, listing: {$ref: '#/components/schemas/ListingPlan'}, image_plan: {$ref: '#/components/schemas/ImagePlanRef'}, image_generation: {$ref: '#/components/schemas/Job'}, qa: {type: array, items: {$ref: '#/components/schemas/QAReport'}}, video: {$ref: '#/components/schemas/VideoPlan'}, approvals: {type: array, items: {$ref: '#/components/schemas/Approval'}}, active_jobs: {type: array, items: {$ref: '#/components/schemas/Job'}}}}]}
+    ProductTruth: {type: object, required: [project_id, sku, product_name, category, material, dimensions, package_contents, product_features, verified_claims, product_images, source, version], properties: {project_id: {type: string}, sku: {type: string}, product_name: {type: string}, category: {type: string}, material: {type: object, additionalProperties: true}, dimensions: {type: object, additionalProperties: true}, variants: {type: array, items: {type: object, additionalProperties: true}}, package_contents: {type: array, items: {type: string}}, product_features: {type: array, items: {type: string}}, verified_claims: {type: array, items: {type: object, additionalProperties: true}}, product_images: {type: array, items: {type: string}}, source: {type: array, items: {type: string}}, version: {type: integer, minimum: 1}}, additionalProperties: true}
+    ResearchRequest: {type: object, required: [urls], properties: {urls: {type: array, minItems: 1, items: {type: string}}}, additionalProperties: false}
+    CompetitorSnapshot: {type: object, required: [competitor_id, url, crawl_status], properties: {competitor_id: {type: string}, url: {type: string}, title: {type: [string, 'null']}, bullet_points: {type: array, items: {type: string}}, description: {type: [string, 'null']}, rating: {type: [number, 'null']}, price: {type: [number, 'null']}, reviews: {type: array, items: {type: object, additionalProperties: true}}, negative_reviews: {type: array, items: {type: object, additionalProperties: true}}, neutral_reviews: {type: array, items: {type: object, additionalProperties: true}}, positive_reviews: {type: array, items: {type: object, additionalProperties: true}}, images: {type: array, items: {type: string}}, crawl_status: {type: string}, captured_at: {type: [string, 'null']}, raw_source: {type: object, additionalProperties: true}}}
     EvidenceRef: {type: object, required: [snapshot_id, field], properties: {snapshot_id: {type: string}, field: {type: string}, excerpt: {type: string}}}
-    CompetitorInsight: {type: object, required: [project_id, purchase_drivers, customer_pain_points, competitor_claims, competitor_strengths, competitor_weaknesses, opportunity_gaps, priority_ranking, evidence, confidence, version], properties: {project_id: {type: string}, purchase_drivers: {type: array, items: {type: string}}, customer_pain_points: {type: array, items: {type: string}}, competitor_claims: {type: array, items: {type: string}}, competitor_strengths: {type: array, items: {type: string}}, competitor_weaknesses: {type: array, items: {type: string}}, opportunity_gaps: {type: array, items: {type: string}}, priority_ranking: {type: array, items: {type: string}}, evidence: {type: array, minItems: 1, items: {$ref: '#/components/schemas/EvidenceRef'}}, confidence: {type: number, minimum: 0, maximum: 1}, version: {type: integer, minimum: 1}}}
-    PresentationStrategy: {type: object, required: [project_id, primary_purchase_drivers, customer_pain_points, core_differentiators, product_claims, proof_points, priority_order, listing_mapping, image_mapping, video_mapping, version], properties: {project_id: {type: string}, primary_purchase_drivers: {type: array, items: {type: string}}, customer_pain_points: {type: array, items: {type: string}}, core_differentiators: {type: array, items: {type: string}}, product_claims: {type: array, items: {type: string}}, proof_points: {type: array, items: {type: string}}, priority_order: {type: array, items: {type: string}}, listing_mapping: {type: object}, image_mapping: {type: object}, video_mapping: {type: object}, version: {type: integer, minimum: 1}}}
-    ListingPlan: {type: object, required: [project_id, product_truth_version, insight_version, strategy_version, title, bullet_points, product_description, claims_used, strategy_refs, version, generated_content, status], properties: {project_id: {type: string}, product_truth_version: {type: integer, minimum: 1}, insight_version: {type: integer, minimum: 1}, strategy_version: {type: integer, minimum: 1}, title: {type: string}, bullet_points: {type: array, items: {type: string}}, product_description: {type: string}, claims_used: {type: array, items: {type: string}}, strategy_refs: {type: array, items: {type: string}}, version: {type: integer, minimum: 1}, generated_content: {type: object}, edited_content: {type: [object, 'null']}, approved_content: {type: [object, 'null']}, status: {$ref: '#/components/schemas/HumanStatus'}}}
-    ImagePlanRef: {type: object, required: [project_id, strategy_version, image_plan], properties: {project_id: {type: string}, strategy_version: {type: integer, minimum: 1}, image_plan: {type: object, description: Existing six-image ImagePlan; validated by image_planning.models}}}
-    GenerateRequest: {type: object, properties: {strategy_version: {type: integer, minimum: 1}}}
-    AsyncJob: {type: object, required: [job_id, status], properties: {job_id: {type: string}, status: {$ref: '#/components/schemas/AsyncStatus'}, version: {type: integer, minimum: 1}}}
-    ResearchRequest: {type: object, required: [urls], properties: {urls: {type: array, minItems: 1, items: {type: string, format: uri}}}}
-    ResearchJob: {allOf: [{$ref: '#/components/schemas/AsyncJob'}, {type: object, properties: {competitor_ids: {type: array, items: {type: string}}}}]}
-    VideoPlanInput: {type: object, required: [video_goal, target_audience, duration, hook, selling_points, scene_plan, visual_direction, narration, on_screen_text, final_prompt], properties: {video_goal: {type: string}, target_audience: {type: string}, duration: {type: integer, minimum: 1}, hook: {type: string}, selling_points: {type: array, items: {type: string}}, scene_plan: {type: array, items: {type: object}}, visual_direction: {type: string}, narration: {type: string}, on_screen_text: {type: array, items: {type: string}}, final_prompt: {type: string}}}
-    VideoPlan: {allOf: [{$ref: '#/components/schemas/VideoPlanInput'}, {type: object, required: [project_id, strategy_version, status, version, strategy_refs], properties: {project_id: {type: string}, strategy_version: {type: integer, minimum: 1}, status: {$ref: '#/components/schemas/HumanStatus'}, version: {type: integer, minimum: 1}, strategy_refs: {type: array, items: {type: string}}, listing_version: {type: [integer, 'null']}, image_plan_version: {type: [integer, 'null']}}}]}
-    ErrorResponse: {type: object, required: [error], properties: {error: {type: object, required: [code, message, details], properties: {code: {type: string}, message: {type: string}, details: {type: object}}}}}
+    CompetitorInsight: {type: object, required: [project_id, purchase_drivers, customer_pain_points, competitor_claims, competitor_strengths, competitor_weaknesses, opportunity_gaps, priority_ranking, evidence, confidence, version], properties: {project_id: {type: string}, purchase_drivers: {type: array, items: {type: string}}, customer_pain_points: {type: array, items: {type: string}}, competitor_claims: {type: array, items: {type: string}}, competitor_strengths: {type: array, items: {type: string}}, competitor_weaknesses: {type: array, items: {type: string}}, opportunity_gaps: {type: array, items: {type: string}}, priority_ranking: {type: array, items: {type: string}}, evidence: {type: array, items: {$ref: '#/components/schemas/EvidenceRef'}}, confidence: {type: number}, version: {type: integer, minimum: 1}}}
+    PresentationStrategy: {type: object, required: [project_id, primary_purchase_drivers, customer_pain_points, core_differentiators, product_claims, proof_points, priority_order, listing_mapping, image_mapping, video_mapping, version], properties: {project_id: {type: string}, primary_purchase_drivers: {type: array, items: {type: string}}, customer_pain_points: {type: array, items: {type: string}}, core_differentiators: {type: array, items: {type: string}}, product_claims: {type: array, items: {type: string}}, proof_points: {type: array, items: {type: string}}, priority_order: {type: array, items: {type: string}}, listing_mapping: {type: object, additionalProperties: true}, image_mapping: {type: object, additionalProperties: true}, video_mapping: {type: object, additionalProperties: true}, version: {type: integer, minimum: 1}, product_truth_version: {type: integer}, competitor_insight_version: {type: integer}}}
+    ListingPlan: {type: object, required: [project_id, product_truth_version, insight_version, strategy_version, title, bullet_points, product_description, claims_used, strategy_refs, version, status], properties: {project_id: {type: string}, product_truth_version: {type: integer}, insight_version: {type: integer}, strategy_version: {type: integer}, title: {type: string}, bullet_points: {type: array, items: {type: string}}, product_description: {type: string}, claims_used: {type: array, items: {type: string}}, strategy_refs: {type: array, items: {type: string}}, version: {type: integer}, generated_content: {type: object, additionalProperties: true}, edited_content: {type: [object, 'null'], additionalProperties: true}, approved_content: {type: [object, 'null'], additionalProperties: true}, status: {type: string, enum: [pending_review, approved, rejected, revision_required]}}}
+    ImagePlanRef: {type: object, required: [project_id, strategy_version, image_plan], properties: {project_id: {type: string}, strategy_version: {type: integer}, version: {type: integer}, image_plan: {type: object, additionalProperties: true}}}
+    QAReport: {type: object, required: [qa_version, image_id, overall_status], properties: {qa_version: {type: string}, generation_id: {type: [string, 'null']}, image_id: {type: string}, product_id: {type: [string, 'null']}, overall_status: {type: string}, details: {type: object, additionalProperties: true}}}
+    VideoPlanInput: {type: object, required: [video_goal, target_audience, duration, hook, selling_points, scene_plan, visual_direction, narration, on_screen_text, final_prompt], properties: {video_goal: {type: string}, target_audience: {type: string}, duration: {type: integer}, hook: {type: string}, selling_points: {type: array, items: {type: string}}, scene_plan: {type: array, items: {type: object, additionalProperties: true}}, visual_direction: {type: string}, narration: {type: string}, on_screen_text: {type: array, items: {type: string}}, final_prompt: {type: string}}}
+    VideoPlan: {allOf: [{$ref: '#/components/schemas/VideoPlanInput'}, {type: object, required: [project_id, strategy_version, status, version, strategy_refs], properties: {project_id: {type: string}, strategy_version: {type: integer}, status: {type: string, enum: [pending_review, approved, rejected, revision_required]}, version: {type: integer}, strategy_refs: {type: array, items: {type: string}}}}]}
+    Job: {type: object, required: [job_id, project_id, type, status, attempt, created_at], properties: {job_id: {type: string}, project_id: {type: string}, type: {type: string}, status: {type: string, enum: [queued, running, completed, failed, cancelled]}, input_version: {type: object, additionalProperties: true}, idempotency_key: {type: [string, 'null']}, attempt: {type: integer}, created_at: {type: string, format: date-time}, started_at: {type: [string, 'null']}, completed_at: {type: [string, 'null']}, lease_expires_at: {type: [string, 'null']}, result_ref: {type: [string, 'null']}, error_code: {type: [string, 'null']}, error_message: {type: [string, 'null']}}}
+    ApprovalCreate: {type: object, required: [artifact_version_id, status, reviewer], properties: {artifact_version_id: {type: string}, status: {type: string, enum: [pending, approved, rejected]}, reviewer: {type: string}, comment: {type: string}}}
+    Approval: {allOf: [{$ref: '#/components/schemas/ApprovalCreate'}, {type: object, required: [approval_id, project_id, created_at, updated_at], properties: {approval_id: {type: string}, project_id: {type: string}, created_at: {type: string, format: date-time}, updated_at: {type: string, format: date-time}}}]}
+    ArtifactVersion: {type: object, required: [artifact_version_id, project_id, artifact_type, version, input_refs_json, payload_json, created_at], properties: {artifact_version_id: {type: string}, project_id: {type: string}, artifact_type: {type: string}, version: {type: integer}, input_refs_json: {type: object, additionalProperties: true}, payload_json: {oneOf: [{type: object, additionalProperties: true}, {type: array, items: {}}]}, created_at: {type: string, format: date-time}}}
+    ExportManifest: {type: object, required: [export_id, project_id, status, source_versions, artifact_versions, generated_files, qa_reports, approval_state, created_at], properties: {export_id: {type: string}, project_id: {type: string}, status: {type: string, enum: [completed, failed]}, file_ref: {type: [string, 'null']}, source_versions: {type: object, additionalProperties: true}, artifact_versions: {type: array, items: {$ref: '#/components/schemas/ArtifactVersion'}}, generated_files: {type: array, items: {type: string}}, qa_reports: {type: array, items: {type: string}}, approval_state: {type: array, items: {$ref: '#/components/schemas/Approval'}}, created_at: {type: string, format: date-time}, completed_at: {type: [string, 'null']}}}
+    ErrorResponse: {type: object, required: [error], properties: {error: {type: object, required: [code, message, details], properties: {code: {type: string}, message: {type: string}, details: {type: object, additionalProperties: true}}}}}

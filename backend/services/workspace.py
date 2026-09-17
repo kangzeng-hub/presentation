@@ -264,6 +264,32 @@ class WorkspaceService:
                 blocked.append({"artifact_id": artifact.get("artifact_id") or artifact_type, "artifact_version": artifact["version"], "status": "unapproved"})
         if blocked:
             raise DeliveryError("EXPORT_BLOCKED_UNAPPROVED_ARTIFACT", "One or more required artifact versions are not approved", blocked)
+        dependency_types = {
+            "product_truth": "product_truth",
+            "competitor_insight": "competitor_insight",
+            "insight": "competitor_insight",
+            "strategy": "strategy",
+            "image_plan": "image_plan",
+            "image_generation": "image_generation",
+        }
+        stale = []
+        for artifact in artifacts:
+            for ref_name, referenced_version_id in (artifact.get("input_refs_json") or {}).items():
+                dependency_type = dependency_types.get(ref_name)
+                if dependency_type is None or not isinstance(referenced_version_id, str):
+                    continue
+                latest_dependency = self.repository.latest_artifact(project_id, dependency_type)
+                if latest_dependency and latest_dependency["artifact_version_id"] != referenced_version_id:
+                    stale.append({
+                        "artifact_id": artifact.get("artifact_id") or artifact["artifact_type"],
+                        "artifact_version": artifact["version"],
+                        "dependency": dependency_type,
+                        "expected_version_id": latest_dependency["artifact_version_id"],
+                        "referenced_version_id": referenced_version_id,
+                        "status": "stale",
+                    })
+        if stale:
+            raise DeliveryError("EXPORT_BLOCKED_STALE_ARTIFACT", "One or more artifact versions depend on stale inputs", stale)
         approvals = [self.repository.get_approval_for_version(project_id, item.get("artifact_id") or item["artifact_type"], item["version"]) for item in artifacts]
         approvals = [item for item in approvals if item]
         manifest = ExportBuilder(ROOT).build(project=project, artifacts=artifacts, approvals=approvals, export_id=export_id, exported_at=utc_now(), system_version=SYSTEM_VERSION, output_path=zip_path)

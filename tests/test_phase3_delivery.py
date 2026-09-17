@@ -113,6 +113,24 @@ class Phase3DeliveryTests(unittest.TestCase):
         error_schema = self.client.get("/openapi.json").json()["components"]["schemas"]["ErrorBody"]
         self.assertIn("anyOf", error_schema["properties"]["details"])
 
+    def test_updated_product_truth_blocks_stale_approved_artifacts(self):
+        project_id = self.run_flow("project-a", "DEMO-GOLD-3PCS")
+        self.approve_current(project_id)
+        truth = self.client.get(f"/projects/{project_id}/product-truth").json()
+        truth["product_name"] = "Updated synthetic product"
+        updated = self.client.put(f"/projects/{project_id}/product-truth", json=truth)
+        self.assertEqual(updated.status_code, 200, updated.text)
+        latest_truth = self.repository.latest_artifact(project_id, "product_truth")
+        approved = self.client.post(
+            f"/projects/{project_id}/artifacts/{latest_truth['artifact_id']}/versions/{latest_truth['version']}/approval",
+            json={"decision": "approved", "approved_by": "reviewer"},
+        )
+        self.assertEqual(approved.status_code, 201, approved.text)
+        response = self.client.post(f"/projects/{project_id}/exports")
+        self.assertEqual(response.status_code, 409)
+        self.assertEqual(response.json()["error"]["code"], "EXPORT_BLOCKED_STALE_ARTIFACT")
+        self.assertTrue(all(item["status"] == "stale" for item in response.json()["error"]["details"]))
+
     def test_export_manifest_zip_and_sha256(self):
         project_id = self.run_flow("project-a", "DEMO-GOLD-3PCS")
         self.approve_current(project_id)
@@ -155,6 +173,13 @@ class Phase3DeliveryTests(unittest.TestCase):
         truth["product_images"] = ["examples/demo_sku/assets/does-not-exist.png"]
         updated = self.client.put(f"/projects/{project_id}/product-truth", json=truth)
         self.assertEqual(updated.status_code, 200, updated.text)
+        self.assertEqual(self.client.post(f"/projects/{project_id}/competitor-insight").status_code, 202)
+        self.assertEqual(self.client.post(f"/projects/{project_id}/strategy").status_code, 202)
+        self.assertEqual(self.client.post(f"/projects/{project_id}/listing").status_code, 202)
+        self.assertEqual(self.client.post(f"/projects/{project_id}/images/plan").status_code, 202)
+        self.assertEqual(self.client.post(f"/projects/{project_id}/images/generate").status_code, 202)
+        video = self.client.get(f"/projects/{project_id}/video").json()
+        self.assertEqual(self.client.post(f"/projects/{project_id}/video/plan", json=video).status_code, 201)
         self.approve_current(project_id)
         response = self.client.post(f"/projects/{project_id}/exports")
         self.assertEqual(response.status_code, 409)

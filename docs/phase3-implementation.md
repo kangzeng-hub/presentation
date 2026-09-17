@@ -14,7 +14,7 @@ Approval is never inherited. `WorkspaceService.approve_artifact` resolves the ex
 
 ## Export lifecycle
 
-`POST /projects/{project_id}/exports` (and the Phase 2 compatibility alias `/export`) resolves the current required artifact version for the project, validates every exact-version approval, collects existing payloads and source assets, and packages them synchronously. It never calls a provider or regenerates business content. Missing or unapproved versions return `EXPORT_BLOCKED_UNAPPROVED_ARTIFACT` with artifact/version details.
+`POST /projects/{project_id}/exports` (and the Phase 2 compatibility alias `/export`) resolves the current required artifact version for the project, validates every exact-version approval and input-version reference, collects existing payloads and source assets, and packages them synchronously. It never calls a provider or regenerates business content. Missing or unapproved versions return `EXPORT_BLOCKED_UNAPPROVED_ARTIFACT`; artifacts based on superseded inputs return `EXPORT_BLOCKED_STALE_ARTIFACT` with dependency details.
 
 The ZIP contains `project.json`, `product_truth.json`, `strategy.json`, `listing.json`, `images/`, `qa/`, `video_prompt.json` when present, and `manifest.json`. The manifest is persisted in SQLite with the ZIP reference, so a later project change cannot change a completed export.
 

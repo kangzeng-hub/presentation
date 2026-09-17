@@ -20,6 +20,7 @@ venv/
 frontend/node_modules/
 frontend/dist/
 npm-debug.log*
+*.tsbuildinfo
 
 # Runtime state and generated artifacts
 output/**

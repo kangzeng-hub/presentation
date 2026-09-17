@@ -283,7 +283,7 @@ export interface paths {
             };
             cookie?: never;
         };
-        get?: never;
+        get: operations["getArtifactVersionApproval"];
         put?: never;
         post: operations["approveArtifactVersion"];
         delete?: never;
@@ -696,7 +696,9 @@ export interface components {
                 message: string;
                 details: {
                     [key: string]: unknown;
-                };
+                } | {
+                    [key: string]: unknown;
+                }[];
             };
         };
     };
@@ -1211,6 +1213,31 @@ export interface operations {
                     "application/json": components["schemas"]["Approval"];
                 };
             };
+        };
+    };
+    getArtifactVersionApproval: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                project_id: components["parameters"]["ProjectId"];
+                artifact_id: string;
+                version: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Approval */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Approval"];
+                };
+            };
+            404: components["responses"]["NotFound"];
         };
     };
     approveArtifactVersion: {

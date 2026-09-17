@@ -24,7 +24,10 @@ def create_workspace_router(service: WorkspaceService | None = None) -> APIRoute
 
     @router.post("/projects", response_model=Project, status_code=status.HTTP_201_CREATED)
     def create_project(payload: CreateProject) -> dict:
-        return service.create_project(payload)
+        try:
+            return service.create_project(payload)
+        except DeliveryError as exc:
+            raise HTTPException(status_code=409, detail={"code": exc.code, "message": exc.message, "details": exc.details})
 
     @router.get("/projects/{project_id}", response_model=ProjectWorkspace, responses={404: {"model": ErrorResponse}})
     def get_project(project_id: str) -> dict:
@@ -50,6 +53,8 @@ def create_workspace_router(service: WorkspaceService | None = None) -> APIRoute
             return service.update_product_truth(project_id, payload)
         except KeyError as exc:
             raise not_found(exc)
+        except DeliveryError as exc:
+            raise HTTPException(status_code=409, detail={"code": exc.code, "message": exc.message, "details": exc.details})
 
     @router.get("/projects/{project_id}/competitors", response_model=list[CompetitorSnapshot])
     def list_competitors(project_id: str) -> list[dict]:
@@ -169,7 +174,10 @@ def create_workspace_router(service: WorkspaceService | None = None) -> APIRoute
 
     @router.get("/projects/{project_id}/approvals", response_model=list[Approval])
     def list_approvals(project_id: str) -> list[dict]:
-        service.get_project(project_id)
+        try:
+            service.get_project(project_id)
+        except KeyError as exc:
+            raise not_found(exc)
         return service.repository.list_approvals(project_id)
 
     @router.post("/projects/{project_id}/approvals", response_model=Approval, status_code=status.HTTP_201_CREATED)
@@ -195,6 +203,20 @@ def create_workspace_router(service: WorkspaceService | None = None) -> APIRoute
         except DeliveryError as exc:
             raise HTTPException(status_code=404 if exc.code == "ARTIFACT_VERSION_NOT_FOUND" else 409, detail={"code": exc.code, "message": exc.message, "details": exc.details})
 
+    @router.get("/projects/{project_id}/artifacts/{artifact_id}/versions/{version}/approval", response_model=Approval, responses={404: {"model": ErrorResponse}})
+    def get_exact_version_approval(project_id: str, artifact_id: str, version: int) -> dict:
+        try:
+            service.get_project(project_id)
+            artifact = service.repository.get_artifact_version(project_id, artifact_id, version)
+            if artifact is None:
+                raise HTTPException(status_code=404, detail={"code": "ARTIFACT_VERSION_NOT_FOUND", "message": "Artifact version not found", "details": {"artifact_id": artifact_id, "artifact_version": version}})
+            approval = service.repository.get_approval_for_version(project_id, artifact.get("artifact_id") or artifact["artifact_type"], version)
+            if approval is None:
+                raise HTTPException(status_code=404, detail={"code": "APPROVAL_NOT_FOUND", "message": "Approval not found for artifact version", "details": {"artifact_id": artifact_id, "artifact_version": version}})
+            return approval
+        except KeyError as exc:
+            raise not_found(exc)
+
     @router.post("/projects/{project_id}/export", response_model=ExportManifest)
     def export_project(project_id: str) -> dict:
         try:
@@ -210,11 +232,18 @@ def create_workspace_router(service: WorkspaceService | None = None) -> APIRoute
 
     @router.get("/projects/{project_id}/exports", response_model=list[ExportManifest])
     def list_exports(project_id: str) -> list[dict]:
-        service.get_project(project_id)
+        try:
+            service.get_project(project_id)
+        except KeyError as exc:
+            raise not_found(exc)
         return [item["manifest_json"] for item in service.repository.list_exports(project_id)]
 
     @router.get("/projects/{project_id}/exports/{export_id}", response_model=ExportManifest)
     def get_export(project_id: str, export_id: str) -> dict:
+        try:
+            service.get_project(project_id)
+        except KeyError as exc:
+            raise not_found(exc)
         value = service.repository.get_export(export_id)
         if value is None or value["project_id"] != project_id:
             raise HTTPException(status_code=404, detail={"code": "RESOURCE_NOT_FOUND", "message": "Export not found", "details": {}})

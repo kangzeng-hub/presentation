@@ -58,8 +58,9 @@ class ExportBuilder:
                 candidate.relative_to(self.root.resolve())
             except ValueError as exc:
                 raise DeliveryError("EXPORT_BUILD_FAILED", "Product asset is outside the workspace", [{"path": source}]) from exc
-            if candidate.is_file():
-                files[f"images/assets/{candidate.name}"] = candidate.read_bytes()
+            if not candidate.is_file():
+                raise DeliveryError("EXPORT_BUILD_FAILED", "Product asset is missing", [{"path": source}])
+            files[f"images/assets/{candidate.name}"] = candidate.read_bytes()
 
         file_records = [
             {"path": path, "sha256": sha256_bytes(content), "size": len(content)}

@@ -29,9 +29,16 @@ jobs:
         run: ./scripts/check_api_contract.sh
       - name: Secret scan
         run: ./scripts/secret_scan.sh
-      - name: Validate Compose configuration
-        run: docker compose config -q
-      - name: Build demo backend image
-        run: docker build -f mock-server/Dockerfile .
-      - name: Build Python API image
-        run: docker build -f Dockerfile .
+      - name: Build and smoke test Compose stack
+        run: |
+          docker compose config -q
+          trap 'docker compose down -v' EXIT
+          docker compose build
+          docker compose up -d
+          for attempt in {1..30}; do
+            if curl --fail --silent http://localhost:8000/health >/dev/null && curl --fail --silent http://localhost:3000 >/dev/null; then
+              break
+            fi
+            sleep 2
+          done
+          ./scripts/smoke_test.sh

@@ -32,7 +32,6 @@ if grep -rEI "$PATTERN" . \
   --exclude-dir=frontend/node_modules \
   --exclude-dir=output \
   --exclude-dir=__pycache__ \
-  --exclude-dir=archive \
   --exclude=.env \
   --exclude='*.pyc' \
   --exclude='*.pptx' \

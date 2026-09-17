@@ -13,7 +13,6 @@ from backend.workers.runner import InlineJobRunner
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DEMO_PRODUCT = ROOT / "examples/demo_sku/product.json"
 SYSTEM_VERSION = (ROOT / "VERSION").read_text(encoding="utf-8").strip() if (ROOT / "VERSION").exists() else "phase3-dev"
 
 
@@ -37,7 +36,11 @@ class WorkspaceService:
             product = json.loads(candidate.read_text(encoding="utf-8"))
             if product.get("sku") == sku:
                 return candidate.parent
-        return DEMO_PRODUCT.parent
+        raise DeliveryError(
+            "SKU_NOT_REGISTERED",
+            f"No public product fixture is registered for SKU {sku}",
+            [{"sku": sku}],
+        )
 
     def _product(self, sku: str) -> tuple[dict[str, Any], Path]:
         fixture_dir = self._fixture_dir(sku)
@@ -68,8 +71,10 @@ class WorkspaceService:
 
     def create_project(self, payload: CreateProject, project_id: str | None = None) -> dict[str, Any]:
         project_id = project_id or f"project-{uuid.uuid4().hex[:12]}"
-        self.repository.create_project(project_id, payload.project_name, payload.sku)
+        # Resolve the SKU before creating the project so an invalid registration
+        # cannot leave an orphan project row behind.
         _, fixture_dir = self._product(payload.sku)
+        self.repository.create_project(project_id, payload.project_name, payload.sku)
         self.repository.save_artifact(project_id, "product_truth", self._demo_truth(project_id, payload.sku), {"source": str((fixture_dir / "product.json").relative_to(ROOT))}, source_ref=str(fixture_dir))
         return self.get_project(project_id)
 
@@ -88,6 +93,15 @@ class WorkspaceService:
         }
 
     def update_product_truth(self, project_id: str, truth: ProductTruth) -> dict[str, Any]:
+        project = self.repository.get_project(project_id)
+        if project is None:
+            raise KeyError(project_id)
+        if truth.sku != project["sku"]:
+            raise DeliveryError(
+                "PRODUCT_TRUTH_SKU_MISMATCH",
+                "Product Truth SKU must match the project SKU",
+                [{"project_sku": project["sku"], "product_truth_sku": truth.sku}],
+            )
         payload = truth.model_dump()
         payload["project_id"] = project_id
         previous = self.repository.latest_artifact(project_id, "product_truth")

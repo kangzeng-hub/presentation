@@ -25,8 +25,9 @@ class WorkspaceRepository:
         self._init_schema()
 
     def _connect(self) -> sqlite3.Connection:
-        connection = sqlite3.connect(self.db_path)
+        connection = sqlite3.connect(self.db_path, timeout=30)
         connection.row_factory = sqlite3.Row
+        connection.execute("PRAGMA busy_timeout = 30000")
         return connection
 
     @contextmanager
@@ -110,6 +111,8 @@ class WorkspaceRepository:
                 CREATE INDEX IF NOT EXISTS idx_jobs_project ON jobs(project_id, created_at);
                 """
             )
+            db.execute("PRAGMA journal_mode = WAL")
+            db.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_artifact_unique_version ON artifact_versions(project_id, artifact_type, version)")
             self._ensure_column(db, "artifact_versions", "artifact_id", "TEXT")
             self._ensure_column(db, "artifact_versions", "checksum", "TEXT")
             self._ensure_column(db, "artifact_versions", "source_ref", "TEXT")
@@ -179,6 +182,9 @@ class WorkspaceRepository:
         payload_bytes = self._json(payload).encode("utf-8")
         checksum = hashlib.sha256(payload_bytes).hexdigest()
         with self._connection() as db:
+            # Serialize version allocation so concurrent writers cannot receive
+            # the same logical version for one project and artifact type.
+            db.execute("BEGIN IMMEDIATE")
             row = db.execute("SELECT COALESCE(MAX(version), 0) AS version FROM artifact_versions WHERE project_id = ? AND artifact_type = ?", (project_id, artifact_type)).fetchone()
             version = int(row["version"]) + 1
             artifact_id = f"{artifact_type}-v{version}-{uuid.uuid4().hex[:8]}"

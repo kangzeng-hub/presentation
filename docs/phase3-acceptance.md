@@ -18,7 +18,11 @@ Date: 2026-09-17
 | SKU isolation | PASS | Project A/B repository, approval, and export assertions |
 | Second SKU full workflow | PASS | `DEMO-DESK-ORGANIZER` register through export |
 | No SKU-specific core code | PASS | second SKU test checks no SKU branch; fixture is data-only |
-| Full regression suite | PASS | `.venv/bin/pytest`: 92 passed, 1 skipped |
+| Full regression suite | PASS | `.venv/bin/pytest`: 99 passed, 1 skipped |
+| Unknown SKU rejection | PASS | `test_unknown_sku_is_rejected_without_orphan_project` |
+| Concurrent version allocation | PASS | `test_concurrent_artifact_versions_are_unique_and_contiguous` |
+| Export snapshot immutable | PASS | `test_completed_export_is_immutable_after_new_artifact_version` |
+| Missing declared asset blocks export | PASS | `test_missing_declared_product_asset_fails_export` |
 
 ## Black-box workflows
 
@@ -30,10 +34,10 @@ SKU B: `DEMO-DESK-ORGANIZER`, synthetic desk organization fixture. The same serv
 
 ```text
 ./scripts/test.sh
-89 tests, 10 skipped (system Python lacks optional FastAPI dependencies)
+96 tests, 1 skipped (automatically uses the project virtual environment)
 
 PYTHONPATH=. PYTHONWARNINGS=error::ResourceWarning .venv/bin/pytest -q
-92 passed, 1 skipped
+99 passed, 1 skipped
 
 npm --prefix frontend ci
 PASS, 0 vulnerabilities

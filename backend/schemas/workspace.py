@@ -247,7 +247,7 @@ class ExportManifest(SchemaModel):
 class ErrorBody(BaseModel):
     code: str
     message: str
-    details: dict[str, Any] = Field(default_factory=dict)
+    details: dict[str, Any] | list[dict[str, Any]] = Field(default_factory=dict)
 
 
 class ErrorResponse(BaseModel):

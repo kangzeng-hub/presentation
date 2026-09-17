@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import tempfile
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 try:
@@ -66,6 +67,35 @@ class WorkspaceBackendTests(unittest.TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(set(response.json()["error"]), {"code", "message", "details"})
         self.assertEqual(response.json()["error"]["code"], "RESOURCE_NOT_FOUND")
+
+    def test_unknown_sku_is_rejected_without_orphan_project(self):
+        before = {item["project_id"] for item in self.service.repository.list_projects()}
+        response = self.client.post("/projects", json={"sku": "UNKNOWN-SKU", "project_name": "invalid"})
+        self.assertEqual(response.status_code, 409)
+        self.assertEqual(response.json()["error"]["code"], "SKU_NOT_REGISTERED")
+        after = {item["project_id"] for item in self.service.repository.list_projects()}
+        self.assertEqual(before, after)
+
+    def test_product_truth_sku_must_match_project(self):
+        truth = self.client.get("/projects/demo-project/product-truth").json()
+        truth["sku"] = "DEMO-DESK-ORGANIZER"
+        response = self.client.put("/projects/demo-project/product-truth", json=truth)
+        self.assertEqual(response.status_code, 409)
+        self.assertEqual(response.json()["error"]["code"], "PRODUCT_TRUTH_SKU_MISMATCH")
+
+    def test_missing_project_collections_return_structured_404(self):
+        for path in ("/projects/missing/approvals", "/projects/missing/exports"):
+            response = self.client.get(path)
+            self.assertEqual(response.status_code, 404)
+            self.assertEqual(response.json()["error"]["code"], "RESOURCE_NOT_FOUND")
+
+    def test_concurrent_artifact_versions_are_unique_and_contiguous(self):
+        def save(index: int) -> int:
+            return self.service.repository.save_artifact("demo-project", "concurrent", {"index": index})["version"]
+
+        with ThreadPoolExecutor(max_workers=8) as executor:
+            versions = sorted(executor.map(save, range(12)))
+        self.assertEqual(versions, list(range(1, 13)))
 
     def test_job_retry_runs_registered_handler_once_more(self):
         calls = []

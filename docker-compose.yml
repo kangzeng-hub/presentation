@@ -1,5 +1,6 @@
 services:
   demo-backend:
+    profiles: ["offline-demo"]
     build:
       context: .
       dockerfile: mock-server/Dockerfile

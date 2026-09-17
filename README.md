@@ -43,6 +43,14 @@ docker compose up --build
 
 前端在 `http://localhost:3000`，正式 Workspace API 在 `http://localhost:8000`；`4010` 仅保留给离线 mock-server。
 
+需要单独验证离线 mock-server 时显式启用 profile：
+
+```bash
+docker compose --profile offline-demo up demo-backend
+```
+
+当前后端使用 SQLite 和本地 `output/` 文件存储，适合单节点/小团队试运行，不等同于已完成多副本水平扩展的生产部署。
+
 ## 验证
 
 ```bash

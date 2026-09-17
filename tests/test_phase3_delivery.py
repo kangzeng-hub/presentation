@@ -84,6 +84,25 @@ class Phase3DeliveryTests(unittest.TestCase):
         self.assertTrue(any(item["artifact_version"] == 1 and item["decision"] == "approved" for item in approvals))
         self.assertFalse(any(item["artifact_version"] == 2 and item["decision"] == "approved" for item in approvals))
 
+        exact = self.client.get(f"/projects/{project_id}/artifacts/listing/versions/1/approval")
+        self.assertEqual(exact.status_code, 200)
+        self.assertEqual(exact.json()["artifact_version"], 1)
+
+    def test_exact_approval_query_is_project_scoped(self):
+        project_a = self.run_flow("project-a", "DEMO-GOLD-3PCS")
+        project_b = self.run_flow("project-b", "DEMO-DESK-ORGANIZER")
+        listing_a = self.repository.latest_artifact(project_a, "listing")
+        approved = self.client.post(
+            f"/projects/{project_a}/artifacts/{listing_a['artifact_id']}/versions/{listing_a['version']}/approval",
+            json={"decision": "approved", "approved_by": "reviewer"},
+        )
+        self.assertEqual(approved.status_code, 201)
+        cross_project = self.client.get(
+            f"/projects/{project_b}/artifacts/{listing_a['artifact_id']}/versions/{listing_a['version']}/approval"
+        )
+        self.assertEqual(cross_project.status_code, 404)
+        self.assertEqual(cross_project.json()["error"]["code"], "APPROVAL_NOT_FOUND")
+
     def test_unapproved_artifact_blocks_export_with_details(self):
         project_id = self.run_flow("project-a", "DEMO-GOLD-3PCS")
         response = self.client.post(f"/projects/{project_id}/export")
@@ -91,6 +110,8 @@ class Phase3DeliveryTests(unittest.TestCase):
         body = response.json()["error"]
         self.assertEqual(body["code"], "EXPORT_BLOCKED_UNAPPROVED_ARTIFACT")
         self.assertTrue(body["details"])
+        error_schema = self.client.get("/openapi.json").json()["components"]["schemas"]["ErrorBody"]
+        self.assertIn("anyOf", error_schema["properties"]["details"])
 
     def test_export_manifest_zip_and_sha256(self):
         project_id = self.run_flow("project-a", "DEMO-GOLD-3PCS")
@@ -115,6 +136,30 @@ class Phase3DeliveryTests(unittest.TestCase):
                 content = archive.read(record["path"])
                 self.assertEqual(hashlib.sha256(content).hexdigest(), record["sha256"])
                 self.assertEqual(len(content), record["size"])
+
+    def test_completed_export_is_immutable_after_new_artifact_version(self):
+        project_id = self.run_flow("project-a", "DEMO-GOLD-3PCS")
+        self.approve_current(project_id)
+        manifest = self.client.post(f"/projects/{project_id}/exports").json()
+        archive_path = Path(manifest["file_ref"])
+        before = hashlib.sha256(archive_path.read_bytes()).hexdigest()
+        self.service.listing(project_id)
+        stored = self.client.get(f"/projects/{project_id}/exports/{manifest['export_id']}")
+        self.assertEqual(stored.status_code, 200)
+        self.assertEqual(stored.json()["source_versions"], manifest["source_versions"])
+        self.assertEqual(hashlib.sha256(archive_path.read_bytes()).hexdigest(), before)
+
+    def test_missing_declared_product_asset_fails_export(self):
+        project_id = self.run_flow("project-a", "DEMO-GOLD-3PCS")
+        truth = self.client.get(f"/projects/{project_id}/product-truth").json()
+        truth["product_images"] = ["examples/demo_sku/assets/does-not-exist.png"]
+        updated = self.client.put(f"/projects/{project_id}/product-truth", json=truth)
+        self.assertEqual(updated.status_code, 200, updated.text)
+        self.approve_current(project_id)
+        response = self.client.post(f"/projects/{project_id}/exports")
+        self.assertEqual(response.status_code, 409)
+        self.assertEqual(response.json()["error"]["code"], "EXPORT_BUILD_FAILED")
+        self.assertEqual(self.repository.list_exports(project_id), [])
 
     def test_second_sku_full_workflow_and_project_isolation(self):
         project_a = self.run_flow("project-a", "DEMO-GOLD-3PCS")

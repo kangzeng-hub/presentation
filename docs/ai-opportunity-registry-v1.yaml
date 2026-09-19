@@ -1,0 +1,363 @@
+registry:
+  id: ai-opportunity-registry
+  version: "1.0"
+  scope: phase-2a-business-decision-audit
+  generated_at: "2026-09-16"
+  status: discovery_only
+  invariant: Product Truth, claims, assets, versions, permissions, validators, persistence, execution, and human approval remain deterministic.
+  scoring: "priority_score = business_value * context_richness * evidence_availability * repeatability * safety / effort"
+  opportunities:
+    - id: research_scope_and_source_prioritization
+      business_decision: "Which competitor URLs or review/visual sources should be investigated first?"
+      current_implementation: "Caller supplies URLs; demo creates synthetic snapshots for all URLs."
+      hidden_assumption: "All sources are equally useful and every research request should run."
+      ai_opportunity: "Rank targets by expected information gain for unresolved customer decisions and skip redundant crawls."
+      ai_type: "LLM-assisted planning + deterministic URL/provider validation"
+      required_context: "category, SKU, unresolved decisions, snapshot freshness, marketplace, source coverage"
+      required_tool: "get_product_truth, list_snapshots, inspect_source_metadata, submit_research"
+      validator: "URL/marketplace validation, duplicate suppression, freshness policy, persisted job state"
+      risk: "low-medium"
+      business_value: 4
+      context_richness: 4
+      evidence_availability: 4
+      repeatability: 5
+      safety: 4
+      effort: 3
+      priority_score: 427
+      measurement: "crawl calls avoided, decision questions answered per crawl, operator time"
+      confidence: high
+
+    - id: review_evidence_sampling
+      business_decision: "Which reviews are representative evidence for a pain point or purchase driver?"
+      current_implementation: "Reviews are normalized and stored; no theme clustering, deduplication, or coverage metric."
+      hidden_assumption: "A small first slice of low-star reviews represents customer pain."
+      ai_opportunity: "Cluster themes, select diverse excerpts, and expose evidence coverage and uncertainty."
+      ai_type: "LLM classification/summarization + structured clustering"
+      required_context: "review rating/title/text/date/verification, category, variants, pain taxonomy, source freshness"
+      required_tool: "list_reviews, search_reviews, save_evidence_cluster"
+      validator: "review IDs and excerpts required; rating bounds; duplicate excerpts rejected; no unsupported aggregates"
+      risk: medium
+      business_value: 5
+      context_richness: 5
+      evidence_availability: 5
+      repeatability: 5
+      safety: 3
+      effort: 3
+      priority_score: 625
+      measurement: "theme coverage, cluster stability, human acceptance, insight revision rate"
+      confidence: high
+
+    - id: evidence_conflict_and_freshness_detection
+      business_decision: "Can conflicting or stale sources be combined in downstream reasoning?"
+      current_implementation: "EvidenceRef checks source/field presence but not contradiction or freshness."
+      hidden_assumption: "Normalized sources are mutually consistent and current."
+      ai_opportunity: "Detect semantic contradictions/staleness, explain conflicts, and escalate unresolved cases."
+      ai_type: "LLM contradiction detection + deterministic freshness rules"
+      required_context: "source excerpts/fields, timestamps, provider, Product Truth versions, artifact dependencies"
+      required_tool: "compare_evidence, get_dependencies, create_escalation"
+      validator: "typed field comparison, timestamps, source IDs, mandatory human review on unresolved conflict"
+      risk: high
+      business_value: 5
+      context_richness: 5
+      evidence_availability: 5
+      repeatability: 4
+      safety: 2
+      effort: 3
+      priority_score: 333
+      measurement: "conflicts caught, stale incidents, confirmed precision/recall"
+      confidence: high
+
+    - id: product_truth_change_impact_analysis
+      business_decision: "Which downstream artifacts become stale when Product Truth changes?"
+      current_implementation: "Versions/input_refs persist, but update_product_truth does not compute semantic impact or selective invalidation."
+      hidden_assumption: "Version mismatch or manual regeneration is sufficient."
+      ai_opportunity: "Classify changed fields and predict impact; deterministic dependency edges mark stale artifacts and scope regeneration."
+      ai_type: "LLM impact classification + deterministic dependency graph"
+      required_context: "old/new truth diff, affected claim/asset IDs, artifact refs/versions, role requirements"
+      required_tool: "diff_truth, list_dependencies, mark_stale, propose_regeneration_scope"
+      validator: "typed diff, explicit dependency graph, version checks, no model mutation of truth"
+      risk: high
+      business_value: 5
+      context_richness: 5
+      evidence_availability: 5
+      repeatability: 4
+      safety: 3
+      effort: 3
+      priority_score: 500
+      measurement: "stale artifacts caught, unnecessary regenerations, unsupported-output incidents"
+      confidence: high
+
+    - id: cross_artifact_decision_consistency_audit
+      business_decision: "Do Listing, ImagePlan, VideoPlan, prompts, and QA express the same approved decisions and claims?"
+      current_implementation: "Artifacts reference strategy versions, but payloads can still be independently or fixed phrased."
+      hidden_assumption: "A shared strategy version guarantees semantic consistency."
+      ai_opportunity: "Compare decision coverage, claim usage, proof points, and forbidden topics across artifacts."
+      ai_type: "LLM semantic evaluator + deterministic claim/reference checks"
+      required_context: "strategy, decision model, all project artifacts/prompts/QA, Product Truth, versions/refs"
+      required_tool: "get_strategy, list_artifacts, validate_claim_refs, create_revision_task"
+      validator: "exact claim IDs, strategy/version refs, forbidden-topic rules, schemas"
+      risk: medium
+      business_value: 5
+      context_richness: 5
+      evidence_availability: 5
+      repeatability: 5
+      safety: 4
+      effort: 3
+      priority_score: 833
+      measurement: "cross-artifact contradiction rate, pre-export findings, approval cycle time"
+      confidence: high
+
+    - id: decision_question_coverage_gap_detection
+      business_decision: "Which important customer questions remain unanswered by current artifacts?"
+      current_implementation: "Roles/purposes are preselected; no project-level coverage matrix or gap score."
+      hidden_assumption: "The fixed six-image plan covers every SKU's important decision space."
+      ai_opportunity: "Build a decision-space coverage graph and recommend the smallest missing proof set."
+      ai_type: "LLM reasoning over structured decision graph"
+      required_context: "review/category questions, truth limitations, strategy priorities, roles, proof points, QA"
+      required_tool: "list_decisions, get_coverage, propose_content_task"
+      validator: "question IDs, evidence refs, role registry, proof/claim constraints"
+      risk: medium
+      business_value: 5
+      context_richness: 5
+      evidence_availability: 4
+      repeatability: 5
+      safety: 3
+      effort: 3
+      priority_score: 500
+      measurement: "P0 coverage, unanswered concerns, incremental artifact acceptance"
+      confidence: high
+
+    - id: reference_asset_suitability_selection
+      business_decision: "Which assets are safe/useful for identity, composition, on-body proof, or operation?"
+      current_implementation: "Reference policy checks allowed IDs but does not rank suitability by task, crop, pose, or limitation."
+      hidden_assumption: "Any allowed reference is equally suitable for all visual tasks."
+      ai_opportunity: "Use VLM plus asset metadata to rank suitability and flag identity/scale limitations."
+      ai_type: "VLM asset classification/retrieval"
+      required_context: "image/dimensions, approved uses, limitations, identity flag, target role, QA drift history"
+      required_tool: "list_assets, inspect_asset, propose_reference_policy"
+      validator: "canonical identity rules, approved uses/limitations, reference schema, product QA"
+      risk: high
+      business_value: 5
+      context_richness: 5
+      evidence_availability: 5
+      repeatability: 5
+      safety: 3
+      effort: 3
+      priority_score: 625
+      measurement: "reference-related QA failures, rejected assets, success rate by role"
+      confidence: high
+
+    - id: template_capability_matching
+      business_decision: "Which registered template best proves a decision without violating evidence constraints?"
+      current_implementation: "Planner hardcodes template IDs although registry has acceptance/source metadata."
+      hidden_assumption: "Fixed role-to-template mapping is optimal for all SKUs."
+      ai_opportunity: "Rank registry templates by decision coverage, evidence fit, density, difficulty, and failure history."
+      ai_type: "LLM-assisted ranking over registry metadata"
+      required_context: "templates/roles, question/priority, assets/claims/evidence, QA/feedback by template"
+      required_tool: "list_templates, search_template_failures, propose_template_assignment"
+      validator: "registry membership, role priority, required evidence, template schema"
+      risk: medium
+      business_value: 4
+      context_richness: 5
+      evidence_availability: 4
+      repeatability: 5
+      safety: 4
+      effort: 2
+      priority_score: 800
+      measurement: "template failures, decision coverage, accepted output rate"
+      confidence: high
+
+    - id: human_review_risk_routing
+      business_decision: "Which outputs can be auto-approved, AI-reviewed, or must reach a human?"
+      current_implementation: "Statuses/approvals exist, but review effort is not risk-ranked."
+      hidden_assumption: "All outputs deserve the same review effort."
+      ai_opportunity: "Prioritize by claim risk, evidence conflict, drift probability, novelty, QA failures, and impact."
+      ai_type: "Risk classifier + deterministic policy gates"
+      required_context: "QA/failure types, provenance, novelty, provider metadata, human approval history"
+      required_tool: "get_qa, get_provenance, assign_review_queue, require_approval"
+      validator: "policy matrix overrides model; high-risk/export always human gated"
+      risk: high
+      business_value: 5
+      context_richness: 5
+      evidence_availability: 5
+      repeatability: 5
+      safety: 2
+      effort: 3
+      priority_score: 417
+      measurement: "review minutes, missed high-risk issues, override rate, queue latency"
+      confidence: high
+
+    - id: generation_portfolio_budget_allocation
+      business_decision: "Which tasks and variants deserve limited generation budget and latency?"
+      current_implementation: "Generation is offline-demo/opt-in; no cost, latency, expected-value, or variant budget model."
+      hidden_assumption: "Generate each planned artifact once or retry uniformly."
+      ai_opportunity: "Allocate budget to high-impact unresolved decisions; reserve expensive variants for uncertainty/high value."
+      ai_type: "Policy optimizer with model-router inputs"
+      required_context: "priority/coverage gaps, provider cost/latency/reliability, acceptance/retry history, budget/deadline"
+      required_tool: "estimate_cost, provider_health, submit_generation, reserve_budget"
+      validator: "hard budget ceilings, provider policy, task eligibility, approval gates"
+      risk: medium
+      business_value: 4
+      context_richness: 3
+      evidence_availability: 3
+      repeatability: 4
+      safety: 4
+      effort: 3
+      priority_score: 192
+      measurement: "accepted coverage per dollar, time to usable output, retry spend"
+      confidence: medium
+
+    - id: provider_reliability_and_fallback_routing
+      business_decision: "Which provider/model should execute a task and when should the system fallback/escalate?"
+      current_implementation: "Adapters exist, but service routing lacks shared reliability/cost history."
+      hidden_assumption: "Configured provider is available and equally suitable for every role."
+      ai_opportunity: "Route by modality, role, quality history, latency, cost, and failure type."
+      ai_type: "Model router + policy rules"
+      required_context: "task modality/role, capabilities/health, cost/latency/retry history, QA by provider"
+      required_tool: "list_capabilities, provider_health, invoke_provider, invoke_fallback"
+      validator: "provider registry, timeout/retry policy, output schemas, QA gate"
+      risk: medium
+      business_value: 4
+      context_richness: 3
+      evidence_availability: 3
+      repeatability: 5
+      safety: 4
+      effort: 3
+      priority_score: 240
+      measurement: "success rate, p95 latency, cost per accepted artifact, fallback frequency"
+      confidence: medium
+
+    - id: export_readiness_and_provenance_preflight
+      business_decision: "Is the project complete and safe enough to export/publish?"
+      current_implementation: "Export writes a zip/manifest but QA list is empty and semantic readiness is unchecked."
+      hidden_assumption: "Existing artifacts and schema validity imply export readiness."
+      ai_opportunity: "Explain missing coverage, unresolved QA, stale refs, unsupported claims, and approval gaps."
+      ai_type: "LLM explanation over deterministic preflight findings"
+      required_context: "artifact graph/versions, QA/approvals, provenance, export policy"
+      required_tool: "list_versions, run_preflight, list_approvals, create_blocker"
+      validator: "stale/approval/QA/manifest gates remain deterministic"
+      risk: high
+      business_value: 5
+      context_richness: 5
+      evidence_availability: 5
+      repeatability: 5
+      safety: 3
+      effort: 2
+      priority_score: 938
+      measurement: "blockers caught, release defects, export rework time"
+      confidence: high
+
+    - id: outcome_attribution_and_learning
+      business_decision: "Which artifact/decision/correction contributed to a business outcome?"
+      current_implementation: "No CTR/CVR/returns/complaints adapter or artifact-level outcome linkage."
+      hidden_assumption: "Human acceptance is a sufficient proxy for business success."
+      ai_opportunity: "Ingest future outcomes, attribute to versions with uncertainty, and feed validated patterns to memory."
+      ai_type: "Outcome adapter + causal/associative analysis"
+      required_context: "artifact versions, channel/time window, metrics, experiment/control metadata"
+      required_tool: "ingest_outcome, link_outcome, query_history, save_experience_memory"
+      validator: "metric/time-window/experiment checks, uncertainty, human approval before policy change"
+      risk: high
+      business_value: 5
+      context_richness: 1
+      evidence_availability: 1
+      repeatability: 4
+      safety: 2
+      effort: 5
+      priority_score: 8
+      measurement: "experiment lift, attribution confidence, accepted memory reuse"
+      confidence: low
+
+    - id: prompt_context_budget_compilation
+      business_decision: "What is the smallest sufficient context for this model call?"
+      current_implementation: "Prompt builders concatenate fixed sections; no shared context builder, ranking, token budget, or prompt artifact version."
+      hidden_assumption: "More prompt text is safer and all available context is relevant."
+      ai_opportunity: "Compile task-specific facts, evidence, examples, constraints, and schema under relevance/budget policies."
+      ai_type: "Deterministic context builder + retrieval ranker; LLM for reasoning"
+      required_context: "goal/schema, relevant truth/claims, ranked evidence/memory, failure/feedback, model limits"
+      required_tool: "build_context, retrieve_evidence, retrieve_memory, estimate_tokens, save_prompt_snapshot"
+      validator: "required facts/constraints present; broad/unsupported context rejected"
+      risk: medium
+      business_value: 5
+      context_richness: 5
+      evidence_availability: 5
+      repeatability: 5
+      safety: 4
+      effort: 3
+      priority_score: 833
+      measurement: "token reduction, latency, replay fidelity, unsupported-output rate"
+      confidence: high
+
+    - id: semantic_duplicate_and_cannibalization_detection
+      business_decision: "Are artifacts redundant while another important question is uncovered?"
+      current_implementation: "Only role+question uniqueness within one plan is checked."
+      hidden_assumption: "Unique IDs imply useful portfolio diversity."
+      ai_opportunity: "Compare semantic coverage, visual proof, and claims across the portfolio."
+      ai_type: "LLM/VLM portfolio evaluator"
+      required_context: "artifact questions, evidence/claims, strategy priorities, QA/acceptance history"
+      required_tool: "list_tasks, compare_semantics, propose_portfolio_change"
+      validator: "stable question IDs, P0 coverage, human approval for removal"
+      risk: medium
+      business_value: 4
+      context_richness: 4
+      evidence_availability: 4
+      repeatability: 4
+      safety: 4
+      effort: 3
+      priority_score: 341
+      measurement: "redundant rate, coverage per artifact, portfolio usefulness"
+      confidence: medium
+
+    - id: competitor_visual_leakage_detection
+      business_decision: "Did generated content copy competitor identity or distinctive visual cues?"
+      current_implementation: "COMPETITOR_LEAKAGE is a human problem code; no systematic image comparison."
+      hidden_assumption: "Prompts and human review reliably catch leakage."
+      ai_opportunity: "Use VLM/image similarity and source metadata to flag logos, copied identity, or distinctive layouts."
+      ai_type: "VLM evaluator + policy classifier"
+      required_context: "generated asset, competitor images, canonical assets, template/brand constraints"
+      required_tool: "inspect_generated, retrieve_competitor_images, create_policy_finding"
+      validator: "identity whitelist, thresholds, human escalation, no automatic deletion"
+      risk: high
+      business_value: 5
+      context_richness: 4
+      evidence_availability: 5
+      repeatability: 4
+      safety: 2
+      effort: 4
+      priority_score: 250
+      measurement: "leakage precision/recall, escalations, post-approval findings"
+      confidence: high
+
+selected_for_next_phase:
+  - id: prompt_context_budget_compilation
+    why_now: "Shared enabling layer for Insight, Strategy, Planner, QA, and regeneration; existing provenance/prompt snapshots/provider adapters make it low-risk."
+    decision_improved: "What evidence and constraints should an AI task receive before reasoning or generation?"
+    why_ai: "Task-aware relevance ranking needs context, history, failure state, and budgets; deterministic code still enforces required facts."
+    fallback: "Existing prompt builders and deterministic planner/QA remain available."
+    first_tests: "include/exclude rules, missing fact, token budget, replay equality, provider failure, unsupported claim"
+  - id: cross_artifact_decision_consistency_audit
+    why_now: "Strategy versions and artifact input_refs already persist; a read-only evaluator can be added without changing execution."
+    decision_improved: "Do customer-facing artifacts express the same approved decisions, claims, and proof points?"
+    why_ai: "Semantic comparison across copy, image tasks, video scenes, prompts, and QA is not exact-string matching."
+    fallback: "Exact claim/reference/schema validators remain authoritative; AI findings only create review tasks."
+    first_tests: "matching artifacts, contradiction, unsupported claim, stale strategy, invalid model output, human dismissal"
+  - id: reference_asset_suitability_selection
+    why_now: "Asset metadata already records approved uses/limitations and generation validates reference policies."
+    decision_improved: "Which asset is safe for identity, composition, on-body proof, or operation?"
+    why_ai: "Suitability depends on multimodal visual content, role intent, and known drift patterns."
+    fallback: "Registry policies and canonical identity rules remain the final gate; failure uses current defaults."
+    first_tests: "identity canonical requirement, composition-only reference, limitation conflict, leakage, invalid VLM, fallback"
+
+deferred:
+  - "research_scope_and_source_prioritization: needs real source quality/freshness signals beyond synthetic demo"
+  - "review_evidence_sampling: follow the context/evidence envelope so excerpts are replayable"
+  - "evidence_conflict_and_freshness_detection: needs typed provenance and freshness policy"
+  - "product_truth_change_impact_analysis: needs complete dependency graph and stale semantics"
+  - "decision_question_coverage_gap_detection: needs canonical Decision Question model"
+  - "template_capability_matching: consume the same decision model and feedback memory"
+  - "human_review_risk_routing: needs stable failure/evidence metadata and policy matrix"
+  - "generation_portfolio_budget_allocation: needs provider cost/latency telemetry"
+  - "provider_reliability_and_fallback_routing: needs shared capability/telemetry registry"
+  - "export_readiness_and_provenance_preflight: make QA/approval completeness explicit first"
+  - "outcome_attribution_and_learning: no business outcome data exists; do not fabricate"
+  - "semantic_duplicate_and_cannibalization_detection: depends on Decision Question graph"
+  - "competitor_visual_leakage_detection: needs calibrated visual leakage dataset"

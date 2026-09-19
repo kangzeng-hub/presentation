@@ -7,9 +7,9 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     proxy: {
-      '/projects': 'http://localhost:8000',
-      '/jobs': 'http://localhost:8000',
-      '/health': 'http://localhost:8000',
+      // Keep React workspace routes (/projects/...) out of the API proxy.
+      // The typed client calls FastAPI directly; only portfolio data uses /api.
+      '/api': 'http://127.0.0.1:8000',
     },
   },
 });

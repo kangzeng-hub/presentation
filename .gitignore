@@ -39,6 +39,10 @@ cache/
 
 # Large local exports and private source material
 *.pptx
+*.docx
+*.pdf
+.preview_check/
+build_resume.py
 analy-report/
 未命名文件夹/
 p1/
